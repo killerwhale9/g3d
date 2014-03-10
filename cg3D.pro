@@ -9,6 +9,9 @@ SOURCES  = *.cpp
 macx:LIBS *= -framework Glut
 linux-g++*:LIBS *= -lglut
 
+exists( /usr/lib/i386-linux-gnu/libQGLViewer.so) {
+    LIBS *= -lQGLViewer # Ubuntu 32
+} else {
 exists( /usr/lib/libqglviewer-qt4.so) |
 exists( /usr/lib/x86_64-linux-gnu/libqglviewer-qt4.so ) {
   LIBS *= -lqglviewer-qt4  # Ubuntu
@@ -18,4 +21,5 @@ exists( /usr/lib/x86_64-linux-gnu/libqglviewer-qt4.so ) {
   } else {
     LIBS *= "-framework qglviewer"   # MacOS
   }
+}
 }
