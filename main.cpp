@@ -1,7 +1,7 @@
 
 #include <qapplication.h>
 #include "viewer.h"
-#include "cylinder.h"
+#include "torse.h"
 #include "lightsMaterials.h"
 
 int main(int argc, char** argv)
@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 	Viewer viewer;
 
 	// build your scene here
-	viewer.addRenderable(new Cylinder(2.0, 2.0, 50));
+	viewer.addRenderable(new Torse());
 	// viewer.addRenderable(new LightsMaterials());
  
 	viewer.setWindowTitle("viewer");
