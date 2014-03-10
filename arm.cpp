@@ -1,15 +1,15 @@
 #include <iostream>
 using namespace std;
-#include "torse.h"
+#include "arm.h"
 #include "cylinder.h"
 #include "math.h"
 
-
-void Torse::draw()
+void Arm::draw()
 {
 	glPushMatrix();
 
-	torse.draw();
+	glRotatef(90, 0, 1, 0);
+	glTranslatef(1.0,0,2.5);
 	arm.draw();
 
 	glPopMatrix();
