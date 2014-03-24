@@ -4,6 +4,8 @@ using namespace std;
 #include "cylinder.h"
 #include "math.h"
 
+Torse::Torse() : torse(3.0, 3.0, 50) {
+}
 
 void Torse::draw()
 {

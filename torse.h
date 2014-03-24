@@ -14,8 +14,9 @@ class Torse : public Renderable
 {
 	public:
 		void draw();
+		Torse();
 	private:
-		Cylinder torse = Cylinder(3.0, 3.0, 50);
+		Cylinder torse;
 		Arm arm;
 };
 

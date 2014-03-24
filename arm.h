@@ -13,8 +13,9 @@ class Arm : public Renderable
 {
 	public:
 		void draw();
+		Arm();
 	private:
-		Cylinder arm = Cylinder(2.0, 1.0, 50);
+		Cylinder arm; 
 };
 
 #endif
