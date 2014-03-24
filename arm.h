@@ -16,6 +16,9 @@ class Arm : public Renderable
 		Arm();
 	private:
 		Cylinder arm; 
+        static const float length = 2.0;
+        static const float width = 1.0;
+        static const int nbFace = 50;
 };
 
 #endif

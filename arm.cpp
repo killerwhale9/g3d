@@ -4,15 +4,16 @@ using namespace std;
 #include "cylinder.h"
 #include "math.h"
 
-Arm::Arm() : arm(2.0, 1.0, 50) {
 
+Arm::Arm() : arm(length, width, nbFace) {
 }
 
 void Arm::draw()
 {
 	glPushMatrix();
+    glutSolidSphere(0.5, nbFace, nbFace);
+    glTranslatef(length/2.0, 0,0);
 	glRotatef(90, 0, 1, 0);
-	glTranslatef(1.0,0,2.5);
 	arm.draw();
 
 	glPopMatrix();

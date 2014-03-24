@@ -4,7 +4,7 @@ using namespace std;
 #include "cylinder.h"
 #include "math.h"
 
-Torse::Torse() : torse(3.0, 3.0, 50) {
+Torse::Torse() : torse(length, width, nbFace) {
 }
 
 void Torse::draw()
@@ -12,7 +12,22 @@ void Torse::draw()
 	glPushMatrix();
 
 	torse.draw();
-	arm.draw();
+
+    //Right arm
+	glPushMatrix();
+	glTranslatef(width/2.0*1.1, 0, length/2.0*0.80);
+	glRotatef(45, 0, 1, 0);
+	rightArm.draw();
+	glPopMatrix();
+
+    //Left arm
+	glPushMatrix();
+	glTranslatef(-(width/2.0*1.1), 0, length/2.0*0.80);
+	glRotatef(180, 0, 1, 0);
+	glRotatef(-45, 0, 1, 0);
+	leftArm.draw();
+	glPopMatrix();
+
 
 	glPopMatrix();
 }

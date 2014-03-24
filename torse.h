@@ -17,7 +17,11 @@ class Torse : public Renderable
 		Torse();
 	private:
 		Cylinder torse;
-		Arm arm;
+		Arm leftArm;
+		Arm rightArm;
+        static const float length = 3.0;
+        static const float width = 3.0;
+        static const int nbFace = 50;
 };
 
 #endif
