@@ -28,6 +28,18 @@ void Torse::draw()
 	leftArm.draw();
 	glPopMatrix();
 
+    //Right leg
+	glPushMatrix();
+	glTranslatef(width/2.0*0.7, 0, -(length/2.0*1.1));
+	glRotatef(-10, 0, 1, 0);
+	rightLeg.draw();
+	glPopMatrix();
 
+    //Left leg
+	glPushMatrix();
+	glTranslatef(-(width/2.0*0.7), 0, -(length/2.0*1.1));
+	glRotatef(10, 0, 1, 0);
+	leftLeg.draw();
+	glPopMatrix();
 	glPopMatrix();
 }
