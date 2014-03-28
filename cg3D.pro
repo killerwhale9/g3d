@@ -3,8 +3,13 @@ TARGET   = cg3D
 CONFIG  += qt opengl warn_on debug
 QT *= xml opengl 
 
-HEADERS  = *.h
-SOURCES  = *.cpp
+HEADERS  = $$system(find src -name '*.h')
+SOURCES  = $$system(find src -name '*.cpp')
+
+DESTDIR = bin
+UI_DIR = .
+
+OBJECTS_DIR = obj
 
 macx:LIBS *= -framework Glut
 linux-g++*:LIBS *= -lglut
