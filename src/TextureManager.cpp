@@ -19,7 +19,7 @@ GLuint TextureManager::loadTexture(const QString &file, const std::string &key, 
     QImage i;
     if (m_images.find(key) != m_images.end()) {
         std::cerr<<"Duplicate key '"<<key<<"' when loading "<<file.toStdString()<<"\n";
-        return 0;
+        return m_images[key].id;
     }
     if (i.load(file)) {
         m_images[key].img = QGLWidget::convertToGLFormat(i);
