@@ -10,7 +10,7 @@
 
 #include <map>
 #include <QGLViewer/qglviewer.h>
-#include <qimage>
+#include <QImage>
 
 class TextureManager {
 		struct GLImg {
