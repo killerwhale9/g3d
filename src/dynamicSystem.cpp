@@ -168,7 +168,7 @@ void DynamicSystem::animate()
 {
     // Creates bubbles
     if (t++ % 100 == 0) {
-        particles.push_back(new Particle(Vec(0.0, 0.0, 3.0), Vec(), particleMass, particleRadius));
+        particles.push_back(new Particle(Vec(0.0, 0.0, 3.0), Vec(0.0, 0.0, -3.0), particleMass, particleRadius));
     }
 
     vector<Particle *>::iterator itP;
@@ -261,7 +261,12 @@ void DynamicSystem::collisionParticleGround(Particle *p)
 
 bool DynamicSystem::collisionParticleParticle(Particle *p1, Particle *p2)
 {
-    return ((p1->getPosition() - p2->getPosition()).norm() < (p1->getRadius() + p2->getRadius()));
+    if ((p1->getPosition() - p2->getPosition()).norm() < (p1->getRadius() + p2->getRadius())) {
+        p1->setPosition((p1->getPosition()+p2->getPosition())/2);
+        p1->setRadius(pow(pow(p1->getRadius(), 3) + pow(p1->getRadius(), 3), 1./3.));
+        return true;
+    }
+    return false;
 }
 
 
