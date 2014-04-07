@@ -5,16 +5,20 @@ using namespace std;
 #include "math.h"
 
 
-Leg::Leg() : leg(length, width, nbFace) {
+Leg::Leg() :
+    m_length(2.0),
+    m_width(1.0),
+    m_precision(50),
+    m_figure(m_length, m_width, m_precision) {
 }
 
 void Leg::draw()
 {
-	glPushMatrix();
-    glutSolidSphere(0.5, nbFace, nbFace);
-    glTranslatef(0, 0, -(length/2.0));
-	glRotatef(180, 0, 1, 0);
-	leg.draw();
+    glPushMatrix();
+    glutSolidSphere(0.5, m_precision, m_precision);
+    glTranslatef(0, 0, 0.0);
+    glRotatef(180, 0, 1, 0);
+    m_figure.draw();
 
-	glPopMatrix();
+    glPopMatrix();
 }

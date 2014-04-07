@@ -117,8 +117,8 @@ void Cylinder::drawElements()
 		vertices[i*3*2+3  ] = cos(i*2*M_PI/nb_face)*0.5*this->width;
 		vertices[i*3*2  +1] = sin(i*2*M_PI/nb_face)*0.5*this->width;
 		vertices[i*3*2+3+1] = sin(i*2*M_PI/nb_face)*0.5*this->width;
-		vertices[i*3*2  +2] = +0.5*this->heigth;
-		vertices[i*3*2+3+2] = -0.5*this->heigth;
+		vertices[i*3*2  +2] = this->heigth;
+		vertices[i*3*2+3+2] = 0.0;
 		indices_top_bot[0][i] = i*2;
 		indices_top_bot[1][i] = i*2+1;
 		indices[i][0] = i*2;
