@@ -15,10 +15,10 @@ class Arm : public Renderable
 		void draw();
 		Arm();
 	private:
-		Cylinder arm; 
-        static const float length = 2.0;
-        static const float width = 1.0;
-        static const int nbFace = 50;
+        float m_length,
+              m_width;
+        int m_precision;
+		Cylinder m_figure; 
 };
 
 #endif

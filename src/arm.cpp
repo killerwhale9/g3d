@@ -5,16 +5,21 @@ using namespace std;
 #include "math.h"
 
 
-Arm::Arm() : arm(length, width, nbFace) {
+Arm::Arm() :
+    m_length(2.0),
+    m_width(1.0),
+    m_precision(50),
+    m_figure(m_length, m_width, m_precision)
+{
 }
 
 void Arm::draw()
 {
 	glPushMatrix();
-    glutSolidSphere(0.5, nbFace, nbFace);
-    glTranslatef(length/2.0, 0,0);
+    glutSolidSphere(0.5, m_precision, m_precision);
+    glTranslatef(m_length/2.0, 0,0);
 	glRotatef(90, 0, 1, 0);
-	arm.draw();
+	m_figure.draw();
 
 	glPopMatrix();
 }
