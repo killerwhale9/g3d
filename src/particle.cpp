@@ -6,13 +6,13 @@
 
 #include "particle.hpp"
 
-Particle::Particle(Vec pos, Vec vel, double m, double r)
-	: position(pos),
-	velocity(vel),
-	mass(m),
-	radius(r)
+    Particle::Particle(Vec pos, Vec vel, double m, double r)
+: position(pos),
+    velocity(vel),
+    mass(m),
+    radius(r)
 {
-	invMass = (m > 0 ? 1 / m : 0.0);
+    invMass = (m > 0 ? 1 / m : 0.0);
 }
 
 Particle::~Particle()
@@ -22,27 +22,27 @@ Particle::~Particle()
 
 const Vec & Particle::getPosition() const
 {
-	return position;
+    return position;
 }
 
 const Vec & Particle::getVelocity() const
 {
-	return velocity;
+    return velocity;
 }
 
 double Particle::getVolume()
 {
-	return 4./3.*M_PI*radius*radius*radius;
+    return 4./3.*M_PI*radius*radius*radius;
 }
 
 double Particle::getMass() const
 {
-	return mass;
+    return mass;
 }
 
 double Particle::getInvMass() const
 {
-	return invMass;
+    return invMass;
 }
 
 void Particle::setRadius(double r)
@@ -52,37 +52,37 @@ void Particle::setRadius(double r)
 
 double Particle::getRadius()
 {
-	return radius;
+    return radius;
 }
 
 void Particle::setPosition(const Vec &pos)
 {
-	position = pos;
+    position = pos;
 }
 
 void Particle::setVelocity(const Vec &vel)
 {	
-	velocity = vel;
+    velocity = vel;
 }
 
 void Particle::incrPosition(const Vec &pos)
 {
-	position += pos;
+    position += pos;
 }
 
 void Particle::incrVelocity(const Vec &vel)
 {
-	velocity += vel;
+    velocity += vel;
 }
 
 
 
 void Particle::draw() const
 {
-	glPushMatrix();
-	glTranslatef(position.x, position.y, position.z);
-	glutSolidSphere(radius, 12, 12);
-	glPopMatrix();
+    glPushMatrix();
+    glTranslatef(position.x, position.y, position.z);
+    glutSolidSphere(radius, 12, 12);
+    glPopMatrix();
 
 }
 
@@ -90,6 +90,6 @@ void Particle::draw() const
 
 std::ostream& operator<<(std::ostream& os, const Particle& p)
 {
-	os << "pos (" << p.getPosition() << "), vel (" << p.getVelocity() << ")";
-	return os;
+    os << "pos (" << p.getPosition() << "), vel (" << p.getVelocity() << ")";
+    return os;
 }

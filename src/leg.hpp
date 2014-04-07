@@ -11,16 +11,16 @@
 
 class Leg : public Renderable
 {
-        public:
-		void draw();
-		Leg();
+    public:
+        void draw();
+        Leg();
         inline float getWidth() const { return m_width; }
         inline float getLength() const { return m_length; }
-	private:
-                float m_length,
-                      m_width;
-                int m_precision;
-		Cylinder m_figure; 
+    private:
+        float m_length,
+              m_width;
+        int m_precision;
+        Cylinder m_figure; 
 };
 
 #endif

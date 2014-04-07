@@ -11,16 +11,16 @@
 
 class Arm : public Renderable
 {
-	public:
-		void draw();
-		Arm();
+    public:
+        void draw();
+        Arm();
         inline float getWidth() const { return m_width; }
         inline float getLength() const { return m_length; }
-	private:
+    private:
         float m_length,
               m_width;
         int m_precision;
-		Cylinder m_figure; 
+        Cylinder m_figure; 
 };
 
 #endif

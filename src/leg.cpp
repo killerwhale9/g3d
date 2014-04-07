@@ -10,7 +10,7 @@ Leg::Leg() :
     m_width(1.0),
     m_precision(50),
     m_figure(m_length, m_width, m_precision) {
-}
+    }
 
 void Leg::draw()
 {

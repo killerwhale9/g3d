@@ -261,9 +261,7 @@ void DynamicSystem::collisionParticleGround(Particle *p)
 
 bool DynamicSystem::collisionParticleParticle(Particle *p1, Particle *p2)
 {
-    if ((p1->getPosition() - p2->getPosition()).norm() < (p1->getRadius() + p2->getRadius())) {
-        return true;
-    }
+    return ((p1->getPosition() - p2->getPosition()).norm() < (p1->getRadius() + p2->getRadius()));
 }
 
 
