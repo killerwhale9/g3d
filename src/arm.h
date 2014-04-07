@@ -14,6 +14,8 @@ class Arm : public Renderable
 	public:
 		void draw();
 		Arm();
+        inline float getWidth() const { return m_width; }
+        inline float getLength() const { return m_length; }
 	private:
         float m_length,
               m_width;

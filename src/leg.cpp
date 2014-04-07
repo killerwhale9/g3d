@@ -16,7 +16,7 @@ void Leg::draw()
 {
     glPushMatrix();
     glutSolidSphere(0.5, m_precision, m_precision);
-    glTranslatef(0, 0, -(m_length/2.0));
+    glTranslatef(0, 0, 0.0);
     glRotatef(180, 0, 1, 0);
     m_figure.draw();
 

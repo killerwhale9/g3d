@@ -16,11 +16,15 @@ class Torse : public Renderable
     public:
         void draw();
         Torse();
+
+        inline float getWidth() const { return m_width; }
+        inline float getLength() const { return m_length; }
     private:
         // Values for sizing the body
         // Lengths
         float m_length,
-              m_width; // size of the memebers eg: radius as they're cylinders
+              m_width, // size of the memebers eg: radius as they're cylinders
+              m_headRadius;
         int m_precision; // number of faces
 
         // Body parts
@@ -33,6 +37,8 @@ class Torse : public Renderable
             m_rULeg,
             m_lLLeg,
             m_rLLeg;
+
+        int m_tmp;
 
 };
 
