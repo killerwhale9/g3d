@@ -6,7 +6,7 @@ using namespace std;
 #include <QGLViewer/vec.h>
 using namespace qglviewer;  
 
-#include "particle.h"
+#include "particle.hpp"
 
 
 class Spring 

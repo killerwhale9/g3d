@@ -5,7 +5,7 @@
 #include <GLUT/glut.h>
 #endif
 
-#include "spring.h"
+#include "spring.hpp"
 
 
 Spring::Spring(const Particle *p1, const Particle *p2, 

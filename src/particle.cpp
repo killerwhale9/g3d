@@ -4,7 +4,7 @@
 #include <GLUT/glut.h>
 #endif
 
-#include "particle.h"
+#include "particle.hpp"
 
 Particle::Particle(Vec pos, Vec vel, double m, double r)
 	: position(pos),

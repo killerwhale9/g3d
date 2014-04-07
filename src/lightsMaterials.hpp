@@ -1,7 +1,7 @@
 #ifndef _LIGHTS_MATERIALS_
 #define _LIGHTS_MATERIALS_
 
-#include "renderable.h"
+#include "renderable.hpp"
 
 class LightsMaterials : public Renderable
 {

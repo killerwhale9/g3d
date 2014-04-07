@@ -1,4 +1,4 @@
-#include "TextureManager.h"
+#include "TextureManager.hpp"
 
 std::map<std::string, TextureManager::GLImg> TextureManager::m_images;
 

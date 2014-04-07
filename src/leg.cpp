@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
-#include "leg.h"
-#include "cylinder.h"
-#include "math.h"
+#include "leg.hpp"
+#include "cylinder.hpp"
+#include <cmath>
 
 
 Leg::Leg() :

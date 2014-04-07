@@ -3,8 +3,8 @@
 #include <map>
 using namespace std;
 
-#include "viewer.h"
-#include "dynamicSystem.h"
+#include "viewer.hpp"
+#include "dynamicSystem.hpp"
 
 
 DynamicSystem::DynamicSystem()

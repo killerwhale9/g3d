@@ -4,7 +4,7 @@
 #include <GLUT/glut.h>
 #endif
 
-#include "lightsMaterials.h"
+#include "lightsMaterials.hpp"
 #include <cmath>
 #include <iostream>
 

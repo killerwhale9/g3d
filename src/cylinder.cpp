@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
-#include "cylinder.h"
-#include "math.h"
+#include "cylinder.hpp"
+#include <cmath>
 
 Cylinder::Cylinder(float heigth, float width, int nb_face) {
 	this->heigth = heigth;

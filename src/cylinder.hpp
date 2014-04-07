@@ -1,7 +1,7 @@
 #ifndef _CYLINDER_
 #define _CYLINDER_
 
-#include "renderable.h"
+#include "renderable.hpp"
 #ifndef __APPLE__
 #include <GL/glut.h>
 #else

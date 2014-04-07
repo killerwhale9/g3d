@@ -6,8 +6,8 @@
 #include <GLUT/glut.h>
 #endif
 
-#include "viewer.h"
-#include "renderable.h"
+#include "viewer.hpp"
+#include "renderable.hpp"
 
 Viewer::Viewer() {
 }

@@ -8,9 +8,9 @@ using namespace qglviewer;
 #include <vector>
 using namespace std;
 
-#include "spring.h"
-#include "particle.h"
-#include "renderable.h"
+#include "spring.hpp"
+#include "particle.hpp"
+#include "renderable.hpp"
 
 /*
  * This class represents a dynamic system made of particles

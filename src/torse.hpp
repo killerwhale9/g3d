@@ -1,10 +1,10 @@
 #ifndef _TORSE_
 #define _TORSE_
 
-#include "renderable.h"
-#include "cylinder.h"
-#include "arm.h"
-#include "leg.h"
+#include "renderable.hpp"
+#include "cylinder.hpp"
+#include "arm.hpp"
+#include "leg.hpp"
 #ifndef __APPLE__
 #include <GL/glut.h>
 #else
