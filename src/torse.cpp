@@ -37,9 +37,11 @@ void Torse::draw()
 
     glPushMatrix();
     glTranslatef(0, 0, m_length);
-    glRotatef(m_tmp, 1, 1, 1);
-    glTranslatef(0, 0, m_headRadius);
-    glutSolidSphere(m_headRadius, m_precision, m_precision);
+    //glTranslatef(0, m_headRadius, m_headRadius);
+    glRotatef(90, 0, 1, 0);
+    glRotatef(90, 0, 0, 1);
+    //glutSolidSphere(m_headRadius, m_precision, m_precision);
+    glutSolidTeapot(m_headRadius);
     glPopMatrix();
 
     //Right arm
