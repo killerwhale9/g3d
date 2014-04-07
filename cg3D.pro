@@ -3,7 +3,7 @@ TARGET   = cg3D
 CONFIG  += qt opengl warn_on debug
 QT *= xml opengl 
 
-HEADERS  = $$system(find src -name '*.h')
+HEADERS  = $$system(find src -name '*.hpp')
 SOURCES  = $$system(find src -name '*.cpp')
 
 DESTDIR = bin
