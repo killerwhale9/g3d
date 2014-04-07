@@ -13,28 +13,28 @@
 #include <QImage>
 
 class TextureManager {
-		struct GLImg {
-			GLuint id;
-			QImage img;
-			GLImg() {}
-		};
+    struct GLImg {
+        GLuint id;
+        QImage img;
+        GLImg() {}
+    };
 
-		static std::map<std::string, GLImg> m_images;
+    static std::map<std::string, GLImg> m_images;
 
-		TextureManager();
-		~TextureManager();
-	
-	public:
-		static GLuint loadTexture(const QString &file, const std::string &key, bool smooth = true);
+    TextureManager();
+    ~TextureManager();
 
-		// On vérifie pas si la clé existe! C'est fait exprès
-		inline static GLuint getTexture(const std::string &key) {
-			return m_images[key].id;
-		}
+    public:
+    static GLuint loadTexture(const QString &file, const std::string &key, bool smooth = true);
 
-		inline static void bindTexture(const std::string &key) {
-			glBindTexture(GL_TEXTURE_2D, m_images[key].id);
-		}
+    // On vérifie pas si la clé existe! C'est fait exprès
+    inline static GLuint getTexture(const std::string &key) {
+        return m_images[key].id;
+    }
+
+    inline static void bindTexture(const std::string &key) {
+        glBindTexture(GL_TEXTURE_2D, m_images[key].id);
+    }
 };
 
 #endif

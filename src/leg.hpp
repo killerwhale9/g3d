@@ -1,26 +1,26 @@
-#ifndef _ARM_
-#define _ARM_
+#ifndef _LEG_
+#define _LEG_
 
-#include "renderable.h"
-#include "cylinder.h"
+#include "renderable.hpp"
+#include "cylinder.hpp"
 #ifndef __APPLE__
 #include <GL/glut.h>
 #else
 #include <GLUT/glut.h>
 #endif
 
-class Arm : public Renderable
+class Leg : public Renderable
 {
-	public:
-		void draw();
-		Arm();
+    public:
+        void draw();
+        Leg();
         inline float getWidth() const { return m_width; }
         inline float getLength() const { return m_length; }
-	private:
+    private:
         float m_length,
               m_width;
         int m_precision;
-		Cylinder m_figure; 
+        Cylinder m_figure; 
 };
 
 #endif

@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
-#include "leg.h"
-#include "cylinder.h"
-#include "math.h"
+#include "leg.hpp"
+#include "cylinder.hpp"
+#include <cmath>
 
 
 Leg::Leg() :
@@ -10,7 +10,7 @@ Leg::Leg() :
     m_width(1.0),
     m_precision(50),
     m_figure(m_length, m_width, m_precision) {
-}
+    }
 
 void Leg::draw()
 {

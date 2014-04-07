@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
-#include "arm.h"
-#include "cylinder.h"
+#include "arm.hpp"
+#include "cylinder.hpp"
 #include <cmath>
 
 

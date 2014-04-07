@@ -1,9 +1,9 @@
 
 #include <qapplication.h>
-#include "viewer.h"
-#include "torse.h"
-#include "lightsMaterials.h"
-#include "dynamicSystem.h"
+#include "viewer.hpp"
+#include "torse.hpp"
+#include "lightsMaterials.hpp"
+#include "dynamicSystem.hpp"
 
 int main(int argc, char** argv)
 {

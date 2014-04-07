@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
-#include "torse.h"
-#include "cylinder.h"
-#include "math.h"
+#include "torse.hpp"
+#include "cylinder.hpp"
+#include <cmath>
 
 Torse::Torse() :
     m_length(4.f),
