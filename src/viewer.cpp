@@ -100,7 +100,7 @@ void Viewer::keyPressEvent(QKeyEvent *e)
     for(it = renderableList.begin(); it != renderableList.end(); ++it) {
         (*it)->keyPressEvent(e, *this);
     }
-
+    int s = 10;
     if ((e->key()==Qt::Key_W) && (modifiers==Qt::NoButton)) {
         // events with modifiers: CTRL+W, ALT+W, ... to handle separately
         toogleWireframe = !toogleWireframe;
@@ -115,7 +115,18 @@ void Viewer::keyPressEvent(QKeyEvent *e)
         else
             glDisable(GL_LIGHTING);       
         // ... and so on with all events to handle here!
-
+    } else if (e->key() == Qt::Key_H) {
+            noise_zoom += modifiers==Qt::NoButton?-1.0:1.0;
+            std::cout<<"zoom:"<<noise_zoom<<"\n";
+            noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
+    } else if (e->key() == Qt::Key_K) {
+            noise_persistence += modifiers==Qt::NoButton?-0.05:0.05;
+            std::cout<<"noise_persistence:"<<noise_persistence<<"\n";
+            noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
+    } else if (e->key() == Qt::Key_J) {
+            noise_octaves += modifiers==Qt::NoButton?-1:1;
+            std::cout<<"noise_octaves:"<<noise_octaves<<"\n";
+            noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
     } else {
         // if the event is not handled here, process it as default
         QGLViewer::keyPressEvent(e);

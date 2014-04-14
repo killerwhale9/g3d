@@ -12,6 +12,7 @@
 
 #include <QGLViewer/qglviewer.h>
 #include <list>
+ #include "NoiseTerrain.hpp"
 using namespace std;
 
 class Renderable;
@@ -24,6 +25,9 @@ class Viewer : public QGLViewer
         Viewer();
         virtual ~Viewer();
         void addRenderable(Renderable *r);
+        double noise_zoom, noise_persistence;
+        int noise_octaves;
+        NoiseTerrain *noise;
 
         /* Scene methods */
     protected :
