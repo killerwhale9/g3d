@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     Viewer viewer;
 
     // build your scene here
-    viewer.addRenderable(new Torse());
+    //viewer.addRenderable(new Torse());
     viewer.addRenderable(new DynamicSystem());
     // viewer.addRenderable(new LightsMaterials());
 

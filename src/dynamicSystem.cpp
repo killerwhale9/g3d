@@ -1,4 +1,5 @@
 #include <cmath>
+#include "stdio.h"
 #include <iostream>
 #include <map>
 using namespace std;
@@ -43,7 +44,8 @@ void DynamicSystem::clear()
 
 const Vec &DynamicSystem::getFixedParticlePosition() const
 {
-    return particles[0]->getPosition();	// no check on 0!
+    //return particles[0]->getPosition();	// no check on 0!
+    return Vec();
 }
 
 void DynamicSystem::setFixedParticlePosition(const Vec &pos)
@@ -79,7 +81,7 @@ void DynamicSystem::init(Viewer &viewer)
     // global scene parameters
     defaultGravity = Vec(0.0, 0.0, -10.0);
     gravity = defaultGravity;
-    defaultMediumViscosity = 1.0;
+    defaultMediumViscosity = 10.0;
     mediumViscosity = defaultMediumViscosity;
     handleCollisions = true;
     dt = 0.1;
@@ -115,7 +117,7 @@ void DynamicSystem::createSystemScene()
     //particles.push_back(new Particle(initPos, Vec(), 0.0, particleRadius));
 
     // add a second particle
-    particles.push_back(new Particle(Vec(0.0, 0.0, 3.0), Vec(), particleMass, particleRadius));
+    //particles.push_back(new Particle(Vec(0.0, 0.0, 3.0), Vec(), particleMass, particleRadius));
 
     // add a spring between the two particle
     //springs.push_back(new Spring(particles[0], particles[1], springStiffness, springInitLength, springDamping));
@@ -168,7 +170,7 @@ void DynamicSystem::animate()
 {
     // Creates bubbles
     if (t++ % 100 == 0) {
-        particles.push_back(new Particle(Vec(0.0, 0.0, 3.0), Vec(0.0, 0.0, -3.0), particleMass, particleRadius));
+        particles.push_back(new Particle(Vec(), Vec(0.4, 0.0, 0.0), particleMass, particleRadius));
     }
 
     vector<Particle *>::iterator itP;
@@ -176,7 +178,7 @@ void DynamicSystem::animate()
     // Make bubbles bigger
     for (itP = particles.begin(); itP != particles.end(); ++itP) {
         Particle *p = *itP;
-        p->setRadius(p->getRadius()*1.005);
+        p->setRadius(p->getRadius()*1.002);
     }
 
     //======== 1. Compute all forces
@@ -262,8 +264,8 @@ void DynamicSystem::collisionParticleGround(Particle *p)
 bool DynamicSystem::collisionParticleParticle(Particle *p1, Particle *p2)
 {
     if ((p1->getPosition() - p2->getPosition()).norm() < (p1->getRadius() + p2->getRadius())) {
-        p1->setPosition((p1->getPosition()+p2->getPosition())/2);
-        p1->setRadius(pow(pow(p1->getRadius(), 3) + pow(p1->getRadius(), 3), 1./3.));
+        p1->setPosition((p1->getPosition()*pow(p1->getRadius(), 3)+p2->getPosition()*pow(p2->getRadius(), 3))/(pow(p1->getRadius(), 3)+pow(p2->getRadius(), 3)));
+        p1->setRadius(pow(pow(p1->getRadius(), 3) + pow(p1->getRadius(), 3), 0.33));
         return true;
     }
     return false;
@@ -303,9 +305,9 @@ void DynamicSystem::keyPressEvent(QKeyEvent* e, Viewer& viewer)
         toggleViscosity = true;
         toggleCollisions = true;
     }
-}	
+}
 
 void DynamicSystem::mouseMoveEvent(QMouseEvent*, Viewer& v)
 {
-    setFixedParticlePosition(v.manipulatedFrame()->position());
+    //setFixedParticlePosition(v.manipulatedFrame()->position());
 }
