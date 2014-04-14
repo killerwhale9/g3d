@@ -2,6 +2,7 @@
 #include <QApplication.h>
 #include "viewer.hpp"
 #include "torse.hpp"
+#include "coral.hpp"
 #include "lightsMaterials.hpp"
 #include "dynamicSystem.hpp"
 #include "NoiseTerrain.hpp"
@@ -15,7 +16,9 @@ int main(int argc, char** argv)
     Viewer viewer;
 
     // build your scene here
+
     //viewer.addRenderable(new Torse());
+    viewer.addRenderable(new Coral(3));
     viewer.addRenderable(new DynamicSystem());
     viewer.noise = new NoiseTerrain();
     viewer.noise_zoom = 4;
@@ -25,6 +28,9 @@ int main(int argc, char** argv)
     viewer.noise->generateClouds(100, 100, 40, 0.5, 2);
     viewer.addRenderable(viewer.noise);
     // viewer.addRenderable(new LightsMaterials());
+
+    glPushMatrix();
+	glTranslatef(4,0.2,0.2);
 
     viewer.setWindowTitle("viewer");
     // Make the viewer window visible on screen.
