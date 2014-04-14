@@ -2,6 +2,7 @@
 #include <qapplication.h>
 #include "viewer.hpp"
 #include "torse.hpp"
+#include "coral.hpp"
 #include "lightsMaterials.hpp"
 #include "dynamicSystem.hpp"
 
@@ -15,6 +16,7 @@ int main(int argc, char** argv)
 
     // build your scene here
     viewer.addRenderable(new Torse());
+    viewer.addRenderable(new Coral());
     viewer.addRenderable(new DynamicSystem());
     // viewer.addRenderable(new LightsMaterials());
 
