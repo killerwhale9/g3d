@@ -16,9 +16,12 @@ int main(int argc, char** argv)
 
     // build your scene here
     viewer.addRenderable(new Torse());
-    viewer.addRenderable(new Coral());
+    viewer.addRenderable(new Coral(3));
     viewer.addRenderable(new DynamicSystem());
     // viewer.addRenderable(new LightsMaterials());
+
+    glPushMatrix();
+	glTranslatef(4,0.2,0.2);
 
     viewer.setWindowTitle("viewer");
     // Make the viewer window visible on screen.

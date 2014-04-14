@@ -14,7 +14,8 @@ class Coral : public Renderable
 {
     public:
         void draw();
-        Coral();
+        void drawSub();
+        Coral(int depth);
     private:
 		int m_nbBranch;
 		int m_depthBranch;
