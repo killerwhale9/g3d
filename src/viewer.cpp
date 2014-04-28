@@ -100,7 +100,7 @@ void Viewer::keyPressEvent(QKeyEvent *e)
     for(it = renderableList.begin(); it != renderableList.end(); ++it) {
         (*it)->keyPressEvent(e, *this);
     }
-    int s = 10;
+    int s = 25;
     if ((e->key()==Qt::Key_W) && (modifiers==Qt::NoButton)) {
         // events with modifiers: CTRL+W, ALT+W, ... to handle separately
         toogleWireframe = !toogleWireframe;

@@ -145,7 +145,7 @@ void DynamicSystem::draw()
 
     // Springs
     glColor3f(1.0, 0.28, 0.0);
-    glLineWidth(5.0);
+    glLineWidth(1.0);
     vector<Spring *>::iterator itS;
     for (itS = springs.begin(); itS != springs.end(); ++itS) {
         (*itS)->draw();

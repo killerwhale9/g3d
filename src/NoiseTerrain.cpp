@@ -16,7 +16,7 @@ double NoiseTerrain::noise(double x,double y)
     return interpolate(int1,int2,y-floory);//Here we use y-floory, to get the 2nd dimension.
 }
 
-NoiseTerrain::NoiseTerrain() : m_hmap(NULL), m_w(0), m_h(0), m_normals(NULL)
+NoiseTerrain::NoiseTerrain() : m_hmap(NULL), m_w(0), m_h(0), m_normals(NULL), m_triangles(NULL)
 {}
 
 NoiseTerrain::~NoiseTerrain()
@@ -61,6 +61,79 @@ void NoiseTerrain::drawHMap()
     glPopMatrix();
 }
 
+
+void NoiseTerrain::triangle_t::computeNormal(uint32_t w, uint32_t h) {
+    for (uint32_t i = 0; i < 3; i++)
+        vx[i].x /= (double)w,
+        vx[i].y /= (double)h;
+    normal = glm::normalize(glm::cross(vx[1]-vx[2], vx[0]-vx[2]));
+}
+
+void NoiseTerrain::computeNormals()
+{
+    // clé indice dans m_hmap;
+    // pour chaque point liste des triangles qui le contient
+    if (m_triangles) {
+        for (std::list<triangle_t*>::iterator it(m_trianglePool.begin()); it != m_trianglePool.end(); ++it)
+            delete *it;
+        m_trianglePool.clear();
+        delete[] m_triangles;
+    }
+    m_triangles = new std::list<triangle_t*>[m_w*m_h];
+
+    // on calcule tout les triangles et les normales de ceux-ci
+    for (uint32_t y = 0; y < m_h-1; ++y) {
+        for (uint32_t x = 0; x < m_w; ++x) {
+            triangle_t* t = NULL;
+            if (x < m_w-1) {
+                t = new triangle_t;
+                assert(t);
+                t->vx[0] = glm::vec3(x, y, m_hmap[x+y*m_w]);
+                t->vx[1] = glm::vec3(x, y+1, m_hmap[x+(1+y)*m_w]);
+                t->vx[2] = glm::vec3(x+1, y, m_hmap[x+1+y*m_w]);
+
+                m_triangles[x+y*m_w].push_back(t);
+                m_triangles[x+1+y*m_w].push_back(t);
+                m_triangles[x+(y+1)*m_w].push_back(t);
+                m_trianglePool.push_back(t);
+                
+                t->computeNormal(m_w, m_h);
+            }
+            if (x > 0) {
+                t = NULL;
+                t = new triangle_t;
+                assert(t);
+                t->vx[2] = glm::vec3(x, y, m_hmap[x+y*m_w]);
+                t->vx[1] = glm::vec3(x, y+1, m_hmap[x+(1+y)*m_w]);
+                t->vx[0] = glm::vec3(x-1, y, m_hmap[x-1+y*m_w]);
+
+                m_triangles[x+y*m_w].push_back(t);
+                m_triangles[x-1+y*m_w].push_back(t);
+                m_triangles[x+(y+1)*m_w].push_back(t);
+                m_trianglePool.push_back(t);
+
+                t->computeNormal(m_w, m_h);
+            }
+        }
+    }
+
+    // on interpole les normale des triangles contenant chaque point
+    if (m_normals)
+        delete[] m_normals;
+    m_normals = new glm::vec3[m_w*m_h];
+    for (uint32_t y = 0; y < m_h; ++y) {
+        for (uint32_t x = 0; x < m_w; ++x) {
+            glm::vec3 sum;
+            std::list<triangle_t*> *l = &m_triangles[x+y*m_w];
+            for (std::list<triangle_t*>::iterator it(l->begin()); it != l->end(); ++it) {
+                sum += (*it)->normal;
+            }
+            m_normals[x+y*m_w] = glm::normalize(sum);
+        }
+    }
+}
+
+/*
 void NoiseTerrain::computeNormals()
 {
     if (m_normals)
@@ -99,3 +172,4 @@ void NoiseTerrain::computeNormals()
         }
     }
 }
+*/
