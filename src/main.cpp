@@ -1,5 +1,5 @@
 
-#include <QApplication.h>
+#include <QApplication>
 #include "viewer.hpp"
 #include "torse.hpp"
 #include "coral.hpp"
