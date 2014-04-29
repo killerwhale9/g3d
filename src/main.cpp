@@ -17,12 +17,8 @@ int main(int argc, char** argv)
     Viewer viewer;
 
     // build your scene here
-	// Allow textures
-	glEnable(GL_TEXTURE_2D);
 
     //viewer.addRenderable(new Torse());
-	// Corals
-	TextureManager::loadTexture("gfx/coral.png", "coral");
     viewer.addRenderable(new Coral(Coral::defaultDepth));
 
     viewer.addRenderable(new DynamicSystem());

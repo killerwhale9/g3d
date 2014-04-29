@@ -8,6 +8,7 @@
 
 #include "viewer.hpp"
 #include "renderable.hpp"
+#include "TextureManager.hpp"
 
 Viewer::Viewer() {
 }
@@ -44,12 +45,20 @@ void Viewer::init()
     else
         glDisable(GL_LIGHTING);
 
+    glEnable(GL_NORMALIZE); // les nomrmales ne sont plus affectées par les scale
     setSceneRadius(5.0f);
 
     list<Renderable *>::iterator it;
     for (it = renderableList.begin(); it != renderableList.end(); ++it) {
         (*it)->init(*this);
     }
+
+    // load textures
+
+    //tmp :D
+    glEnable(GL_TEXTURE_2D);
+    TextureManager::loadTexture("gfx/coral.png", "sand1");
+    TextureManager::loadTexture("gfx/coral.png", "coral");
 }
 
 
