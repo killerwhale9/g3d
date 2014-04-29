@@ -6,6 +6,7 @@
 #include "lightsMaterials.hpp"
 #include "dynamicSystem.hpp"
 #include "NoiseTerrain.hpp"
+#include "TextureManager.hpp"
 
 int main(int argc, char** argv)
 {
@@ -16,9 +17,14 @@ int main(int argc, char** argv)
     Viewer viewer;
 
     // build your scene here
+	// Allow textures
+	glEnable(GL_TEXTURE_2D);
 
     //viewer.addRenderable(new Torse());
+	// Corals
+	TextureManager::loadTexture("gfx/coral.png", "coral");
     viewer.addRenderable(new Coral(Coral::defaultDepth));
+
     viewer.addRenderable(new DynamicSystem());
     viewer.noise = new NoiseTerrain();
     viewer.noise_zoom = 4;

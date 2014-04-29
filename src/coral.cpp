@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 #include "coral.hpp"
+#include "TextureManager.hpp"
 
 Coral::Coral(int depth) : 
 	m_coral(depth,depth*0.3,25)
@@ -11,9 +12,7 @@ Coral::Coral(int depth) :
 
 	//Recursive
 	if (depth > 0) {
-		cout << "Recursive " << depth << endl;
 		for (int i=0; i < m_nbBranch; i++) {
-			cout << "Pushing coral " << i << endl;
 			m_smallCorals.push_back(Coral(depth-1));
 		}
 	}
@@ -23,6 +22,7 @@ void Coral::draw()
 {
     glPushMatrix();
 	glTranslatef(4,0.2,0.2);
+	TextureManager::bindTexture("coral");
 	m_coral.draw();
 
 	vector<Coral>::iterator it;
@@ -47,6 +47,7 @@ void Coral::drawSub(int angle)
 	glRotatef(angle,1,0,0);
 	//Pivote pour eviter d'aligner toutes les branches dans le même plan
 	glRotatef(angle*2,0,0,1);
+	TextureManager::bindTexture("coral");
 	m_coral.draw();
 
 	vector<Coral>::iterator it;
