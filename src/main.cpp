@@ -18,7 +18,7 @@ int main(int argc, char** argv)
     // build your scene here
 
     //viewer.addRenderable(new Torse());
-    viewer.addRenderable(new Coral(3));
+    viewer.addRenderable(new Coral(2));
     viewer.addRenderable(new DynamicSystem());
     viewer.noise = new NoiseTerrain();
     viewer.noise_zoom = 4;

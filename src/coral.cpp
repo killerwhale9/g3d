@@ -23,21 +23,33 @@ void Coral::draw()
 	m_coral.draw();
 
 	vector<Coral>::iterator it;
+	int i=0;
 	for (it=m_smallCorals.begin(); it != m_smallCorals.end(); it++) {
-	    it->drawSub();
+		if (i%2 == 0) {
+		    it->drawSub(defaultAngle);
+		} else {
+		    it->drawSub(-defaultAngle);
+		}			
+		i++;
 	}
     glPopMatrix();
 }
 
-void Coral::drawSub()
+void Coral::drawSub(int angle)
 {
     glPushMatrix();
-	glRotatef(35,1,0,0);
+	glRotatef(angle,1,0,0);
 	m_coral.draw();
 
 	vector<Coral>::iterator it;
 	for (it=m_smallCorals.begin(); it != m_smallCorals.end(); it++) {
-	    it->drawSub();
+		int i=0;
+		if (i%2 == 0) {
+		    it->drawSub(defaultAngle);
+		} else {
+		    it->drawSub(-defaultAngle);
+		}			
+		i++;
 	}
     glPopMatrix();
 
