@@ -3,9 +3,9 @@ using namespace std;
 #include "coral.hpp"
 
 Coral::Coral(int depth) : 
-	m_coral(0.1*depth,0.2,10)
+	m_coral(depth,depth*0.3,25)
 {
-	m_nbBranch = 3;
+	m_nbBranch = 2;
 	m_depthBranch = depth;
 
 	//Recursive
@@ -26,9 +26,9 @@ void Coral::draw()
 	int i=0;
 	for (it=m_smallCorals.begin(); it != m_smallCorals.end(); it++) {
 		if (i%2 == 0) {
-		    it->drawSub(defaultAngle);
-		} else {
 		    it->drawSub(-defaultAngle);
+		} else {
+		    it->drawSub(defaultAngle);
 		}			
 		i++;
 	}
@@ -38,6 +38,7 @@ void Coral::draw()
 void Coral::drawSub(int angle)
 {
     glPushMatrix();
+	glTranslatef(0,0,1);
 	glRotatef(angle,1,0,0);
 	m_coral.draw();
 
@@ -45,9 +46,9 @@ void Coral::drawSub(int angle)
 	for (it=m_smallCorals.begin(); it != m_smallCorals.end(); it++) {
 		int i=0;
 		if (i%2 == 0) {
-		    it->drawSub(defaultAngle);
-		} else {
 		    it->drawSub(-defaultAngle);
+		} else {
+		    it->drawSub(defaultAngle);
 		}			
 		i++;
 	}
