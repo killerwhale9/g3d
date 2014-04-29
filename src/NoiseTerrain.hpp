@@ -67,22 +67,22 @@ public:
         glPushMatrix();
         glScalef(5.0, 5.0, 3.0);
         glColor3f(1, 1, 1);
-        float reps = 1.f;
+        float reps = 3.f;
         TextureManager::bindTexture("sand1");
         for (uint32_t y = 0; y < m_h-1; y++) {
             glBegin(GL_TRIANGLE_STRIP);
             for (uint32_t x = 0; x < m_w; x++) {
                 double col = m_hmap[x+y*m_w];
                 glNormal3f(m_normals[x+y*m_w].x, m_normals[x+y*m_w].y, m_normals[x+y*m_w].z);
-                glTexCoord2f(x/((float)m_w*reps),
-                             y/((float)m_h*reps));
+                glTexCoord2f(x/((float)m_w)*reps,
+                             y/((float)m_h)*reps);
                 //glColor3f(col, col, col);
                 glVertex3f((double)(x)/m_w, (double)(y)/m_h, col);
                 y++;
                 col = m_hmap[x+y*m_w];
                 glNormal3f(m_normals[x+y*m_w].x, m_normals[x+y*m_w].y, m_normals[x+y*m_w].z);
-                glTexCoord2f(x/((float)m_w*reps),
-                             y/((float)m_h*reps));
+                glTexCoord2f(x/((float)m_w)*reps,
+                             y/((float)m_h)*reps);
                 //glColor3f(col, col, col);
                 glVertex3f((double)(x)/m_w, (double)(y)/m_h, col);
                 y--;

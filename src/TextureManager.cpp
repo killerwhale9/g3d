@@ -33,8 +33,8 @@ GLuint TextureManager::loadTexture(const QString &file, const std::string &key, 
 
         //les deux commandes suivantes servent a elargir la texture pq. la surface soit remplie;
         //.. clamp_to_edge = repeter la derniere ligne de la texture (marche bien ici)
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
         glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, m_images[key].img.width(), m_images[key].img.height(), 0,
                 GL_RGBA, GL_UNSIGNED_BYTE, m_images[key].img.bits() );
     } else {
