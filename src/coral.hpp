@@ -14,12 +14,15 @@ class Coral : public Renderable
 {
     public:
 		static const int defaultAngle = 35;
+		static const int defaultDepth = 6;
+
         void draw();
         void drawSub(int angle);
         Coral(int depth);
     private:
 		int m_nbBranch;
 		int m_depthBranch;
+		int m_depth;
 		Cylinder m_coral; //root
 		std::vector<Coral> m_smallCorals;
 };

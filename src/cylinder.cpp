@@ -149,4 +149,7 @@ void Cylinder::drawElements()
 }
 
 
+float Cylinder::getHeigth() {
+	return heigth;
+}
 
