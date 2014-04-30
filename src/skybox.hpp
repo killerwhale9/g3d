@@ -15,7 +15,7 @@ class Skybox : public Renderable
         void draw(int pass);
 
     private:
-		void drawCrate(float size);
+		void drawCrate(float size, int pass);
 };
 
 #endif
