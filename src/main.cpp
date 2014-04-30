@@ -7,6 +7,7 @@
 #include "dynamicSystem.hpp"
 #include "NoiseTerrain.hpp"
 #include "TextureManager.hpp"
+#include "skybox.hpp"
 
 int main(int argc, char** argv)
 {
@@ -20,6 +21,8 @@ int main(int argc, char** argv)
 
     //viewer.addRenderable(new Torse());
     viewer.addRenderable(new Coral(Coral::defaultDepth));
+
+	viewer.addRenderable(new Skybox());
 
     viewer.addRenderable(new DynamicSystem());
     viewer.noise = new NoiseTerrain();
