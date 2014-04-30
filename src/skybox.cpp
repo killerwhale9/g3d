@@ -4,7 +4,7 @@ using namespace std;
 
 Skybox::Skybox() {}
 
-void Skybox::draw() {
+void Skybox::draw(int pass) {
 	// Configuration des états OpenGL
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_CUBE_MAP_ARB); 

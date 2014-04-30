@@ -12,7 +12,7 @@ class Skybox : public Renderable
 {
     public:
         Skybox();
-        void draw();
+        void draw(int pass);
 
     private:
 		void drawCrate(float size);
