@@ -12,7 +12,7 @@ UI_DIR = .
 OBJECTS_DIR = obj
 
 macx:LIBS *= -framework Glut
-linux-g++*:LIBS *= -lglut
+linux-g++*:LIBS *= -lglut -lGLU
 
 exists( /usr/lib/i386-linux-gnu/libQGLViewer.so) {
     LIBS *= -lQGLViewer # Ubuntu 32
