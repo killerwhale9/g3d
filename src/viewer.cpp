@@ -74,6 +74,14 @@ void Viewer::loadTextures()
         file<<"gfx/caustics/caust"<<i<<".jpg";
         TextureManager::loadTexture(file.str().c_str(), key.str());
     }
+
+	//Skybox
+	//Pour garder les noms de fichiers explicites et pas des "i", on charge à la main
+    TextureManager::loadTexture("gfx/skybox/back.jpg", "sky_back");
+    TextureManager::loadTexture("gfx/skybox/front.jpg", "sky_front");
+    TextureManager::loadTexture("gfx/skybox/left.jpg", "sky_left");
+    TextureManager::loadTexture("gfx/skybox/right.jpg", "sky_right");
+    TextureManager::loadTexture("gfx/skybox/top.jpg", "sky_top");
 }
 
 
