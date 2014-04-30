@@ -9,6 +9,7 @@
 #include "viewer.hpp"
 #include "renderable.hpp"
 #include "TextureManager.hpp"
+#include <sstream>
 
 Viewer::Viewer() {
 }
@@ -56,9 +57,23 @@ void Viewer::init()
     // load textures
 
     glEnable(GL_TEXTURE_2D);
+    loadTextures();
+}
+
+void Viewer::loadTextures()
+{
     TextureManager::loadTexture("gfx/sand1.jpg", "sand1");
     TextureManager::loadTexture("gfx/coral.png", "coral");
     TextureManager::loadTexture("gfx/corail1.jpg", "corail1");
+
+    std::stringstream file, key;
+    for (uint32_t i = 0; i < 32; ++i) {
+        file.str("");
+        key.str("");
+        key<<"caust"<<i;
+        file<<"gfx/caustics/caust"<<i<<".jpg";
+        TextureManager::loadTexture(file.str().c_str(), key.str());
+    }
 }
 
 
