@@ -43,6 +43,9 @@ class Viewer : public QGLViewer
         /// Animate every objects of the scene
         virtual void animate();
 
+        // load all the textures
+        void loadTextures();
+
 
         /* Viewing parameters */
     protected :
