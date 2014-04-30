@@ -12,13 +12,13 @@ Leg::Leg() :
     m_figure(m_length, m_width, m_precision) {
     }
 
-void Leg::draw()
+void Leg::draw(int pass)
 {
     glPushMatrix();
     glutSolidSphere(0.5, m_precision, m_precision);
     glTranslatef(0, 0, 0.0);
     glRotatef(180, 0, 1, 0);
-    m_figure.draw();
+    m_figure.draw(pass);
 
     glPopMatrix();
 }

@@ -18,27 +18,28 @@ Coral::Coral(int depth) :
 	}
 }
 
-void Coral::draw()
+void Coral::draw(int pass)
 {
     glPushMatrix();
-	TextureManager::bindTexture("corail1");
+        if (pass == PASS_NORMAL)
+            TextureManager::bindTexture("corail1");
 	glTranslatef(4,0.2,0.2);
-	m_coral.draw();
+	m_coral.draw(pass);
 
 	vector<Coral>::iterator it;
 	int i=0;
 	for (it=m_smallCorals.begin(); it != m_smallCorals.end(); it++) {
 		if (i%2 == 0) {
-		    it->drawSub(-defaultAngle);
+		    it->drawSub(pass, -defaultAngle);
 		} else {
-		    it->drawSub(defaultAngle);
+		    it->drawSub(pass, defaultAngle);
 		}			
 		i++;
 	}
     glPopMatrix();
 }
 
-void Coral::drawSub(int angle)
+void Coral::drawSub(int pass, int angle)
 {
     glPushMatrix();
 	//Decale les branches vers le haut
@@ -47,15 +48,15 @@ void Coral::drawSub(int angle)
 	glRotatef(angle,1,0,0);
 	//Pivote pour eviter d'aligner toutes les branches dans le même plan
 	glRotatef(angle*2,0,0,1);
-	m_coral.draw();
+	m_coral.draw(pass);
 
 	vector<Coral>::iterator it;
 	int i=0;
 	for (it=m_smallCorals.begin(); it != m_smallCorals.end(); it++) {
 		if (i%2 == 0) {
-		    it->drawSub(-defaultAngle);
+		    it->drawSub(pass, -defaultAngle);
 		} else {
-		    it->drawSub(defaultAngle);
+		    it->drawSub(pass, defaultAngle);
 		}			
 		i++;
 	}

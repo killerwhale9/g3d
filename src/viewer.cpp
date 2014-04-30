@@ -11,7 +11,7 @@
 #include "TextureManager.hpp"
 #include <sstream>
 
-Viewer::Viewer() {
+Viewer::Viewer() : currentCaustic(0){
 }
 
 Viewer::~Viewer()
@@ -67,28 +67,90 @@ void Viewer::loadTextures()
     TextureManager::loadTexture("gfx/corail1.jpg", "corail1");
 
     std::stringstream file, key;
-    for (uint32_t i = 0; i < 32; ++i) {
+    for (uint32_t i = 0; i < NUM_PATTERNS; ++i) {
         file.str("");
         key.str("");
         key<<"caust"<<i;
         file<<"gfx/caustics/caust"<<i<<".jpg";
-        TextureManager::loadTexture(file.str().c_str(), key.str());
+        causticsTex[i] = TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
     }
 }
 
 
 void Viewer::draw()
 {  
+    // === FIRST PASS NORMAL ===
+    //glDisable(GL_TEXTURE_2D);
+
     // draw every objects in renderableList
     list<Renderable *>::iterator it;
     for(it = renderableList.begin(); it != renderableList.end(); ++it) {
-        (*it)->draw();
+        (*it)->draw(PASS_NORMAL);
     }
+
+    // === SECOND PASS CAUSTICS :3 ===
+    /* Disable depth buffer update and exactly match depth
+       buffer values for slightly faster rendering. */
+    glDepthMask(GL_FALSE);
+    glDepthFunc(GL_EQUAL);
+
+    /* Multiply the source color (from the caustic luminance
+       texture) with the previous color from the normal pass.  The
+       caustics are modulated into the scene. */
+    glBlendFunc(GL_ZERO, GL_SRC_COLOR);
+    glEnable(GL_BLEND);
+    glEnable(GL_TEXTURE_2D);
+
+    GLfloat sPlane[4] = { 0.05, 0.03, 0.0, 0.0 };
+    GLfloat tPlane[4] = { 0.0, 0.03, 0.05, 0.0 };
+    GLfloat causticScale = 1.0;
+
+    /* The causticScale determines how large the caustic "ripples" will
+       be.  See the "Increate/Decrease ripple size" menu options. */
+
+    sPlane[0] = 0.05 * causticScale;
+    sPlane[1] = 0.03 * causticScale;
+
+    tPlane[1] = 0.03 * causticScale;
+    tPlane[2] = 0.05 * causticScale;
+
+    /* Set current color to "white" and disable lighting
+       to emulate OpenGL 1.1's GL_REPLACE texture environment. */
+    glColor3f(1.0, 1.0, 1.0);
+    glDisable(GL_LIGHTING);
+
+    /* Generate the S & T coordinates for the caustic textures
+       from the object coordinates. */
+
+    glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+    glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+    glTexGenfv(GL_S, GL_OBJECT_PLANE, sPlane);
+    glTexGenfv(GL_T, GL_OBJECT_PLANE, tPlane);
+    glEnable(GL_TEXTURE_GEN_S);
+    glEnable(GL_TEXTURE_GEN_T);
+
+    glBindTexture(GL_TEXTURE_2D, causticsTex[currentCaustic]);
+
+    // draw every objects in renderableList
+    for(it = renderableList.begin(); it != renderableList.end(); ++it) {
+        (*it)->draw(PASS_CAUSTIC);
+    }
+    if (toogleLight)
+        glEnable(GL_LIGHTING);
+    glDisable(GL_TEXTURE_GEN_S);
+    glDisable(GL_TEXTURE_GEN_T);
+
+    /* Restore fragment operations to normal. */
+    glDepthMask(GL_TRUE);
+    glDepthFunc(GL_LESS);
+    glDisable(GL_BLEND);
+
 }
 
 
 void Viewer::animate()
 {
+    currentCaustic = (currentCaustic + 1) % NUM_PATTERNS;
     // animate every objects in renderableList
     list<Renderable *>::iterator it;
     for(it = renderableList.begin(); it != renderableList.end(); ++it) {

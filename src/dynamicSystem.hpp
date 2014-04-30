@@ -108,7 +108,7 @@ class DynamicSystem : public Renderable
         void init(Viewer &);
 
         // Draw the particle-spring system
-        void draw();
+        void draw(int pass);
 
         // Update positions and velocities of dynamic objects
         void animate();

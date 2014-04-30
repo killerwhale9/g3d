@@ -23,7 +23,7 @@ Torse::Torse() :
 {
 }
 
-void Torse::draw()
+void Torse::draw(int pass)
 {
     glPushMatrix();
     m_tmp = (m_tmp+1)%360;
@@ -33,7 +33,7 @@ void Torse::draw()
     //glRotatef(45, 1, 0, 0);
     //glRotatef(45, 0, 0, 1);
     glRotatef(m_tmp, 1, 1, 1);
-    m_figure.draw();
+    m_figure.draw(pass);
 
     glPushMatrix();
     glTranslatef(0, 0, m_length);
@@ -50,11 +50,11 @@ void Torse::draw()
     glRotatef(60, 0, 0, 1);
     glRotatef(m_tmp, 0, 1, 0);
     //glRotatef(m_tmp, 0, 0, 1);
-    m_rUArm.draw();
+    m_rUArm.draw(pass);
 
     glTranslatef(m_rUArm.getLength(), 0, 0);
     glRotatef(m_tmp, 0, 1, 0);
-    m_rLArm.draw();
+    m_rLArm.draw(pass);
 
     glPopMatrix();
 
@@ -63,11 +63,11 @@ void Torse::draw()
     glTranslatef(-(m_width/2.0*1.1), 0, m_length*0.80);
     //glRotatef(180, 0, 1, 0);
     glRotatef(180, 0, 0, 1);
-    m_lUArm.draw();
+    m_lUArm.draw(pass);
 
     glTranslatef(m_lUArm.getLength(), 0, 0);
     glRotatef(m_tmp, 0, 1, 0);
-    m_lLArm.draw();
+    m_lLArm.draw(pass);
 
     glPopMatrix();
 
@@ -75,11 +75,11 @@ void Torse::draw()
     glPushMatrix();
     glTranslatef(m_width/2.0*0.7, 0, 0.0);
     glRotatef(m_tmp, 1, 1, 1);
-    m_rULeg.draw();
+    m_rULeg.draw(pass);
 
     glTranslatef(0.0, 0.0, -m_rULeg.getLength());
     glRotatef(m_tmp, 1, 1, 1);
-    m_rLLeg.draw();
+    m_rLLeg.draw(pass);
 
     glPopMatrix();
 
@@ -87,11 +87,11 @@ void Torse::draw()
     glPushMatrix();
     glTranslatef(-(m_width/2.0*0.7), 0, 0);
     glRotatef(-m_tmp, 1, 1, 1);
-    m_lULeg.draw();
+    m_lULeg.draw(pass);
 
     glTranslatef(0, 0, -m_lULeg.getLength());
     glRotatef(m_tmp, 0, 1, 0);
-    m_lLLeg.draw();
+    m_lLLeg.draw(pass);
 
     glPopMatrix();
 

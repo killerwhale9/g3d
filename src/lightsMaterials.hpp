@@ -7,7 +7,7 @@ class LightsMaterials : public Renderable
 {
     public:
         LightsMaterials();
-        virtual void draw();
+        virtual void draw(int pass);
         virtual void animate();
         virtual void init();
 

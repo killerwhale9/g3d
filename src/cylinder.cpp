@@ -9,7 +9,7 @@ Cylinder::Cylinder(float heigth, float width, int nb_face) {
     this->nb_face = nb_face;
 }
 
-void Cylinder::draw()
+void Cylinder::draw(int pass)
 {
     glPushMatrix();
 

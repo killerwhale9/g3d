@@ -16,8 +16,8 @@ class Coral : public Renderable
 		static const int defaultAngle = 35;
 		static const int defaultDepth = 6;
 
-        void draw();
-        void drawSub(int angle);
+        void draw(int pass);
+        void drawSub(int pass, int angle);
         Coral(int depth);
     private:
 		int m_nbBranch;

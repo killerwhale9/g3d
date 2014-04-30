@@ -12,7 +12,8 @@
 
 #include <QGLViewer/qglviewer.h>
 #include <list>
- #include "NoiseTerrain.hpp"
+#include "NoiseTerrain.hpp"
+#define NUM_PATTERNS 32
 using namespace std;
 
 class Renderable;
@@ -51,6 +52,8 @@ class Viewer : public QGLViewer
     protected :
         bool toogleWireframe;
         bool toogleLight;
+        int currentCaustic;
+        GLuint causticsTex[NUM_PATTERNS];
 
         /// Handle keyboard events specifically
         virtual void keyPressEvent(QKeyEvent *e);

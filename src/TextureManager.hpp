@@ -35,6 +35,8 @@ class TextureManager {
     inline static void bindTexture(const std::string &key) {
         glBindTexture(GL_TEXTURE_2D, m_images[key].id);
     }
+
+    static GLuint loadTextureMipmaps(const QString &file, const std::string &key);
 };
 
 #endif

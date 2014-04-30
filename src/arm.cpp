@@ -13,7 +13,7 @@ Arm::Arm() :
 {
 }
 
-void Arm::draw()
+void Arm::draw(int pass)
 {
     glPushMatrix();
     glutSolidSphere(0.5, m_precision, m_precision);
@@ -21,7 +21,7 @@ void Arm::draw()
     //glTranslatef(m_length/2.0, 0,0);
     glRotatef(90, 0, 1, 0);
     //glRotatef(20, 1, 0, 0);
-    m_figure.draw();
+    m_figure.draw(pass);
     //glPopMatrix();
     //glTranslatef( 0, -m_length*sin(90), 0);
     //glutSolidSphere(0.5, m_precision, m_precision);

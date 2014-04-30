@@ -63,13 +63,16 @@ public:
 
     void generateClouds(uint32_t w, uint32_t h, double zoom, double persistence, int octaves);
 
-    void draw() {
+    void draw(int pass) {
         glPushMatrix();
-        glScalef(50.0, 50.0, 1.0);
-        glTranslatef(-0.5, -.5, 0.f);
+        //glScalef(50.0, 50.0, 1.0);
+        //glTranslatef(-0.5, -.5, 0.f);
+        float w = 50.f;
+        float h = w;
         glColor3f(1, 1, 1);
         float reps = 3.f;
-        TextureManager::bindTexture("sand1");
+        if (pass == PASS_NORMAL)
+            TextureManager::bindTexture("sand1");
         for (uint32_t y = 0; y < m_h-1; y++) {
             glBegin(GL_TRIANGLE_STRIP);
             for (uint32_t x = 0; x < m_w; x++) {
@@ -78,14 +81,14 @@ public:
                 glTexCoord2f(x/((float)m_w)*reps,
                              y/((float)m_h)*reps);
                 //glColor3f(col, col, col);
-                glVertex3f((double)(x)/m_w, (double)(y)/m_h, col);
+                glVertex3f(((double)(x)/m_w-0.5)*w, ((double)(y)/m_h-0.5)*h, col);
                 y++;
                 col = m_hmap[x+y*m_w];
                 glNormal3f(m_normals[x+y*m_w].x, m_normals[x+y*m_w].y, m_normals[x+y*m_w].z);
                 glTexCoord2f(x/((float)m_w)*reps,
                              y/((float)m_h)*reps);
                 //glColor3f(col, col, col);
-                glVertex3f((double)(x)/m_w, (double)(y)/m_h, col);
+                glVertex3f(((double)(x)/m_w-0.5)*w, ((double)(y)/m_h-0.5)*h, col);
                 y--;
             }
             glEnd();

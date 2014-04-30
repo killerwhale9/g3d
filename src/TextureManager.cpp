@@ -38,7 +38,35 @@ GLuint TextureManager::loadTexture(const QString &file, const std::string &key, 
         glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, m_images[key].img.width(), m_images[key].img.height(), 0,
                 GL_RGBA, GL_UNSIGNED_BYTE, m_images[key].img.bits() );
     } else {
-        std::cerr<<"Error loading file "<<file.toStdString()<<"\n";
+        std::cerr<<"Error loading file("<<key<<") "<<file.toStdString()<<"\n";
+        return 0;
+    }
+
+    return m_images[key].id;
+}
+
+GLuint TextureManager::loadTextureMipmaps(const QString &file, const std::string &key)
+{
+    QImage i;
+    if (m_images.find(key) != m_images.end()) {
+        std::cerr<<"Duplicate key '"<<key<<"' when loading "<<file.toStdString()<<"\n";
+        return m_images[key].id;
+    }
+    if (i.load(file)) {
+        m_images[key].img = QGLWidget::convertToGLFormat(i);
+
+        //construire les textures openGL
+        glGenTextures( 1, &m_images[key].id );
+        std::cerr<<"Generated texture with id "<<m_images[key].id<<" from "<<file.toStdString()<<"\n";
+        glBindTexture( GL_TEXTURE_2D, m_images[key].id );
+        glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
+        glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+        gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, m_images[key].img.width(), m_images[key].img.height(),
+                GL_RGBA, GL_UNSIGNED_BYTE, m_images[key].img.bits());
+    } else {
+        std::cerr<<"Error loading file("<<key<<") "<<file.toStdString()<<"\n";
         return 0;
     }
 

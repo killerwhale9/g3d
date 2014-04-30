@@ -12,7 +12,7 @@
 class Leg : public Renderable
 {
     public:
-        void draw();
+        void draw(int pass);
         Leg();
         inline float getWidth() const { return m_width; }
         inline float getLength() const { return m_length; }

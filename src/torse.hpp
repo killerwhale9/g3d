@@ -14,7 +14,7 @@
 class Torse : public Renderable
 {
     public:
-        void draw();
+        void draw(int pass);
         Torse();
 
         inline float getWidth() const { return m_width; }

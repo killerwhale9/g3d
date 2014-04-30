@@ -17,6 +17,7 @@ GLfloat LightsMaterials::blue[]    = { 0.0f, 0.0f, 1.0f, 1.0f };
 GLfloat LightsMaterials::yellow[]  = { 1.0f, 1.0f, 0.0f, 1.0f };
 GLfloat LightsMaterials::magenta[] = { 1.0f, 0.0f, 1.0f, 1.0f };
 GLfloat LightsMaterials::cyan[]    = { 0.0f, 1.0f, 1.0f, 1.0f };
+static GLfloat lightDiffuseColor[] = {1.0, 1.5, 1.0, 1.0};  /* XXX Green = 1.5 */
 
 
 LightsMaterials::LightsMaterials(): nRot(0), precRot(128)
@@ -32,8 +33,8 @@ void LightsMaterials::init()
     // disable the default qglviewer light !!
     glDisable(GL_LIGHT0);	
     // create a new light on GL_LIGHT1
-    glEnable(GL_LIGHT1);
-    glEnable(GL_LIGHT2);
+    //glEnable(GL_LIGHT1);
+    //glEnable(GL_LIGHT2);
     // directional light (4th parameter w=0), coming along +z axis :
     //  ==> IN THE DRAW METHOD!
     // 	GLfloat light1_position[] = { 0.0f, 0.0f, 1.0f, 0.0f };
@@ -47,6 +48,11 @@ void LightsMaterials::init()
     glLightfv(GL_LIGHT1, GL_DIFFUSE,  white);
     glLightfv(GL_LIGHT1, GL_SPECULAR, white);
 
+    // greenish light for the ambient
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuseColor);
+    GLfloat lightPosition[4] = {0.0, 0.0, 5.0, 0.0};
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+
     // TODO 
     //  1. remove light components, change colors... what to expect? what result do you have?
     //  2. add new lights! (spot, ...)
@@ -56,6 +62,7 @@ void LightsMaterials::init()
     glLightfv(GL_LIGHT2, GL_SPECULAR, red);
 
     glClearColor(0.0f, 0.1f, 0.1f, 0.0f); 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for (int i = 0; i< 4; i++)
         light2Pos[i] = 0;
@@ -70,7 +77,7 @@ void LightsMaterials::animate()
     glLightfv(GL_LIGHT2, GL_POSITION, light2Pos);
 }
 
-void LightsMaterials::draw()
+void LightsMaterials::draw(int pass)
 {
     init();
     // ==== PLACE LIGHTS

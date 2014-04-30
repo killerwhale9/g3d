@@ -77,7 +77,7 @@ void Particle::incrVelocity(const Vec &vel)
 
 
 
-void Particle::draw() const
+void Particle::draw(int pass) const
 {
     glPushMatrix();
     glTranslatef(position.x, position.y, position.z);

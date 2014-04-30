@@ -134,13 +134,13 @@ void DynamicSystem::createSystemScene()
 
 
 ///////////////////////////////////////////////////////////////////////////////
-void DynamicSystem::draw()
+void DynamicSystem::draw(int pass)
 {
     // Particles
     glColor3f(1,0,0);
     vector<Particle *>::iterator itP;
     for (itP = particles.begin(); itP != particles.end(); ++itP) {
-        (*itP)->draw();
+        (*itP)->draw(pass);
     }
 
     // Springs

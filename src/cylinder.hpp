@@ -13,7 +13,7 @@ class Cylinder : public Renderable
     public:
         Cylinder(float, float, int);
 		float getHeigth();
-        void draw();
+        void draw(int pass);
 
     private:
         void drawImmediate();

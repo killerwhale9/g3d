@@ -3,6 +3,8 @@
 #include <QKeyEvent>
 
 class Viewer;
+#define PASS_NORMAL 0
+#define PASS_CAUSTIC 1
 
 /**
  * General interface of renderable objetcs, that can be displayed
@@ -25,8 +27,9 @@ class Renderable
         /** 
          * Draw a Renderable object.
          * This pure virtual method must be overriden if child classes.
+         * pass is used for the caustics. Only when pass is PASS_NORMAL there should be bind texture
          */
-        virtual void draw() = 0;
+        virtual void draw(int pass) = 0;
 
         /** 
          * Animate an object. This method is invoked before each call of draw().
