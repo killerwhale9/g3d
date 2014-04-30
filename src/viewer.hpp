@@ -29,6 +29,7 @@ class Viewer : public QGLViewer
         double noise_zoom, noise_persistence;
         int noise_octaves;
         NoiseTerrain *noise;
+    	GLfloat fogColor[4];
 
         /* Scene methods */
     protected :

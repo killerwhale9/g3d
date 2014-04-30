@@ -29,6 +29,7 @@ Viewer::~Viewer()
     for (it = renderableList.begin(); it != renderableList.end(); ++it) {
         delete(*it);
     }
+
     renderableList.clear();
 }
 
@@ -75,6 +76,19 @@ void Viewer::init()
     glDisable(GL_LIGHT5);
     glDisable(GL_LIGHT6);
     glDisable(GL_LIGHT7);
+
+	// fog
+	fogColor[0] = 0.666;
+	fogColor[1] = 1.0;
+	fogColor[2] = 1.0;
+	fogColor[3] = 1.0;
+
+	GLfloat density = 0.01;
+	glEnable (GL_FOG);
+	glFogi (GL_FOG_MODE, GL_EXP2);
+	glFogfv (GL_FOG_COLOR, fogColor);
+	glFogf (GL_FOG_DENSITY, density);
+	glHint (GL_FOG_HINT, GL_NICEST);
 }
 
 void Viewer::loadTextures()
