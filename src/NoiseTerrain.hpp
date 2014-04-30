@@ -65,7 +65,8 @@ public:
 
     void draw() {
         glPushMatrix();
-        glScalef(5.0, 5.0, 3.0);
+        glScalef(50.0, 50.0, 1.0);
+        glTranslatef(-0.5, -.5, 0.f);
         glColor3f(1, 1, 1);
         float reps = 3.f;
         TextureManager::bindTexture("sand1");

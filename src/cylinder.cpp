@@ -34,11 +34,17 @@ void Cylinder::draw()
 void Cylinder::drawImmediate()
 {
     //Side of the cylinder
+    float x, y;
     glBegin(GL_QUAD_STRIP);
     for (int i = 0; i<=nb_face; i++) {
         glNormal3f(cos((i+0.5/nb_face)*2*M_PI/nb_face), sin((i+0.5/nb_face)*2*M_PI/nb_face),0);
-        glVertex3f(cos(i*2*M_PI/nb_face)*0.5, sin(i*2*M_PI/nb_face)*0.5, +0.5);
-        glVertex3f(cos(i*2*M_PI/nb_face)*0.5, sin(i*2*M_PI/nb_face)*0.5, -0.5);
+        x = cos(i*2.f*M_PI/nb_face)*0.5;
+        y = sin(i*2.f*M_PI/nb_face)*0.5;
+        glTexCoord2f((float)i/nb_face, 1.f);
+        glVertex3f(x, y, +0.5);
+        glNormal3f(cos((i+0.5/nb_face)*2*M_PI/nb_face), sin((i+0.5/nb_face)*2*M_PI/nb_face),0);
+        glTexCoord2f((float)i/nb_face, 0.f);
+        glVertex3f(x, y, -0.5);
     }
     glEnd();
 
@@ -102,9 +108,11 @@ void Cylinder::drawArrays()
 // - single definition of shared data
 // - draw face by face, using face indices
 
+// TODO on calcule une seule fois pas +a chaque draw
 void Cylinder::drawElements()
 {
     GLfloat vertices[nb_face*3*2];//top bot top bot ...
+    GLfloat texcoords[nb_face*2*2];//top bot top bot ...
     GLfloat normals[nb_face][3];
     GLubyte indices[nb_face][4];
     GLubyte indices_top_bot[2][nb_face];
@@ -114,11 +122,15 @@ void Cylinder::drawElements()
         normals[i][1] = sin((i+0.5/nb_face)*2*M_PI/nb_face);
         normals[i][2] = 0;
         vertices[i*3*2    ] = cos(i*2*M_PI/nb_face)*0.5*this->width;
+        texcoords[i*2*2   ] = (float)i/nb_face;
         vertices[i*3*2+3  ] = cos(i*2*M_PI/nb_face)*0.5*this->width;
+        texcoords[i*2*2+2 ] = (float)i/nb_face;
         vertices[i*3*2  +1] = sin(i*2*M_PI/nb_face)*0.5*this->width;
         vertices[i*3*2+3+1] = sin(i*2*M_PI/nb_face)*0.5*this->width;
         vertices[i*3*2  +2] = this->heigth;
+        texcoords[i*2*2 +1] = 1.f;
         vertices[i*3*2+3+2] = 0.0;
+        texcoords[i*2*2+2+1] = 0.f;
         indices_top_bot[0][i] = i*2;
         indices_top_bot[1][i] = i*2+1;
         indices[i][0] = i*2;
@@ -129,7 +141,9 @@ void Cylinder::drawElements()
 
     // activate the use of GL_VERTEX_ARRAY (not GL_NORMALS_ARRAY)
     glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0 , vertices);
+    glTexCoordPointer(2, GL_FLOAT, 0 , texcoords);
 
     // Draw the top
     glNormal3f(0,0,1);

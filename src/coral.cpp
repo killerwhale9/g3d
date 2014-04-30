@@ -21,8 +21,8 @@ Coral::Coral(int depth) :
 void Coral::draw()
 {
     glPushMatrix();
+	TextureManager::bindTexture("corail1");
 	glTranslatef(4,0.2,0.2);
-	TextureManager::bindTexture("coral");
 	m_coral.draw();
 
 	vector<Coral>::iterator it;
@@ -47,7 +47,6 @@ void Coral::drawSub(int angle)
 	glRotatef(angle,1,0,0);
 	//Pivote pour eviter d'aligner toutes les branches dans le même plan
 	glRotatef(angle*2,0,0,1);
-	TextureManager::bindTexture("coral");
 	m_coral.draw();
 
 	vector<Coral>::iterator it;

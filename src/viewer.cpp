@@ -55,10 +55,10 @@ void Viewer::init()
 
     // load textures
 
-    //tmp :D
     glEnable(GL_TEXTURE_2D);
-    TextureManager::loadTexture("gfx/coral.png", "sand1");
+    TextureManager::loadTexture("gfx/sand1.jpg", "sand1");
     TextureManager::loadTexture("gfx/coral.png", "coral");
+    TextureManager::loadTexture("gfx/corail1.jpg", "corail1");
 }
 
 
