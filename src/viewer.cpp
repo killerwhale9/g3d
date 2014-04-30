@@ -11,7 +11,16 @@
 #include "TextureManager.hpp"
 #include <sstream>
 
-Viewer::Viewer() : currentCaustic(0){
+Viewer::Viewer() : currentCaustic(0)
+{
+    lightDiffuseColor[0] = 1.0;
+    lightDiffuseColor[1] = 1.5;
+    lightDiffuseColor[2]= 1.0;
+    lightDiffuseColor[3] = 1.0;
+    lightPosition[0] = 0.0;
+    lightPosition[1] = 0.0;
+    lightPosition[2] = 5.0;
+    lightPosition[3] = 0.0;
 }
 
 Viewer::~Viewer()
@@ -47,7 +56,6 @@ void Viewer::init()
         glDisable(GL_LIGHTING);
 
     glEnable(GL_NORMALIZE); // les nomrmales ne sont plus affectées par les scale
-    setSceneRadius(5.0f);
 
     list<Renderable *>::iterator it;
     for (it = renderableList.begin(); it != renderableList.end(); ++it) {
@@ -58,6 +66,15 @@ void Viewer::init()
 
     glEnable(GL_TEXTURE_2D);
     loadTextures();
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glDisable(GL_LIGHT1);
+    glDisable(GL_LIGHT2);
+    glDisable(GL_LIGHT3);
+    glDisable(GL_LIGHT4);
+    glDisable(GL_LIGHT5);
+    glDisable(GL_LIGHT6);
+    glDisable(GL_LIGHT7);
 }
 
 void Viewer::loadTextures()
@@ -87,6 +104,11 @@ void Viewer::loadTextures()
 
 void Viewer::draw()
 {  
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // greenish light for the ambient
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuseColor);
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+
     // === FIRST PASS NORMAL ===
     //glDisable(GL_TEXTURE_2D);
 

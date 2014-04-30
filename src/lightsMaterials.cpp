@@ -31,7 +31,7 @@ void LightsMaterials::init()
     // ==== SET UP LIGHTS
     glEnable(GL_LIGHTING);	
     // disable the default qglviewer light !!
-    glDisable(GL_LIGHT0);	
+    glEnable(GL_LIGHT0);	
     // create a new light on GL_LIGHT1
     //glEnable(GL_LIGHT1);
     //glEnable(GL_LIGHT2);

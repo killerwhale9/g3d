@@ -22,7 +22,7 @@ int main(int argc, char** argv)
     //viewer.addRenderable(new Torse());
     viewer.addRenderable(new Coral(Coral::defaultDepth));
 
-	viewer.addRenderable(new Skybox());
+    //viewer.addRenderable(new Skybox());
 
     viewer.addRenderable(new DynamicSystem());
     viewer.noise = new NoiseTerrain();
@@ -32,7 +32,6 @@ int main(int argc, char** argv)
 
     viewer.noise->generateClouds(25, 25, 2, 0.5, 2);
     viewer.addRenderable(viewer.noise);
-    // viewer.addRenderable(new LightsMaterials());
 
     glPushMatrix();
 	glTranslatef(4,0.2,0.2);
@@ -40,6 +39,11 @@ int main(int argc, char** argv)
     viewer.setWindowTitle("viewer");
     // Make the viewer window visible on screen.
     viewer.show();
+
+    // scene size and stuff
+    qglviewer::Camera *cam = viewer.camera();
+    cam->setSceneRadius(500.f);
+    viewer.setSceneRadius(500.0f);
 
     // Run main loop.
     return application.exec();

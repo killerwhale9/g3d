@@ -54,6 +54,8 @@ class Viewer : public QGLViewer
         bool toogleLight;
         int currentCaustic;
         GLuint causticsTex[NUM_PATTERNS];
+        GLfloat lightDiffuseColor[4];
+        GLfloat lightPosition[4];
 
         /// Handle keyboard events specifically
         virtual void keyPressEvent(QKeyEvent *e);
