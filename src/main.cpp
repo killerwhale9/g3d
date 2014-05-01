@@ -33,9 +33,6 @@ int main(int argc, char** argv)
     viewer.noise->generateClouds(25, 25, 2, 0.5, 2);
     viewer.addRenderable(viewer.noise);
 
-    glPushMatrix();
-	glTranslatef(4,0.2,0.2);
-
     viewer.setWindowTitle("viewer");
     // Make the viewer window visible on screen.
     viewer.show();
