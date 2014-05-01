@@ -116,7 +116,7 @@ void Viewer::loadTextures()
         key.str("");
         key<<"fish"<<i;
         file<<"gfx/fishes/TropicalFish"<<(i<10?"0":"")<<i<<".jpg";
-        causticsTex[i] = TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
+        TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
     }
 
 	//Skybox
