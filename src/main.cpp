@@ -22,7 +22,7 @@ int main(int argc, char** argv)
     //viewer.addRenderable(new Torse());
     viewer.addRenderable(new Coral(Coral::defaultDepth));
 
-    //viewer.addRenderable(new Skybox());
+    viewer.addRenderable(new Skybox());
 
     viewer.addRenderable(new DynamicSystem());
     viewer.noise = new NoiseTerrain();
