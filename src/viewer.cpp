@@ -60,7 +60,7 @@ void Viewer::init()
 
     glEnable(GL_NORMALIZE); // les nomrmales ne sont plus affectées par les scale
 
-    addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
+    //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
     addRenderable(new Flock());
