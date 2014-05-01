@@ -67,7 +67,7 @@ public:
         glPushMatrix();
         //glScalef(50.0, 50.0, 1.0);
         //glTranslatef(-0.5, -.5, 0.f);
-        float w = 50.f;
+        float w = 200.f;
         float h = w;
         glColor3f(1, 1, 1);
         float reps = 3.f;

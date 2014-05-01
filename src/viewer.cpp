@@ -81,9 +81,9 @@ void Viewer::init()
     glDisable(GL_LIGHT7);
 
 	// fog
-	fogColor[0] = 0.666;
-	fogColor[1] = 1.0;
-	fogColor[2] = 1.0;
+	fogColor[0] = 0.333;
+	fogColor[1] = 0.5;
+	fogColor[2] = 0.5;
 	fogColor[3] = 1.0;
 
 	GLfloat density = 0.01;
@@ -233,7 +233,7 @@ void Viewer::keyPressEvent(QKeyEvent *e)
     for(it = renderableList.begin(); it != renderableList.end(); ++it) {
         (*it)->keyPressEvent(e, *this);
     }
-    int s = 25;
+    int s = 100;
     if ((e->key()==Qt::Key_W) && (modifiers==Qt::NoButton)) {
         // events with modifiers: CTRL+W, ALT+W, ... to handle separately
         toogleWireframe = !toogleWireframe;
