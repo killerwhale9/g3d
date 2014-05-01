@@ -3,17 +3,19 @@ using namespace std;
 #include "coral.hpp"
 #include "TextureManager.hpp"
 
-Coral::Coral(int depth) : 
+Coral::Coral(int depth, int x, int y) : 
 	m_coral(depth/10.0,depth/10.0*0.3,25)
 {
 	m_depth=depth;
 	m_nbBranch = 2;
 	m_depthBranch = depth;
+    m_x = x;
+    m_y = y;
 
 	//Recursive
 	if (depth > 0) {
 		for (int i=0; i < m_nbBranch; i++) {
-			m_smallCorals.push_back(Coral(depth-1));
+			m_smallCorals.push_back(Coral(depth-1, 0, 0));
 		}
 	}
 }
@@ -23,8 +25,11 @@ void Coral::draw(int pass)
     glPushMatrix();
         if (pass == PASS_NORMAL)
             TextureManager::bindTexture("corail1");
-	glTranslatef(4,0.2,0.2);
-	m_coral.draw(pass);
+    //Sur le sol c'est bien aussi
+    glTranslatef(4,0.2,0.2);
+    //On le bouge
+    glTranslatef(m_x, m_y, 0);
+    m_coral.draw(pass);
 
 	vector<Coral>::iterator it;
 	int i=0;

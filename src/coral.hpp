@@ -18,11 +18,13 @@ class Coral : public Renderable
 
         void draw(int pass);
         void drawSub(int pass, int angle);
-        Coral(int depth);
+        Coral(int depth, int x, int y);
     private:
 		int m_nbBranch;
 		int m_depthBranch;
 		int m_depth;
+        int m_x;
+        int m_y;
 		Cylinder m_coral; //root
 		std::vector<Coral> m_smallCorals;
 };

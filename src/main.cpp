@@ -21,7 +21,8 @@ int main(int argc, char** argv)
     // build your scene here
 
     //viewer.addRenderable(new Torse());
-    viewer.addRenderable(new Coral(Coral::defaultDepth));
+    viewer.addRenderable(new Coral(Coral::defaultDepth, 0, 0));
+    viewer.addRenderable(new Coral(Coral::defaultDepth, 1, 1));
 
     viewer.addRenderable(new Skybox());
 
