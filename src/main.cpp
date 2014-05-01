@@ -13,6 +13,7 @@ int main(int argc, char** argv)
 {
     // Read command lines arguments.
     QApplication application(argc,argv);
+    glutInit(&argc, argv);
 
     // Instantiate the viewer.
     Viewer viewer;
