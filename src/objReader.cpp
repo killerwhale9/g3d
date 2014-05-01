@@ -11,6 +11,29 @@
 objReader::objReader(const std::string &file, const char* texture)
 : m_vertices(), m_normals(), m_texCoord(), m_faces(), m_textures()
 {
+    loadObj(file);
+
+    //computeNormals();
+
+    if (texture) {
+        m_textures.push_back(TextureManager::loadTexture(texture, texture));
+    }
+
+    std::cout<<"Read "<<m_vertices.size()<<" vertices, "<<m_texCoord.size()
+        <<" texcoord, "<<m_normals.size()<<" normals, "<<m_faces.size()<<" faces.\n"
+        <<m_textures.size()<<" textures files were loaded\n";
+}
+
+objReader::objReader(const std::string &file, GLuint texture)
+{
+    loadObj(file);
+
+    m_textures.push_back(texture);
+
+}
+
+void objReader::loadObj(const std::string &file)
+{
     std::string r;
     std::ifstream f;
     f.open(file.c_str());
@@ -81,17 +104,6 @@ objReader::objReader(const std::string &file, const char* texture)
         line++;
     }
     f.close();
-
-    //computeNormals();
-
-    if (texture) {
-        m_textures.push_back(TextureManager::loadTexture(texture, texture));
-    }
-
-
-    std::cout<<"Read "<<m_vertices.size()<<" vertices, "<<m_texCoord.size()
-        <<" texcoord, "<<m_normals.size()<<" normals, "<<m_faces.size()<<" faces.\n"
-        <<m_textures.size()<<" textures files were loaded\n";
 }
 
 objReader::~objReader()

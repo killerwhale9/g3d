@@ -87,8 +87,12 @@ class objReader : public Renderable {
                 break;
         }
     }
+
+    void loadObj(const std::string &file);
+
     public:
     objReader(const std::string &file, const char* texture);
+    objReader(const std::string &file, GLuint texture);
     ~objReader();
 
     virtual void draw(int pass);
