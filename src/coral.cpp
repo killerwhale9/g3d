@@ -4,7 +4,7 @@ using namespace std;
 #include "TextureManager.hpp"
 
 Coral::Coral(int depth) : 
-	m_coral(depth,depth*0.3,25)
+	m_coral(depth/10.0,depth/10.0*0.3,25)
 {
 	m_depth=depth;
 	m_nbBranch = 2;
@@ -43,7 +43,7 @@ void Coral::drawSub(int pass, int angle)
 {
     glPushMatrix();
 	//Decale les branches vers le haut
-	glTranslatef(0,0, m_coral.getHeigth() - m_depth/1.7);
+	glTranslatef(0,0, m_coral.getHeigth() - m_depth/10.0/1.7);
 	//Pivote pour détacher le nouveau cylindre
 	glRotatef(angle,1,0,0);
 	//Pivote pour eviter d'aligner toutes les branches dans le même plan
