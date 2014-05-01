@@ -3,6 +3,7 @@
 #include "environment.hpp"
 #include "glm/geometric.hpp"
 #include <iostream>
+#include <stdint.h>
 
 //#include "flock.hpp"
 

@@ -15,8 +15,8 @@
 #endif
 #include <vector>
 
-#include "Fish.hpp"
-#include "Environment.hpp"
+#include "fish.hpp"
+#include "environment.hpp"
 #include "glm/geometric.hpp"
 
 // Simulation Parameters
