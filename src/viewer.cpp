@@ -9,7 +9,7 @@
 #include "viewer.hpp"
 #include "renderable.hpp"
 #include "TextureManager.hpp"
-#include "objReader.hpp"
+#include "chest.hpp"
 #include <sstream>
 
 Viewer::Viewer() : currentCaustic(0)
@@ -60,6 +60,7 @@ void Viewer::init()
     glEnable(GL_NORMALIZE); // les nomrmales ne sont plus affectées par les scale
 
     addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
+    addRenderable(new Chest());
 
     list<Renderable *>::iterator it;
     for (it = renderableList.begin(); it != renderableList.end(); ++it) {

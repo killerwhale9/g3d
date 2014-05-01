@@ -40,7 +40,7 @@ int main(int argc, char** argv)
     // scene size and stuff
     qglviewer::Camera *cam = viewer.camera();
     cam->setSceneRadius(500.f);
-    viewer.setSceneRadius(500.0f);
+    //viewer.setSceneRadius(500.0f);
 
     // Run main loop.
     return application.exec();
