@@ -8,7 +8,7 @@
  *  http://posva.net                                                           *
  ******************************************************************************/
 
-#define NUM_FLOCKING_FISH 20
+#define NUM_FLOCKING_FISH 40
 #define TIME_BETWEEN_UPDATES 3
 
 #define kSpeed 0.003f

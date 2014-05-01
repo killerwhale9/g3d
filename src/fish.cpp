@@ -315,7 +315,7 @@ bool Fish::update( float dt, uint32_t schoolID, vector< Fish > &school, glm::vec
     if ( swimAngle <= -SWIM_ANGLE_MAX ) swimAngleDelta *= -1;
     swimAngle += swimAngleDelta;
 
-    return false;
+    return glm::length(pos-globalGoal) < 0.5;
 
 }
 

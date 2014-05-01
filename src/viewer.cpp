@@ -12,6 +12,7 @@
 #include "chest.hpp"
 #include "flock.hpp"
 #include <sstream>
+#include <ctime>
 
 Viewer::Viewer() : currentCaustic(0)
 {
@@ -43,9 +44,11 @@ void Viewer::addRenderable(Renderable *r)
 void Viewer::init()
 {
     // glut initialisation (mandatory) 
-    int dum;
-    glutInit(&dum, NULL);
+    //int dum;
+    //glutInit(&dum, NULL);
+    // XXX WTF cet appel était en trop?
 
+    srand(time(NULL));
     //=== VIEWING PARAMETERS
     restoreStateFromFile();   // Restore previous viewer state.
 
