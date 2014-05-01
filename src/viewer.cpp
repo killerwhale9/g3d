@@ -60,6 +60,7 @@ void Viewer::init()
     glEnable(GL_NORMALIZE); // les nomrmales ne sont plus affectées par les scale
 
     addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
+    //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
 
     list<Renderable *>::iterator it;
@@ -107,6 +108,14 @@ void Viewer::loadTextures()
         key.str("");
         key<<"caust"<<i;
         file<<"gfx/caustics/caust"<<i<<".jpg";
+        causticsTex[i] = TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
+    }
+
+    for (uint32_t i = 1; i <= 15; ++i) {
+        file.str("");
+        key.str("");
+        key<<"fish"<<i;
+        file<<"gfx/fishes/TropicalFish"<<(i<10?"0":"")<<i<<".jpg";
         causticsTex[i] = TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
     }
 
