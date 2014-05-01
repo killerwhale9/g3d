@@ -395,8 +395,6 @@ void Fish::draw(int pass) {
     float velRatio = glm::length(vel) / MAX_VELOCITY;
     glPushMatrix();
 
-    glEnable(GL_LIGHTING);
-
     GLfloat amDef[4], spDef[4];
     GLfloat am[] = { colour[0], colour[1], colour[2], 1 };
     GLfloat sp[] = { 0, 0.5, 1, 0.5 };
@@ -430,8 +428,6 @@ void Fish::draw(int pass) {
 
     glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, amDef );
     glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, spDef );
-
-    glDisable(GL_LIGHTING);
 
     // Radius of influence
     if ( SHOW_FOV_RADIUS ) {
