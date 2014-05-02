@@ -13,6 +13,7 @@
 #include <QGLViewer/qglviewer.h>
 #include <list>
 #include "NoiseTerrain.hpp"
+#include "environment.hpp"
 #define NUM_PATTERNS 32
 using namespace std;
 
@@ -57,6 +58,7 @@ class Viewer : public QGLViewer
         GLuint causticsTex[NUM_PATTERNS];
         GLfloat lightDiffuseColor[4];
         GLfloat lightPosition[4];
+        Environment env;
 
         /// Handle keyboard events specifically
         virtual void keyPressEvent(QKeyEvent *e);

@@ -29,8 +29,6 @@
 #define SWIM_ANGLE_DELTA_NORM 4   // Change in angle per step
 #define SWIM_ANGLE_MAX 30        // Maximum bend in body
 
-using namespace std;
-
 // DEBUG assistance
 const bool SHOW_LINE_TO_GOAL = false;
 const bool SHOW_GOAL_SEEK_DIR = false;
@@ -46,16 +44,16 @@ float mypi = 3.14;
 
 // Default Constructor
 Fish::Fish() {
-    pos = glm::vec3( 0, 0, 0 );
-    oldpos = pos;
-    vel = glm::vec3( 0, 0, 0 );
-    direction = glm::vec3( 1, 0, 0 );
-    direction = glm::normalize(direction);
-    leader = false;
-    swimAngle = 0;
-    swimAngleDelta = SWIM_ANGLE_DELTA_NORM;
+    m_pos = glm::vec3( 0, 0, 0 );
+    m_oldPos = m_pos;
+    m_vel = glm::vec3( 0, 0, 0 );
+    m_direction = glm::vec3( 1, 0, 0 );
+    m_direction = glm::normalize(m_direction);
+    m_leader = false;
+    m_swimAngle = 0;
+    m_swimAngleDelta = SWIM_ANGLE_DELTA_NORM;
 
-    colour = glm::vec3( 0.3, 0.5, 0.3 );
+    m_colour = glm::vec3( 0.3, 0.5, 0.3 );
 
 }
 
@@ -67,21 +65,21 @@ Fish::~Fish()
 void Fish::debug()
 {
     std::cout<<" ==== \n";
-    std::cout<<"pos:"<<pos.x<<","<<pos.y<<","<<pos.z<<"\n";
-    std::cout<<"oldpos:"<<oldpos.x<<","<<oldpos.y<<","<<oldpos.z<<"\n";
-    std::cout<<"vel:"<<vel.x<<","<<vel.y<<","<<vel.z<<"\n";
-    std::cout<<"oldvel:"<<oldvel.x<<","<<oldvel.y<<","<<oldvel.z<<"\n";
-    std::cout<<"colour:"<<colour.x<<","<<colour.y<<","<<colour.z<<"\n";
-    std::cout<<"direction:"<<direction.x<<","<<direction.y<<","<<direction.z<<"\n";
-    std::cout<<"lineToGoal:"<<lineToGoal.x<<","<<lineToGoal.y<<","<<lineToGoal.z<<"\n";
+    std::cout<<"m_pos:"<<m_pos.x<<","<<m_pos.y<<","<<m_pos.z<<"\n";
+    std::cout<<"m_oldPos:"<<m_oldPos.x<<","<<m_oldPos.y<<","<<m_oldPos.z<<"\n";
+    std::cout<<"m_vel:"<<m_vel.x<<","<<m_vel.y<<","<<m_vel.z<<"\n";
+    std::cout<<"m_oldVel:"<<m_oldVel.x<<","<<m_oldVel.y<<","<<m_oldVel.z<<"\n";
+    std::cout<<"m_colour:"<<m_colour.x<<","<<m_colour.y<<","<<m_colour.z<<"\n";
+    std::cout<<"m_direction:"<<m_direction.x<<","<<m_direction.y<<","<<m_direction.z<<"\n";
+    std::cout<<"m_lineToGoal:"<<m_lineToGoal.x<<","<<m_lineToGoal.y<<","<<m_lineToGoal.z<<"\n";
     std::cout<<"goalSeekDir:"<<goalSeekDir.x<<","<<goalSeekDir.y<<","<<goalSeekDir.z<<"\n";
-    std::cout<<"envSteerDir:"<<envSteerDir.x<<","<<envSteerDir.y<<","<<envSteerDir.z<<"\n";
-    std::cout<<"separationDir:"<<separationDir.x<<","<<separationDir.y<<","<<separationDir.z<<"\n";
-    std::cout<<"avgNeighbourVel:"<<avgNeighbourVel.x<<","<<avgNeighbourVel.y<<","<<avgNeighbourVel.z<<"\n";
-    std::cout<<"velMatchDir:"<<velMatchDir.x<<","<<velMatchDir.y<<","<<velMatchDir.z<<"\n";
-    std::cout<<"avgNeighbourPos:"<<avgNeighbourPos.x<<","<<avgNeighbourPos.y<<","<<avgNeighbourPos.z<<"\n";
-    std::cout<<"centeringDir:"<<centeringDir.x<<","<<centeringDir.y<<","<<centeringDir.z<<"\n";
-    std::cout<<"targetDir:"<<targetDir.x<<","<<targetDir.y<<","<<targetDir.z<<"\n";
+    std::cout<<"m_envSteerDir:"<<m_envSteerDir.x<<","<<m_envSteerDir.y<<","<<m_envSteerDir.z<<"\n";
+    std::cout<<"m_separationDir:"<<m_separationDir.x<<","<<m_separationDir.y<<","<<m_separationDir.z<<"\n";
+    std::cout<<"m_avgNeighbourVel:"<<m_avgNeighbourVel.x<<","<<m_avgNeighbourVel.y<<","<<m_avgNeighbourVel.z<<"\n";
+    std::cout<<"m_velMatchDir:"<<m_velMatchDir.x<<","<<m_velMatchDir.y<<","<<m_velMatchDir.z<<"\n";
+    std::cout<<"m_avgNeighbourPos:"<<m_avgNeighbourPos.x<<","<<m_avgNeighbourPos.y<<","<<m_avgNeighbourPos.z<<"\n";
+    std::cout<<"m_centeringDir:"<<m_centeringDir.x<<","<<m_centeringDir.y<<","<<m_centeringDir.z<<"\n";
+    std::cout<<"m_targetDir:"<<m_targetDir.x<<","<<m_targetDir.y<<","<<m_targetDir.z<<"\n";
     std::cout<<" ==== \n";
 }
 
@@ -100,42 +98,42 @@ Fish::Fish( float x, float y, float z,
         float dirx, float diry, float dirz,
         float vx, float vy, float vz,
         float rand) {
-    pos = glm::vec3( x, y, z );
-    oldpos = pos;
-    vel = glm::vec3( vx, vy, vz );
-    direction = glm::vec3( dirx, diry, dirz );
-    direction = checkedNormalize(direction);
-    leader = false;
-    swimAngle = (2 * SWIM_ANGLE_MAX) * rand - SWIM_ANGLE_MAX;
-    swimAngleDelta = SWIM_ANGLE_DELTA_NORM;
+    m_pos = glm::vec3( x, y, z );
+    m_oldPos = m_pos;
+    m_vel = glm::vec3( vx, vy, vz );
+    m_direction = glm::vec3( dirx, diry, dirz );
+    m_direction = checkedNormalize(m_direction);
+    m_leader = false;
+    m_swimAngle = (2 * SWIM_ANGLE_MAX) * rand - SWIM_ANGLE_MAX;
+    m_swimAngleDelta = SWIM_ANGLE_DELTA_NORM;
 
-    colour = glm::vec3( 0.3, 0.5, 0.3 );
+    m_colour = glm::vec3( 0.3, 0.5, 0.3 );
 }
 
 
 // Update Simulation
-bool Fish::update( float dt, uint32_t schoolID, vector< Fish > &school, glm::vec3 globalGoal,
+bool Fish::update( float dt, uint32_t schoolID, std::vector< Fish > &school, glm::vec3 globalGoal,
         Environment &env ) {
 
 
     // Save old data
-    oldpos = pos;
-    oldvel = vel;
+    m_oldPos = m_pos;
+    m_oldVel = m_vel;
 
     // Reset some data
-    zerovec(lineToGoal);
+    zerovec(m_lineToGoal);
     zerovec(goalSeekDir);
-    zerovec(envSteerDir);
-    envSteerPriority = 0;
-    zerovec(separationDir);
-    separationPriority = 0;
-    zerovec(avgNeighbourPos);
-    zerovec(centeringDir);
-    centeringPriority = 0;
-    zerovec(avgNeighbourVel);
-    zerovec(velMatchDir);
-    velMatchPriority = 0;
-    zerovec(targetDir);
+    zerovec(m_envSteerDir);
+    m_envSteerPriority = 0;
+    zerovec(m_separationDir);
+    m_separationPriority = 0;
+    zerovec(m_avgNeighbourPos);
+    zerovec(m_centeringDir);
+    m_centeringPriority = 0;
+    zerovec(m_avgNeighbourVel);
+    zerovec(m_velMatchDir);
+    m_velMatchPriority = 0;
+    zerovec(m_targetDir);
     int numNeighbours = 0;
     float smallestCloseNeighDist = MIN_DISTANCE;
     float priorityControl = 0;
@@ -145,17 +143,17 @@ bool Fish::update( float dt, uint32_t schoolID, vector< Fish > &school, glm::vec
     // ####################### Controller ##########################
 
     // Global Goal
-    lineToGoal = globalGoal - oldpos;	
+    m_lineToGoal = globalGoal - m_oldPos;	
 
-    goalSeekDir = globalGoal - oldpos;
+    goalSeekDir = globalGoal - m_oldPos;
     goalSeekDir = checkedNormalize(goalSeekDir);
     goalSeekDir *= 0.4;
 
     // Environment Effects
-    envSteerDir = env.steer( oldpos, oldvel );
-    envSteerPriority = glm::length(envSteerDir);
-    envSteerDir = checkedNormalize(envSteerDir);
-    priorityControl += envSteerPriority;
+    m_envSteerDir = env.steer( m_oldPos, m_oldVel );
+    m_envSteerPriority = glm::length(m_envSteerDir);
+    m_envSteerDir = checkedNormalize(m_envSteerDir);
+    priorityControl += m_envSteerPriority;
 
 
     // Local Neighbourhood
@@ -163,25 +161,25 @@ bool Fish::update( float dt, uint32_t schoolID, vector< Fish > &school, glm::vec
         if ( schoolID != i ) {  // Don't influence yourself
 
 
-            glm::vec3 neighbourDir = school[i].oldpos - pos;
+            glm::vec3 neighbourDir = school[i].m_oldPos - m_pos;
             float neighbourDist = glm::length(neighbourDir);
 
             if (	(neighbourDist < FOV_RADIUS) &&
-                    (rad2deg(acos( glm::dot(checkedNormalize(neighbourDir), direction) )) < FOV_ANGLE) ) {  // Is it a neighbour?
+                    (rad2deg(acos( glm::dot(checkedNormalize(neighbourDir), m_direction) )) < FOV_ANGLE) ) {  // Is it a neighbour?
 
                 numNeighbours++;
 
                 // Work for Separation
                 if ( neighbourDist < MIN_DISTANCE ) {
-                    separationDir -= checkedNormalize(neighbourDir) * intexp( 1-(neighbourDist / MIN_DISTANCE), 2 );
+                    m_separationDir -= checkedNormalize(neighbourDir) * intexp( 1-(neighbourDist / MIN_DISTANCE), 2 );
                     if ( neighbourDist < smallestCloseNeighDist ) smallestCloseNeighDist = neighbourDist;
                 }
 
                 // Work for Velocity Matching
-                avgNeighbourVel += school[i].oldvel;
+                m_avgNeighbourVel += school[i].m_oldVel;
 
                 // Work for Flock Centering
-                avgNeighbourPos += school[i].oldpos;
+                m_avgNeighbourPos += school[i].m_oldPos;
 
             }
 
@@ -195,8 +193,8 @@ bool Fish::update( float dt, uint32_t schoolID, vector< Fish > &school, glm::vec
     if ( 	(numNeighbours > 0) &&
             (priorityControl < MAX_PRIORITY_CONTROL) ) {
 
-        separationPriority = intexp(1-(smallestCloseNeighDist / MIN_DISTANCE), 3);
-        priorityControl += separationPriority;
+        m_separationPriority = intexp(1-(smallestCloseNeighDist / MIN_DISTANCE), 3);
+        priorityControl += m_separationPriority;
 
     }
 
@@ -205,20 +203,20 @@ bool Fish::update( float dt, uint32_t schoolID, vector< Fish > &school, glm::vec
     if ( 	(numNeighbours > 0) &&
             (priorityControl < MAX_PRIORITY_CONTROL) ) {
 
-        glm::vec3 avgVel = avgNeighbourVel / (float)numNeighbours;
-        float diffAngle = rad2deg( acos( glm::dot( checkedNormalize(avgVel), checkedNormalize(oldvel) ) ) );
-        velMatchDir = (avgNeighbourVel / (float)numNeighbours) - oldvel;
-        velMatchPriority = intexp( diffAngle / 180.0, 2);
+        glm::vec3 avgVel = m_avgNeighbourVel / (float)numNeighbours;
+        float diffAngle = rad2deg( acos( glm::dot( checkedNormalize(avgVel), checkedNormalize(m_oldVel) ) ) );
+        m_velMatchDir = (m_avgNeighbourVel / (float)numNeighbours) - m_oldVel;
+        m_velMatchPriority = intexp( diffAngle / 180.0, 2);
 
-        if ( velMatchPriority + priorityControl > MAX_PRIORITY_CONTROL ) {
+        if ( m_velMatchPriority + priorityControl > MAX_PRIORITY_CONTROL ) {
 
-            velMatchPriority = MAX_PRIORITY_CONTROL - priorityControl;
+            m_velMatchPriority = MAX_PRIORITY_CONTROL - priorityControl;
             priorityControl = MAX_PRIORITY_CONTROL;				
 
         }
         else {
 
-            priorityControl += centeringPriority;
+            priorityControl += m_centeringPriority;
 
         }
     }		
@@ -228,18 +226,18 @@ bool Fish::update( float dt, uint32_t schoolID, vector< Fish > &school, glm::vec
     if ( 	(numNeighbours > 0) &&
             (priorityControl < MAX_PRIORITY_CONTROL) ) {
 
-        centeringDir = (avgNeighbourPos / (float)numNeighbours) - oldpos;
-        centeringPriority = intexp( glm::length(centeringDir) / 20, 2);
+        m_centeringDir = (m_avgNeighbourPos / (float)numNeighbours) - m_oldPos;
+        m_centeringPriority = intexp( glm::length(m_centeringDir) / 20, 2);
 
-        if ( centeringPriority + priorityControl > MAX_PRIORITY_CONTROL ) {
+        if ( m_centeringPriority + priorityControl > MAX_PRIORITY_CONTROL ) {
 
-            centeringPriority = MAX_PRIORITY_CONTROL - priorityControl;
+            m_centeringPriority = MAX_PRIORITY_CONTROL - priorityControl;
             priorityControl = MAX_PRIORITY_CONTROL;				
 
         }
         else {
 
-            priorityControl += centeringPriority;
+            priorityControl += m_centeringPriority;
 
         }
     }
@@ -250,32 +248,32 @@ bool Fish::update( float dt, uint32_t schoolID, vector< Fish > &school, glm::vec
     /*
        if ( priorityControl > 0 && priorityControl < MAX_PRIORITY_CONTROL ) {
        float scale = MAX_PRIORITY_CONTROL / priorityControl;
-       envSteerPriority *= scale;
-       separationPriority *= scale;
-       velMatchPriority *= scale;
-       centeringPriority *= scale;
+       m_envSteerPriority *= scale;
+       m_separationPriority *= scale;
+       m_velMatchPriority *= scale;
+       m_centeringPriority *= scale;
        priorityControl = MAX_PRIORITY_CONTROL;
        }
        */
 
-    // Final Target Direction
-    if ( leader ) {
+    // Final Target m_direction
+    if ( m_leader ) {
 
-        targetDir = envSteerPriority * envSteerDir +
+        m_targetDir = m_envSteerPriority * m_envSteerDir +
             (MAX_PRIORITY_CONTROL - priorityControl) * goalSeekDir;  	
 
     }
     else {
 
-        targetDir = envSteerPriority * envSteerDir +
-            separationPriority * separationDir +
-            velMatchPriority * velMatchDir +
-            centeringPriority * centeringDir +
+        m_targetDir = m_envSteerPriority * m_envSteerDir +
+            m_separationPriority * m_separationDir +
+            m_velMatchPriority * m_velMatchDir +
+            m_centeringPriority * m_centeringDir +
             (MAX_PRIORITY_CONTROL - priorityControl) * goalSeekDir;  /// Aim to goal with remaining priority
     }
 
 
-    if ( glm::length(targetDir) > 1 ) targetDir *= (1.f / glm::length(targetDir));
+    if ( glm::length(m_targetDir) > 1 ) m_targetDir *= (1.f / glm::length(m_targetDir));
 
 
 
@@ -283,9 +281,9 @@ bool Fish::update( float dt, uint32_t schoolID, vector< Fish > &school, glm::vec
 
     // Arrival
     float modMax;
-    if ( glm::length(lineToGoal) < ARRIVAL_DISTANCE ) {
+    if ( glm::length(m_lineToGoal) < ARRIVAL_DISTANCE ) {
 
-        modMax = intexp( (glm::length(lineToGoal) / ARRIVAL_DISTANCE) * MAX_VELOCITY, 2);
+        modMax = intexp( (glm::length(m_lineToGoal) / ARRIVAL_DISTANCE) * MAX_VELOCITY, 2);
 
     }
     else {
@@ -297,25 +295,25 @@ bool Fish::update( float dt, uint32_t schoolID, vector< Fish > &school, glm::vec
 
 
     // Solver
-    vel = oldvel + targetDir * dt;
-    if ( glm::length(vel) > modMax ) vel *= (modMax / glm::length(vel));   // Truncate velocity
-    pos = oldpos + oldvel * dt;
+    m_vel = m_oldVel + m_targetDir * dt;
+    if ( glm::length(m_vel) > modMax ) m_vel *= (modMax / glm::length(m_vel));   // Truncate velocity
+    m_pos = m_oldPos + m_oldVel * dt;
 
 
-    // Update Direction - Hack
-    if ( 	pos[0] != oldpos[0] &&
-            pos[1] != oldpos[1] &&
-            pos[2] != oldpos[2]) {
-        direction = pos - oldpos;
-        direction = checkedNormalize(direction);
+    // Update m_direction - Hack
+    if ( 	m_pos[0] != m_oldPos[0] &&
+            m_pos[1] != m_oldPos[1] &&
+            m_pos[2] != m_oldPos[2]) {
+        m_direction = m_pos - m_oldPos;
+        m_direction = checkedNormalize(m_direction);
     }
 
     // Update Swim Angle
-    if ( swimAngle >= SWIM_ANGLE_MAX ) swimAngleDelta *= -1;
-    if ( swimAngle <= -SWIM_ANGLE_MAX ) swimAngleDelta *= -1;
-    swimAngle += swimAngleDelta;
+    if ( m_swimAngle >= SWIM_ANGLE_MAX ) m_swimAngleDelta *= -1;
+    if ( m_swimAngle <= -SWIM_ANGLE_MAX ) m_swimAngleDelta *= -1;
+    m_swimAngle += m_swimAngleDelta;
 
-    return glm::length(pos-globalGoal) < 0.5;
+    return glm::length(m_pos-globalGoal) < 0.5;
 
 }
 
@@ -325,27 +323,27 @@ bool Fish::update( float dt, uint32_t schoolID, vector< Fish > &school, glm::vec
 void Fish::draw(int pass) {
 
     glPushMatrix();
-    glTranslatef( pos[0], pos[1], pos[2] );
+    glTranslatef( m_pos[0], m_pos[1], m_pos[2] );
 
-    // Line To Goal Direction
+    // Line To Goal m_direction
     if ( SHOW_LINE_TO_GOAL ) {
         glColor3f( 0.5, 0.5, 0.5 );	
         glBegin( GL_LINES );
         glVertex3f(0,0,0);
-        glVertex3f( lineToGoal[0], lineToGoal[1], lineToGoal[2] );
+        glVertex3f( m_lineToGoal[0], m_lineToGoal[1], m_lineToGoal[2] );
         glEnd();
     }
 
-    // Goal Seek Direction
+    // Goal Seek m_direction
     if ( SHOW_ENVSTEER_DIR ) {
         glColor3f( 1, 1, 0 );	
         glBegin( GL_LINES );
         glVertex3f(0,0,0);
-        glVertex3f( envSteerDir[0], envSteerDir[1], envSteerDir[2] );
+        glVertex3f( m_envSteerDir[0], m_envSteerDir[1], m_envSteerDir[2] );
         glEnd();
     }
 
-    // Goal Seek Direction
+    // Goal Seek m_direction
     if ( SHOW_GOAL_SEEK_DIR ) {
         glColor3f( 0.8, 0.8, 0.8 );	
         glBegin( GL_LINES );
@@ -354,22 +352,22 @@ void Fish::draw(int pass) {
         glEnd();
     }
 
-    // Direction Vector
+    // m_direction Vector
     if ( SHOW_DIRECTION_VECTOR ) {
         glColor3f( 1, 1, 1 );	
         glBegin( GL_LINES );
         glVertex3f(0,0,0);
-        glVertex3f( direction[0], direction[1], direction[2] );
+        glVertex3f( m_direction[0], m_direction[1], m_direction[2] );
         glEnd();	
     }
 
 
-    // Rotate to point in direction
-    float xzLen = sqrt ( direction[0] * direction[0] + direction[2] * direction[2] );
+    // Rotate to point in m_direction
+    float xzLen = sqrt ( m_direction[0] * m_direction[0] + m_direction[2] * m_direction[2] );
     float yRot, xRot;
     if ( xzLen == 0 ) {
 
-        if ( direction[0] > 0 )
+        if ( m_direction[0] > 0 )
             yRot = 90;
         else
             yRot = -90;
@@ -377,26 +375,26 @@ void Fish::draw(int pass) {
     }
     else {
 
-        yRot = rad2deg( acos( direction[2] / xzLen ) );
+        yRot = rad2deg( acos( m_direction[2] / xzLen ) );
 
     }
     xRot = rad2deg( acos( xzLen ) );
-    if ( direction[1] > 0 ) xRot *= -1;
-    if ( direction[0] < 0 ) yRot *= -1;
+    if ( m_direction[1] > 0 ) xRot *= -1;
+    if ( m_direction[0] < 0 ) yRot *= -1;
 
     glRotatef( yRot, 0, 1, 0 );
     glRotatef( xRot, 1, 0, 0 );
 
 
     // Draw Actual "Fish"
-    glColor3f( colour[0], colour[1], colour[2] );
+    glColor3f( m_colour[0], m_colour[1], m_colour[2] );
 
     // Draw "Fish"
-    float velRatio = glm::length(vel) / MAX_VELOCITY;
+    float velRatio = glm::length(m_vel) / MAX_VELOCITY;
     glPushMatrix();
 
     GLfloat amDef[4], spDef[4];
-    GLfloat am[] = { colour[0], colour[1], colour[2], 1 };
+    GLfloat am[] = { m_colour[0], m_colour[1], m_colour[2], 1 };
     GLfloat sp[] = { 0, 0.5, 1, 0.5 };
 
     glGetMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, amDef );
@@ -406,11 +404,11 @@ void Fish::draw(int pass) {
     glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, sp );
 
     // Head
-    glRotatef( velRatio * 0.8 * swimAngle, 0, 1, 0 );
+    glRotatef( velRatio * 0.8 * m_swimAngle, 0, 1, 0 );
     glutSolidCone( 0.2, 0.4, 5, 1 );
 
     // Body
-    glRotatef( 180 - velRatio * swimAngle, 0, 1, 0 );
+    glRotatef( 180 - velRatio * m_swimAngle, 0, 1, 0 );
     glutSolidCone( 0.1, 0.5, 5, 1 );
     glPushMatrix();
     glTranslatef( 0, 0, 0.1 );
@@ -420,7 +418,7 @@ void Fish::draw(int pass) {
 
     // Tail
     glTranslatef( 0, 0, 0.5 );
-    glRotatef( 180 + velRatio * 1.2 * swimAngle, 0, 1, 0 );
+    glRotatef( 180 + velRatio * 1.2 * m_swimAngle, 0, 1, 0 );
     glTranslatef( 0, 0, -0.2 );
     glScalef( 0.5, 1, 1 );
     glutSolidCone( 0.2, 0.2, 5, 1 );
@@ -473,9 +471,9 @@ void Fish::draw(int pass) {
 // Draw Helpers
 void Fish::drawSeparation() {
     glPushMatrix();
-    glTranslatef( pos[0], pos[1], pos[2] );
+    glTranslatef( m_pos[0], m_pos[1], m_pos[2] );
 
-    glm::vec3 sepVec = separationDir * 3.f * separationPriority;
+    glm::vec3 sepVec = m_separationDir * 3.f * m_separationPriority;
     glColor3f( 1, 0, 0 );	
     glBegin( GL_LINES );
     glVertex3f(0,0,0);
@@ -488,9 +486,9 @@ void Fish::drawSeparation() {
 
 void Fish::drawVelocityMatching() {
     glPushMatrix();
-    glTranslatef( pos[0], pos[1], pos[2] );
+    glTranslatef( m_pos[0], m_pos[1], m_pos[2] );
 
-    glm::vec3 vmatVec = velMatchDir * 3.f * velMatchPriority;
+    glm::vec3 vmatVec = m_velMatchDir * 3.f * m_velMatchPriority;
     glColor3f( 0, 0, 1 );
     glBegin( GL_LINES );
     glVertex3f(0,0,0);
@@ -502,9 +500,9 @@ void Fish::drawVelocityMatching() {
 
 void Fish::drawCentering() {
     glPushMatrix();
-    glTranslatef( pos[0], pos[1], pos[2] );
+    glTranslatef( m_pos[0], m_pos[1], m_pos[2] );
 
-    glm::vec3 cenVec = centeringDir * 3.f * centeringPriority;
+    glm::vec3 cenVec = m_centeringDir * 3.f * m_centeringPriority;
     glColor3f( 0, 1, 0 );	
     glBegin( GL_LINES );
     glVertex3f(0,0,0);
@@ -516,9 +514,9 @@ void Fish::drawCentering() {
 
 void Fish::drawTarget() {
     glPushMatrix();
-    glTranslatef( pos[0], pos[1], pos[2] );
+    glTranslatef( m_pos[0], m_pos[1], m_pos[2] );
 
-    glm::vec3 tarVec = targetDir * 3.f;
+    glm::vec3 tarVec = m_targetDir * 3.f;
     glColor3f( 1, 0, 1 );	
     glBegin( GL_LINES );
     glVertex3f(0,0,0);
@@ -531,12 +529,12 @@ void Fish::drawTarget() {
 void Fish::drawVelocity() {
 
     glPushMatrix();
-    glTranslatef( pos[0], pos[1], pos[2] );
+    glTranslatef( m_pos[0], m_pos[1], m_pos[2] );
 
     glColor3f( 0, 1, 1 );	
     glBegin( GL_LINES );
     glVertex3f(0,0,0);
-    glVertex3f( vel[0], vel[1], vel[2] );
+    glVertex3f( m_vel[0], m_vel[1], m_vel[2] );
     glEnd();	
 
     glPopMatrix();
@@ -545,9 +543,9 @@ void Fish::drawVelocity() {
 void Fish::drawEnvSteer() {
 
     glPushMatrix();
-    glTranslatef( pos[0], pos[1], pos[2] );
+    glTranslatef( m_pos[0], m_pos[1], m_pos[2] );
 
-    glm::vec3 esVec = envSteerDir * 3.f * envSteerPriority;
+    glm::vec3 esVec = m_envSteerDir * 3.f * m_envSteerPriority;
     glColor3f( 1, 1, 1 );	
     glBegin( GL_LINES );
     glVertex3f(0,0,0);
@@ -570,13 +568,3 @@ float Fish::intexp( float base, int exp ) {
     return acc;
 }
 
-// Zero out vector
-void Fish::zerovec( glm::vec3 &vec ) {
-    vec[0] = 0;
-    vec[1] = 0;
-    vec[2] = 0;	
-}
-
-// Radians/Degree conversion
-float Fish::rad2deg( float rad ) { return rad * 180.0 / mypi; }
-float Fish::deg2rad( float deg ) { return deg * mypi / 180.0; }

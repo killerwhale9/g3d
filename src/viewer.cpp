@@ -66,7 +66,7 @@ void Viewer::init()
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
-    addRenderable(new Flock());
+    addRenderable(new Flock(env));
     //addRenderable(new Flock());
 
     list<Renderable *>::iterator it;

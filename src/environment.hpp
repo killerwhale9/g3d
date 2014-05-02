@@ -25,8 +25,6 @@ class Environment {
         std::vector<glm::vec3> spherePos;
         std::vector<float> sphereRad;
         float intexp( float base, int exp );
-        float rad2deg( float rad );
-        float deg2rad( float deg );
 
 
 };
