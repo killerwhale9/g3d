@@ -37,6 +37,8 @@ class TextureManager {
     }
 
     static GLuint loadTextureMipmaps(const QString &file, const std::string &key);
+
+    static void free();
 };
 
 #endif

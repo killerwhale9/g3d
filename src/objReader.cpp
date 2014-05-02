@@ -108,7 +108,7 @@ void objReader::loadObj(const std::string &file)
 
 objReader::~objReader()
 {
-    // eventually destroy textures from texturemanager
+    // all the containers are clared by default
 }
 
 void objReader::computeNormals()
@@ -116,7 +116,7 @@ void objReader::computeNormals()
     // not really needed
 }
 
-void objReader::draw(int pass)
+void objReader::draw(int pass) 
 {
     glPushMatrix();
 

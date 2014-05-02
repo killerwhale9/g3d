@@ -72,3 +72,12 @@ GLuint TextureManager::loadTextureMipmaps(const QString &file, const std::string
 
     return m_images[key].id;
 }
+
+void TextureManager::free()
+{
+    for (std::map<std::string, GLImg>::iterator it(m_images.begin()); it != m_images.end(); ++it) {
+        glDeleteTextures(1, &(it->second.id));
+    }
+    m_images.clear();
+}
+

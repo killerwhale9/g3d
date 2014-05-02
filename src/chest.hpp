@@ -10,8 +10,9 @@
 
 #include "objReader.hpp"
 
-class Chest : public objReader {
+class Chest : public Renderable {
     protected:
+        objReader& m_model;
 
     public:
         Chest();

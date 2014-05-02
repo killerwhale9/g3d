@@ -1,6 +1,7 @@
 #include "chest.hpp"
+#include "objManager.hpp"
 
-Chest::Chest() : objReader("models/treasure_chest.obj", "gfx/treasure_chest.jpg")
+Chest::Chest() : m_model(objManager::getObj("chest"))
 {
 }
 
@@ -9,6 +10,6 @@ void Chest::draw(int pass)
     glPushMatrix();
     glScalef(0.25, 0.25, 0.25);
     glRotatef(90, 1, 0, 0);
-    objReader::draw(pass);
+    m_model.draw(pass);
     glPopMatrix();
 }

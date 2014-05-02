@@ -9,6 +9,7 @@
 #include "viewer.hpp"
 #include "renderable.hpp"
 #include "TextureManager.hpp"
+#include "objManager.hpp"
 #include "chest.hpp"
 #include "flock.hpp"
 #include <sstream>
@@ -34,6 +35,8 @@ Viewer::~Viewer()
     }
 
     renderableList.clear();
+    objManager::free();
+    TextureManager::free();
 }
 
 void Viewer::addRenderable(Renderable *r)
@@ -61,6 +64,11 @@ void Viewer::init()
     else
         glDisable(GL_LIGHTING);
 
+
+    // load textures & models
+    glEnable(GL_TEXTURE_2D);
+    loadTextures();
+
     glEnable(GL_NORMALIZE); // les nomrmales ne sont plus affectées par les scale
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
@@ -74,10 +82,6 @@ void Viewer::init()
         (*it)->init(*this);
     }
 
-    // load textures
-
-    glEnable(GL_TEXTURE_2D);
-    loadTextures();
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glDisable(GL_LIGHT1);
@@ -132,6 +136,10 @@ void Viewer::loadTextures()
     TextureManager::loadTexture("gfx/skybox/left.jpg", "sky_left");
     TextureManager::loadTexture("gfx/skybox/right.jpg", "sky_right");
     TextureManager::loadTexture("gfx/skybox/top.jpg", "sky_top");
+
+
+    // obj
+    objManager::loadObj("models/treasure_chest.obj", "gfx/treasure_chest.jpg", "chest");
 }
 
 

@@ -28,7 +28,7 @@ int main(int argc, char** argv)
     float coralOffsetX=0;
     float coralOffsetY=0;
     int i=0;
-    for (i=0; i < 60; i++) {
+    for (i=0; i < 6; i++) {
         coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0));
         coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0));
         viewer.addRenderable(new Coral(Coral::defaultDepth, coralOffsetX*10, coralOffsetY*10));
