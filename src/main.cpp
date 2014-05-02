@@ -8,6 +8,7 @@
 #include "NoiseTerrain.hpp"
 #include "TextureManager.hpp"
 #include "skybox.hpp"
+#include "glm/gtx/noise.hpp"
 
 int main(int argc, char** argv)
 {
@@ -21,8 +22,14 @@ int main(int argc, char** argv)
     // build your scene here
 
     //viewer.addRenderable(new Torse());
-    viewer.addRenderable(new Coral(Coral::defaultDepth, 0, 0));
-    viewer.addRenderable(new Coral(Coral::defaultDepth, 1, 1));
+    float coralOffsetX=0;
+    float coralOffsetY=0;
+    int i=0;
+    for (i=0; i < 60; i++) {
+        coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0));
+        coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0));
+        viewer.addRenderable(new Coral(Coral::defaultDepth, coralOffsetX*10, coralOffsetY*10));
+    } 
 
     viewer.addRenderable(new Skybox());
 

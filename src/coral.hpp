@@ -14,7 +14,7 @@ class Coral : public Renderable
 {
     public:
 		static const int defaultAngle = 35;
-		static const int defaultDepth = 6;
+		static const int defaultDepth = 5;
 
         void draw(int pass);
         void drawSub(int pass, int angle);

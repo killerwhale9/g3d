@@ -66,7 +66,7 @@ void Viewer::init()
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
-    addRenderable(new Flock());
+    //addRenderable(new Flock());
     //addRenderable(new Flock());
 
     list<Renderable *>::iterator it;
@@ -95,7 +95,7 @@ void Viewer::init()
 	fogColor[3] = 1.0;
 
 	GLfloat density = 0.01;
-	glEnable (GL_FOG);
+	//glEnable (GL_FOG);
 	glFogi (GL_FOG_MODE, GL_EXP2);
 	glFogfv (GL_FOG_COLOR, fogColor);
 	glFogf (GL_FOG_DENSITY, density);
