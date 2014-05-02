@@ -95,7 +95,7 @@ void Viewer::init()
 	fogColor[3] = 1.0;
 
 	GLfloat density = 0.01;
-	glEnable (GL_FOG);
+	//glEnable (GL_FOG);
 	glFogi (GL_FOG_MODE, GL_EXP2);
 	glFogfv (GL_FOG_COLOR, fogColor);
 	glFogf (GL_FOG_DENSITY, density);
