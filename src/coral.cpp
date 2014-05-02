@@ -11,6 +11,7 @@ Coral::Coral(int depth, int x, int y) :
 	m_depthBranch = depth;
     m_x = x;
     m_y = y;
+    m_initialized = false;
 
 	//Recursive
 	if (depth > 0) {
@@ -20,15 +21,10 @@ Coral::Coral(int depth, int x, int y) :
 	}
 }
 
-void Coral::draw(int pass)
-{
-    glPushMatrix();
-        if (pass == PASS_NORMAL)
-            TextureManager::bindTexture("corail1");
-    //Sur le sol c'est bien aussi
-    glTranslatef(4,0.2,0.2);
-    //On le bouge
-    glTranslatef(m_x, m_y, 0);
+void Coral::initDraw(int pass) {
+    m_list = glGenLists(1);
+    glNewList(m_list, GL_COMPILE);
+
     m_coral.draw(pass);
 
 	vector<Coral>::iterator it;
@@ -41,6 +37,26 @@ void Coral::draw(int pass)
 		}			
 		i++;
 	}
+    glEndList();
+}
+
+void Coral::draw(int pass)
+{
+    if (!m_initialized) {
+        initDraw(pass);
+        m_initialized = true;
+    }
+
+    glPushMatrix();
+        if (pass == PASS_NORMAL)
+            TextureManager::bindTexture("corail1");
+    //Sur le sol c'est bien aussi
+    glTranslatef(4,0.2,0.2);
+    //On le bouge
+    glTranslatef(m_x, m_y, 0);
+
+    glCallList(m_list);
+
     glPopMatrix();
 }
 
