@@ -47,16 +47,16 @@ void objReader::loadObj(const std::string &file)
                 switch (r[1]) {
                     case ' ': // vertex
                         sscanf(r.c_str(), "v %f %f %f", &x, &y, &z);
-                        m_vertices.push_back(vec3(x,y,z));
+                        m_vertices.push_back(glm::vec3(x,y,z));
                         //std::cerr<<"Read vx("<<x<<","<<y<<","<<z<<")\n";
                         break;
                     case 't': // text coord
                         sscanf(r.c_str(), "vt %f %f", &x, &y);
-                        m_texCoord.push_back(vec2(x,y));
+                        m_texCoord.push_back(glm::vec2(x,y));
                         break;
                     case 'n': // normal
                         sscanf(r.c_str(), "vn %f %f %f", &x, &y, &z);
-                        m_normals.push_back(vec3(x,y,z));
+                        m_normals.push_back(glm::vec3(x,y,z));
                         break;
                     default:
                         std::cout<<"Error reading line '"<<r<<"' in file "<<file<<"\n";
@@ -130,17 +130,17 @@ void objReader::draw(int pass)
         std::vector<int>::iterator tx(it->tx.begin());
         for (std::vector<int>::iterator vx(it->vx.begin()); vx != it->vx.end(); ++vx) {
             if (nr != it->nr.end()) {
-                glNormal3fv(m_normals[*nr].vec());
+                glNormal3fv((GLfloat*)&m_normals[*nr]);
                 ++nr;
             }
             if (tx != it->tx.end()) {
                 //glTexCoord2fv(m_texCoord[*tx].vec());
-                glTexCoord2f(m_texCoord[*tx].v[0],
-                             m_texCoord[*tx].v[1]);
+                glTexCoord2f(m_texCoord[*tx].x,
+                             m_texCoord[*tx].y);
                 //std::cerr<<"Tex["<<*tx<<"]: "<<m_texCoord[*tx].v[0]<<","<<m_texCoord[*tx].v[1]<<"\n";
                 ++tx;
             }
-                glVertex3fv(m_vertices[*vx].vec());
+                glVertex3fv((GLfloat*)&m_vertices[*vx]);
                 //std::cout<<"v["<<*vx<<"] = ("<<
                     //m_vertices[*vx].vec()[0]<<","<<
                     //m_vertices[*vx].vec()[1]<<","<<

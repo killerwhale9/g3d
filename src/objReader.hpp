@@ -9,37 +9,10 @@
 #endif
 #include <string>
 #include <vector>
+#include "glm/vec3.hpp"
+#include "glm/vec2.hpp"
 
 class objReader : public Renderable {
-
-    struct vec3 {
-        GLfloat v[3];
-        vec3(GLfloat x, GLfloat y, GLfloat z) {
-            v[0] = x;
-            v[1] = y;
-            v[2] = z;
-        }
-        vec3(const vec3& c) {
-            v[0] = c.v[0];
-            v[1] = c.v[1];
-            v[2] = c.v[2];
-        }
-        inline GLfloat* vec() { return v; }
-    };
-
-    struct vec2 {
-        GLfloat v[2];
-        vec2(GLfloat x, GLfloat y) {
-            v[0] = x;
-            v[1] = y;
-        }
-
-        vec2(const vec2& c){
-            v[0] = c.v[0];
-            v[1] = c.v[1];
-        }
-        inline GLfloat* vec() { return v; }
-    };
 
     class face {
         public:
@@ -60,9 +33,9 @@ class objReader : public Renderable {
             }
     };
 
-    std::vector<vec3> m_vertices,
+    std::vector<glm::vec3> m_vertices,
         m_normals;
-    std::vector<vec2> m_texCoord;
+    std::vector<glm::vec2> m_texCoord;
     std::vector<face> m_faces;
     std::vector<GLuint> m_textures;
     //GLuint m_vertN, m_normN, m_texN;
