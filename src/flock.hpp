@@ -24,7 +24,7 @@ class Flock : public Renderable {
     int step;
 
     /* Environment */
-    Environment env;
+    Environment &env;
     std::vector<glm::vec3> envPos;
     std::vector<float> envRad;
 
@@ -39,7 +39,7 @@ class Flock : public Renderable {
     virtual void animate();
     virtual void init(Viewer& v);
 
-    Flock();
+    Flock(Environment &e);
     ~Flock();
 
 };

@@ -12,7 +12,7 @@ void Flock::draw(int pass)
     }
 }
 
-Flock::Flock() : step(0), dx(0), dy(0)
+Flock::Flock(Environment &e) : step(0), env(e), dx(0), dy(0)
 {
 
 }
@@ -31,9 +31,9 @@ void Flock::animate()
 
     // Rush the Leader (0.08 0.05)
     needUpdate = school[0].update( dt, 0, school, goal, env );	  // Update Leader 
-    //std::cout<<"dist:"<<glm::length(school[0].pos - goal)<<"\n";
+    //std::cout<<"dist:"<<glm::length(school[0].m_pos - goal)<<"\n";
     for ( uint32_t i = 1; i < school.size(); i++ ) {
-        school[i].update( dt, i, school, school[0].oldpos, env );	
+        school[i].update( dt, i, school, school[0].getOldPos(), env );	
     }
 
     // Random Goal
@@ -67,8 +67,8 @@ void Flock::init(Viewer& v)
         school.push_back( *newFish );
     }
 
-    school[0].leader = true;
-    school[0].colour = glm::vec3( 1, 0.5, 0.5 );
-    school[0].pos = glm::vec3( 0, 0, 0 );
+    school[0].setLeader(true);
+    school[0].setColour(glm::vec3( 1, 0.5, 0.5 ));
+    school[0].setPos(glm::vec3( 0, 0, 0 ));
     goal = glm::vec3( 8, 5, 5 );    // Default Goal
 }

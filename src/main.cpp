@@ -1,5 +1,6 @@
 
-#include <QApplication>
+// QApplication est dans QtGui, même si on ajoute le dossier de QtGui avec -I
+#include <QtGui/QApplication>
 #include "viewer.hpp"
 #include "torse.hpp"
 #include "coral.hpp"
@@ -14,7 +15,9 @@ int main(int argc, char** argv)
 {
     // Read command lines arguments.
     QApplication application(argc,argv);
+#ifndef __APPLE__ // sur mac cet appel est en trop
     glutInit(&argc, argv);
+#endif
 
     // Instantiate the viewer.
     Viewer viewer;

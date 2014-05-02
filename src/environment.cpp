@@ -17,17 +17,6 @@ float Environment::intexp( float base, int exp ) {
     return acc;
 }
 
-// Helper - Radians/Degree conversion
-float Environment::rad2deg( float rad )
-{
-    return rad * 180.0 / 3.14;
-}
-
-float Environment::deg2rad( float deg )
-{
-    return deg * 3.14 / 180.0;
-}
-
 // Returns steering vector
 glm::vec3 Environment::steer( glm::vec3 pos, glm::vec3 vel )
 {
