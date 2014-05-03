@@ -37,6 +37,8 @@ class Torse : public Renderable
             m_rULeg,
             m_lLLeg,
             m_rLLeg;
+        float m_angLeg;
+        int m_dirLeg;
 
         int m_tmp;
 
