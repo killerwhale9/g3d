@@ -84,18 +84,20 @@ void Viewer::init()
     addRenderable(flock);
     //addRenderable(new Flock());
 
-    for (int32_t y = -10; y < 10; ++y) {
-        for (int32_t x = -10; x < 10; x++) {
-            if (glm::simplex(glm::vec2(x, y)) > 0.4) {
-                Stone *s = new Stone();
-                s->m_size = 1.f;
-                s->m_pos.x = x;
-                s->m_pos.y = y;
-                s->m_pos.z = 0.2; // TODO get z from the terrain
+    //Useless XXX
+    //for (int32_t y = -TERRAIN_HEIGHT/2; y < TERRAIN_HEIGHT/2; ++y) {
+        //for (int32_t x = -TERRAIN_WIDTH/2; x < TERRAIN_WIDTH/2; x++) {
+            //float nn = glm::simplex(glm::vec2(x, y));
+            //if (nn > 0.78) {
+                //Stone *s = new Stone();
+                //s->m_size = nn*10.f;
+                //s->m_pos.x = x;
+                //s->m_pos.y = y;
+                //s->m_pos.z = 0.2; // TODO get z from the terrain
                 //addRenderable(s);
-            }
-        }
-    }
+            //}
+        //}
+    //}
 
     list<Renderable *>::iterator it;
     for (it = renderableList.begin(); it != renderableList.end(); ++it) {
