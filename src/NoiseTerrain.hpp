@@ -20,6 +20,7 @@
 #include <list>
 #include "glm/vec3.hpp"
 #include "TextureManager.hpp"
+#include "globals.hpp"
 
 // TODO Renderable is debug purpose
 class NoiseTerrain : public Renderable {
@@ -67,8 +68,8 @@ public:
         glPushMatrix();
         //glScalef(50.0, 50.0, 1.0);
         //glTranslatef(-0.5, -.5, 0.f);
-        float w = 200.f;
-        float h = w;
+        float w = TERRAIN_WIDTH;
+        float h = TERRAIN_HEIGHT;
         glColor3f(1, 1, 1);
         float reps = 3.f;
         if (pass == PASS_NORMAL)
@@ -94,18 +95,21 @@ public:
             glEnd();
         }
 
-        //glDisable(GL_LIGHTING);
-        //glBegin(GL_LINES);
-        //glColor3f(1, 0, 0);
-        //for (uint32_t y = 0; y < m_h; y++) {
-            //for (uint32_t x = 0; x < m_w; x++) {
-                //glVertex3f((double)(x)/m_w, (double)(y)/m_h, m_hmap[x+y*m_w]);
-                //glVertex3f((double)(x)/m_w+m_normals[x+y*m_w].x*0.1, (double)(y)/m_h+m_normals[x+y*m_w].y*0.1, m_hmap[x+y*m_w]+m_normals[x+y*m_w].z*0.1);
-            //}
-        //} 
-        //glEnd();
-        //glEnable(GL_LIGHTING);
-        glColor3f(1,1,1);
+        //if (pass == PASS_NORMAL){
+            //glDisable(GL_LIGHTING);
+            //glBegin(GL_LINES);
+            //glColor3f(1, 0, 0);
+            //float s = 0.3f;
+            //for (uint32_t y = 0; y < m_h; y++) {
+                //for (uint32_t x = 0; x < m_w; x++) {
+                    //glVertex3f(w*((double)(x)/m_w-0.5), h*((double)(y)/m_h-0.5), m_hmap[x+y*m_w]);
+                    //glVertex3f(w*((double)(x)/m_w-0.5)+m_normals[x+y*m_w].x*s, h*((double)(y)/m_h-0.5)+m_normals[x+y*m_w].y*s, m_hmap[x+y*m_w]+m_normals[x+y*m_w].z*s);
+                //}
+            //} 
+            //glEnd();
+            //glEnable(GL_LIGHTING);
+            //glColor3f(1,1,1);
+        //}
 
         glPopMatrix();
     }

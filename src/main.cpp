@@ -4,11 +4,8 @@
 #include "viewer.hpp"
 #include "torse.hpp"
 #include "coral.hpp"
-#include "lightsMaterials.hpp"
-#include "dynamicSystem.hpp"
 #include "NoiseTerrain.hpp"
 #include "TextureManager.hpp"
-#include "skybox.hpp"
 #include "glm/gtx/noise.hpp"
 
 int main(int argc, char** argv)
@@ -34,15 +31,14 @@ int main(int argc, char** argv)
         viewer.addRenderable(new Coral(Coral::defaultDepth, coralOffsetX*10, coralOffsetY*10));
     } 
 
-    viewer.addRenderable(new Skybox());
 
-    viewer.addRenderable(new DynamicSystem());
+    //viewer.addRenderable(new DynamicSystem());
     viewer.noise = new NoiseTerrain();
-    viewer.noise_zoom = 4;
-    viewer.noise_persistence = 0.3;
-    viewer.noise_octaves = 2;
+    viewer.noise_zoom = 50;
+    viewer.noise_persistence = 0.95;
+    viewer.noise_octaves = 6;
 
-    viewer.noise->generateClouds(100, 100, viewer.noise_octaves, viewer.noise_persistence, viewer.noise_octaves);
+    viewer.noise->generateClouds(100, 100, viewer.noise_zoom, viewer.noise_persistence, viewer.noise_octaves);
     viewer.addRenderable(viewer.noise);
 
     viewer.setWindowTitle("viewer");

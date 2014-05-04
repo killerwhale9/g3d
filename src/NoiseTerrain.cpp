@@ -1,6 +1,7 @@
 #include "NoiseTerrain.hpp"
 #include <cassert>
 #include "glm/geometric.hpp"
+#include "globals.hpp"
 
 double NoiseTerrain::noise(double x,double y)
 {
@@ -88,9 +89,9 @@ void NoiseTerrain::computeNormals()
             if (x < m_w-1) {
                 t = new triangle_t;
                 assert(t);
-                t->vx[0] = glm::vec3(x, y, m_hmap[x+y*m_w]);
-                t->vx[1] = glm::vec3(x, y+1, m_hmap[x+(1+y)*m_w]);
-                t->vx[2] = glm::vec3(x+1, y, m_hmap[x+1+y*m_w]);
+                t->vx[0] = glm::vec3((x-0.5)*TERRAIN_WIDTH, (y-0.5)*TERRAIN_HEIGHT, m_hmap[x+y*m_w]);
+                t->vx[1] = glm::vec3((x-0.5)*TERRAIN_WIDTH, (y+1-0.5)*TERRAIN_HEIGHT, m_hmap[x+(1+y)*m_w]);
+                t->vx[2] = glm::vec3((x+1-0.5)*TERRAIN_WIDTH, (y-0.5)*TERRAIN_HEIGHT, m_hmap[x+1+y*m_w]);
 
                 m_triangles[x+y*m_w].push_back(t);
                 m_triangles[x+1+y*m_w].push_back(t);
@@ -103,9 +104,9 @@ void NoiseTerrain::computeNormals()
                 t = NULL;
                 t = new triangle_t;
                 assert(t);
-                t->vx[2] = glm::vec3(x, y, m_hmap[x+y*m_w]);
-                t->vx[1] = glm::vec3(x, y+1, m_hmap[x+(1+y)*m_w]);
-                t->vx[0] = glm::vec3(x-1, y, m_hmap[x-1+y*m_w]);
+                t->vx[2] = glm::vec3((x-0.5)*TERRAIN_WIDTH, (y-0.5)*TERRAIN_HEIGHT, m_hmap[x+y*m_w]);
+                t->vx[1] = glm::vec3((x-0.5)*TERRAIN_WIDTH, (y+1-0.5)*TERRAIN_HEIGHT, m_hmap[x+(1+y)*m_w]);
+                t->vx[0] = glm::vec3((x-1-0.5)*TERRAIN_WIDTH, (y-0.5)*TERRAIN_HEIGHT, m_hmap[x-1+y*m_w]);
 
                 m_triangles[x+y*m_w].push_back(t);
                 m_triangles[x-1+y*m_w].push_back(t);

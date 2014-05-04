@@ -7,9 +7,11 @@
 
 void Flock::draw(int pass)
 {
+    glPushAttrib(GL_CURRENT_BIT);
     for (std::vector<Fish>::iterator it(school.begin()); it != school.end(); ++it) {
         it->draw(pass);
     }
+    glPopAttrib();
 }
 
 Flock::Flock(Environment &e) : step(0), env(e), dx(0), dy(0)

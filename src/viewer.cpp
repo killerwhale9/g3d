@@ -12,6 +12,9 @@
 #include "objManager.hpp"
 #include "chest.hpp"
 #include "flock.hpp"
+#include "stone.hpp"
+#include "glm/gtx/noise.hpp"
+#include "skybox.hpp"
 #include <sstream>
 #include <ctime>
 
@@ -22,9 +25,9 @@ Viewer::Viewer() : currentCaustic(0)
     lightDiffuseColor[2]= 1.0;
     lightDiffuseColor[3] = 1.0;
     lightPosition[0] = 0.0;
-    lightPosition[1] = 0.0;
-    lightPosition[2] = 5.0;
-    lightPosition[3] = 0.0;
+    lightPosition[1] = 50.0;
+    lightPosition[2] = 100.0;
+    lightPosition[3] = 50.0;
 }
 
 Viewer::~Viewer()
@@ -59,7 +62,7 @@ void Viewer::init()
     toogleLight = true;       // light on
     help();                   // display help
 
-    if (toogleLight == true)
+    if (toogleLight)
         glEnable(GL_LIGHTING);
     else
         glDisable(GL_LIGHTING);
@@ -73,18 +76,33 @@ void Viewer::init()
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
-    addRenderable(new Chest());
-    addRenderable(new Flock(env));
+    //addRenderable(new Chest());
+    //addRenderable(new Flock(env));
     //addRenderable(new Flock());
+
+    for (int32_t y = -10; y < 10; ++y) {
+        for (int32_t x = -10; x < 10; x++) {
+            if (glm::simplex(glm::vec2(x, y)) > 0.4) {
+                Stone *s = new Stone();
+                s->m_size = 1.f;
+                s->m_pos.x = x;
+                s->m_pos.y = y;
+                s->m_pos.z = 0.2; // TODO get z from the terrain
+                //addRenderable(s);
+            }
+        }
+    }
+
+    // end with the skybox or begin TODO
+    //viewer.addRenderable(new Skybox());
 
     list<Renderable *>::iterator it;
     for (it = renderableList.begin(); it != renderableList.end(); ++it) {
         (*it)->init(*this);
     }
 
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glDisable(GL_LIGHT1);
+    glDisable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
     glDisable(GL_LIGHT2);
     glDisable(GL_LIGHT3);
     glDisable(GL_LIGHT4);
@@ -92,18 +110,18 @@ void Viewer::init()
     glDisable(GL_LIGHT6);
     glDisable(GL_LIGHT7);
 
-	// fog
-	fogColor[0] = 0.333;
-	fogColor[1] = 0.5;
-	fogColor[2] = 0.5;
-	fogColor[3] = 1.0;
+    // fog
+    fogColor[0] = 0.333;
+    fogColor[1] = 0.5;
+    fogColor[2] = 0.5;
+    fogColor[3] = 1.0;
 
-	GLfloat density = 0.01;
-	//glEnable (GL_FOG);
-	glFogi (GL_FOG_MODE, GL_EXP2);
-	glFogfv (GL_FOG_COLOR, fogColor);
-	glFogf (GL_FOG_DENSITY, density);
-	glHint (GL_FOG_HINT, GL_NICEST);
+    GLfloat density = 0.0048;
+    glEnable (GL_FOG);
+    glFogi (GL_FOG_MODE, GL_EXP2);
+    glFogfv (GL_FOG_COLOR, fogColor);
+    glFogf (GL_FOG_DENSITY, density);
+    glHint (GL_FOG_HINT, GL_NICEST);
 }
 
 void Viewer::loadTextures()
@@ -140,6 +158,11 @@ void Viewer::loadTextures()
 
     // obj
     objManager::loadObj("models/treasure_chest.obj", "gfx/treasure_chest.jpg", "chest");
+    objManager::loadObj("models/stone1.obj", "gfx/stones/stone1.jpg", "stone1");
+    objManager::loadObj("models/stone2.obj", "gfx/stones/stone2.jpg", "stone2");
+    objManager::loadObj("models/stone3.obj", "gfx/stones/stone3.jpg", "stone3");
+    objManager::loadObj("models/stone4.obj", "gfx/stones/stone4.jpg", "stone4");
+    objManager::loadObj("models/stone5.obj", "gfx/stones/stone5.jpg", "stone5");
 }
 
 
@@ -147,8 +170,8 @@ void Viewer::draw()
 {  
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // greenish light for the ambient
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuseColor);
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightDiffuseColor);
+    glLightfv(GL_LIGHT1, GL_POSITION, lightPosition);
 
     // === FIRST PASS NORMAL ===
     //glDisable(GL_TEXTURE_2D);
