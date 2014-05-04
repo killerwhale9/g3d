@@ -23,7 +23,6 @@ int main(int argc, char** argv)
     // build your scene here
 
     viewer.addRenderable(new Torse());
-    /*
     float coralOffsetX=0;
     float coralOffsetY=0;
     int i=0;
@@ -42,9 +41,20 @@ int main(int argc, char** argv)
 
     viewer.noise->generateClouds(100, 100, viewer.noise_zoom, viewer.noise_persistence, viewer.noise_octaves);
     viewer.addRenderable(viewer.noise);
-    */
 
-    viewer.addRenderable(new Bubble(1.0f,5,0,0));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+    viewer.addRenderable(new Bubble(0.3f,5,0,4));
+
     viewer.setWindowTitle("viewer");
     // Make the viewer window visible on screen.
     viewer.show();
