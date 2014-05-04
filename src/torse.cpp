@@ -14,6 +14,9 @@ Torse::Torse() :
     m_rUArm(),
     m_lLArm(),
     m_rLArm(),
+    m_angUArm(0.0f),
+    m_angLArm(0.0f),
+    m_dirArm(+1),
     m_lULeg(),
     m_rULeg(),
     m_lLLeg(),
@@ -29,7 +32,7 @@ void Torse::draw(int pass)
 {
     glPushMatrix();
     m_tmp = (m_tmp+1)%360;
-    cout<<m_tmp<<"\n";
+    //cout<<m_tmp<<"\n";
 
     //glRotatef(45, 0, 1, 0);
     //glRotatef(45, 1, 0, 0);
@@ -46,16 +49,46 @@ void Torse::draw(int pass)
     glutSolidTeapot(m_headRadius);
     glPopMatrix();
 
+    //Change arms orientation
+    m_angUArm += m_dirArm;
+
+    if (m_dirArm > 0) {
+        //Arm going down
+        if (m_angUArm < 0) {
+            //First half
+            if (m_angLArm < 0) {
+                m_angLArm += m_dirArm;
+            }
+        } else {
+            //Second half
+            if (m_angUArm <= 30) {
+                m_angLArm -= m_dirArm;
+            } else {
+                m_angLArm += m_dirArm;
+            }
+        }
+    } else {
+        //Arm going up
+        if (m_angLArm + m_angUArm <= -90) {
+            m_angLArm = -90 - m_angUArm;
+        } else {
+            m_angLArm += m_dirArm;
+        }
+    }
+
+    if (m_angUArm >= 60 || m_angUArm <= -50)
+        m_dirArm = -m_dirArm;
+
+    //cout<<"angUArm:"<<m_angUArm<<" angLArm:"<<m_angLArm<<"\n";
+
     //Right arm
     glPushMatrix();
     glTranslatef(m_width/2.0*1.1, 0, m_length*0.80);
-    glRotatef(60, 0, 0, 1);
-    glRotatef(m_tmp, 0, 1, 0);
-    //glRotatef(m_tmp, 0, 0, 1);
+    glRotatef(m_angUArm, 0, 1, 0);
     m_rUArm.draw(pass);
 
     glTranslatef(m_rUArm.getLength(), 0, 0);
-    glRotatef(m_tmp, 0, 1, 0);
+    glRotatef(m_angLArm, 0, 1, 0);
     m_rLArm.draw(pass);
 
     glPopMatrix();
@@ -63,12 +96,12 @@ void Torse::draw(int pass)
     //Left arm
     glPushMatrix();
     glTranslatef(-(m_width/2.0*1.1), 0, m_length*0.80);
-    //glRotatef(180, 0, 1, 0);
     glRotatef(180, 0, 0, 1);
+    glRotatef(m_angUArm, 0, 1, 0);
     m_lUArm.draw(pass);
 
     glTranslatef(m_lUArm.getLength(), 0, 0);
-    glRotatef(m_tmp, 0, 1, 0);
+    glRotatef(m_angLArm, 0, 1, 0);
     m_lLArm.draw(pass);
 
     glPopMatrix();

@@ -33,12 +33,15 @@ class Torse : public Renderable
             m_rUArm,
             m_lLArm, // Left Lower arm
             m_rLArm;
+        float m_angUArm, // Angle of the upper arm
+              m_angLArm; // Angle of the lower arm
+        int m_dirArm; // Derivate of the angle
         Leg m_lULeg,
             m_rULeg,
             m_lLLeg,
             m_rLLeg;
-        float m_angLeg;
-        int m_dirLeg;
+        float m_angLeg; // Angle of the Leg
+        int m_dirLeg; // Derivate of the angle
 
         int m_tmp;
 
