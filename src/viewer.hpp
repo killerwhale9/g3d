@@ -13,6 +13,7 @@
 #include <QGLViewer/qglviewer.h>
 #include <list>
 #include "NoiseTerrain.hpp"
+#include "flock.hpp"
 #include "environment.hpp"
 #define NUM_PATTERNS 32
 using namespace std;
@@ -30,6 +31,7 @@ class Viewer : public QGLViewer
         double noise_zoom, noise_persistence;
         int noise_octaves;
         NoiseTerrain *noise;
+        Flock *flock;
     	GLfloat fogColor[4];
 
         /* Scene methods */

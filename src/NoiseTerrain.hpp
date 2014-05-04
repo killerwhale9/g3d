@@ -71,7 +71,7 @@ public:
         float w = TERRAIN_WIDTH;
         float h = TERRAIN_HEIGHT;
         glColor3f(1, 1, 1);
-        float reps = 3.f;
+        float reps = TERRAIN_WIDTH/10.f;
         if (pass == PASS_NORMAL)
             TextureManager::bindTexture("sand1");
         for (uint32_t y = 0; y < m_h-1; y++) {

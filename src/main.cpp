@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     viewer.noise = new NoiseTerrain();
     viewer.noise_zoom = 50;
     viewer.noise_persistence = 0.95;
-    viewer.noise_octaves = 6;
+    viewer.noise_octaves = 13;
 
     viewer.noise->generateClouds(100, 100, viewer.noise_zoom, viewer.noise_persistence, viewer.noise_octaves);
     viewer.addRenderable(viewer.noise);

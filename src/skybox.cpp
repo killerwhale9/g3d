@@ -2,6 +2,7 @@
 using namespace std;
 #include "skybox.hpp"
 #include "TextureManager.hpp"
+#include "globals.hpp"
 
 Skybox::Skybox() {}
 
@@ -16,8 +17,8 @@ void Skybox::draw(int pass) {
 
 	// Dessine la skybox
 	glPushMatrix();
-	glTranslatef(-100.0, -100.0, 0.0);
-	drawCrate(200, pass);
+	glTranslatef(-TERRAIN_WIDTH/2.f, -TERRAIN_HEIGHT/2.f, 0.0);
+	drawCrate(TERRAIN_WIDTH, pass);
 	glPopMatrix();
 
 	// Réactivation de l'écriture dans le DepthBuffer

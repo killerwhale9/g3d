@@ -1,4 +1,4 @@
-#include <QKeyEvent>
+#include <QtGui/QKeyEvent>
 
 #ifndef __APPLE__
 #include <GL/glut.h>
@@ -11,7 +11,6 @@
 #include "TextureManager.hpp"
 #include "objManager.hpp"
 #include "chest.hpp"
-#include "flock.hpp"
 #include "stone.hpp"
 #include "glm/gtx/noise.hpp"
 #include "skybox.hpp"
@@ -20,14 +19,14 @@
 
 Viewer::Viewer() : currentCaustic(0)
 {
-    lightDiffuseColor[0] = 1.0;
-    lightDiffuseColor[1] = 1.5;
-    lightDiffuseColor[2]= 1.0;
+    lightDiffuseColor[0] = 0.66;
+    lightDiffuseColor[1] = 1.0;
+    lightDiffuseColor[2]= 0.66;
     lightDiffuseColor[3] = 1.0;
     lightPosition[0] = 0.0;
-    lightPosition[1] = 50.0;
-    lightPosition[2] = 100.0;
-    lightPosition[3] = 50.0;
+    lightPosition[1] = 10.0;
+    lightPosition[2] = 30.0;
+    lightPosition[3] = 1.0;
 }
 
 Viewer::~Viewer()
@@ -74,10 +73,15 @@ void Viewer::init()
 
     glEnable(GL_NORMALIZE); // les nomrmales ne sont plus affectées par les scale
 
+    // end with the skybox or begin TODO
+    addRenderable(new Skybox());
+
+
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
-    //addRenderable(new Chest());
-    //addRenderable(new Flock(env));
+    addRenderable(new Chest());
+    flock = new Flock(env);
+    addRenderable(flock);
     //addRenderable(new Flock());
 
     for (int32_t y = -10; y < 10; ++y) {
@@ -93,9 +97,6 @@ void Viewer::init()
         }
     }
 
-    // end with the skybox or begin TODO
-    //viewer.addRenderable(new Skybox());
-
     list<Renderable *>::iterator it;
     for (it = renderableList.begin(); it != renderableList.end(); ++it) {
         (*it)->init(*this);
@@ -103,12 +104,24 @@ void Viewer::init()
 
     glDisable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
-    glDisable(GL_LIGHT2);
+    glEnable(GL_LIGHT2);
     glDisable(GL_LIGHT3);
     glDisable(GL_LIGHT4);
     glDisable(GL_LIGHT5);
     glDisable(GL_LIGHT6);
     glDisable(GL_LIGHT7);
+
+    // fish light
+    glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, .0);
+    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.25);
+    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.005);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightDiffuseColor);
+
+    // ambient light
+    glLightfv(GL_LIGHT2, GL_AMBIENT, lightDiffuseColor);
+    //glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, .0);
+    glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.005);
+    //glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.5);
 
     // fog
     fogColor[0] = 0.333;
@@ -170,8 +183,15 @@ void Viewer::draw()
 {  
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // greenish light for the ambient
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightDiffuseColor);
-    glLightfv(GL_LIGHT1, GL_POSITION, lightPosition);
+    glLightfv(GL_LIGHT2, GL_POSITION, lightPosition);
+
+    GLfloat fishLight[4];
+    Fish *f = flock->getLeader();
+    fishLight[0] = f->getPos()[0];
+    fishLight[1] = f->getPos()[1];
+    fishLight[2] = f->getPos()[2];
+    fishLight[3] = 1.f;
+    glLightfv(GL_LIGHT1, GL_POSITION, fishLight);
 
     // === FIRST PASS NORMAL ===
     //glDisable(GL_TEXTURE_2D);

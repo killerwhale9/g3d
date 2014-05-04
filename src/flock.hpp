@@ -39,6 +39,8 @@ class Flock : public Renderable {
     virtual void animate();
     virtual void init(Viewer& v);
 
+    inline Fish* getLeader() { return &school[0]; }
+
     Flock(Environment &e);
     ~Flock();
 

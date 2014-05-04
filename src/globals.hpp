@@ -8,7 +8,7 @@
  *  http://posva.net                                                           *
  ******************************************************************************/
 
-#define TERRAIN_WIDTH 200.f
-#define TERRAIN_HEIGHT 200.f
+#define TERRAIN_WIDTH 800.f
+#define TERRAIN_HEIGHT 800.f
 
 #endif
