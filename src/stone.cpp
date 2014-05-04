@@ -1,6 +1,7 @@
 #include "stone.hpp"
 #include "objManager.hpp"
 #include <stdlib.h>
+#include <stdio.h>
 #define MAX_STONES 5
 
 Stone::Stone(): m_model(NULL), m_pos(), m_size(1.f), m_n(rand()%MAX_STONES+1)

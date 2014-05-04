@@ -26,9 +26,9 @@
 /// @author Christophe Riccio
 ///////////////////////////////////////////////////////////////////////////////////
 
-#include <glm/glm.hpp>
-#include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/dual_quaternion.hpp>
+#include <src/glm/glm.hpp>
+#include <src/glm/gtc/quaternion.hpp>
+#include <src/glm/gtx/dual_quaternion.hpp>
 
 namespace glm{
 namespace detail
