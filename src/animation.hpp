@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <list>
+#include <stdint.h>
 #include "glm/vec3.hpp"
 #include "globals.hpp"
 
