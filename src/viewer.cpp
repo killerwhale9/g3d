@@ -14,6 +14,7 @@
 #include "stone.hpp"
 #include "glm/gtx/noise.hpp"
 #include "skybox.hpp"
+#include "weed.hpp"
 #include <sstream>
 #include <ctime>
 
@@ -82,6 +83,7 @@ void Viewer::init()
     addRenderable(new Chest());
     flock = new Flock(env);
     addRenderable(flock);
+    //addRenderable(new Weed());
     //addRenderable(new Flock());
 
     //Useless XXX
@@ -144,6 +146,7 @@ void Viewer::loadTextures()
     TextureManager::loadTexture("gfx/sand1.jpg", "sand1");
     TextureManager::loadTexture("gfx/coral.png", "coral");
     TextureManager::loadTexture("gfx/corail1.jpg", "corail1");
+    TextureManager::loadTexture("gfx/weed.png", "weed");
 
     std::stringstream file, key;
     for (uint32_t i = 0; i < NUM_PATTERNS; ++i) {
