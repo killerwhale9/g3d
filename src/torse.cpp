@@ -41,11 +41,13 @@ void Torse::draw(int pass)
     //glRotatef(m_tmp, 1, 1, 1);
 
     // Torse
+    glColor3f(0,0,1);
     m_figure.draw(pass);
 
     // Bottle
     glPushMatrix();
-    glTranslatef(0, 1.3f, 0);
+    glTranslatef(0, -1.3f, 0);
+    glColor3f(1,1,0);
     m_bottle.draw(pass);
     glPopMatrix();
 
@@ -54,6 +56,7 @@ void Torse::draw(int pass)
     //glTranslatef(0, m_headRadius, m_headRadius);
     glRotatef(90, 0, 1, 0);
     glRotatef(90, 0, 0, 1);
+    glColor3f(1,1,0);
     glutSolidSphere(m_headRadius, m_precision, m_precision);
     glPopMatrix();
 
@@ -93,10 +96,12 @@ void Torse::draw(int pass)
     glPushMatrix();
     glTranslatef(m_width/2.0*1.1, 0, m_length*0.80);
     glRotatef(m_angUArm, 0, 1, 0);
+    glColor3f(0,0,1);
     m_rUArm.draw(pass);
 
     glTranslatef(m_rUArm.getLength(), 0, 0);
     glRotatef(m_angLArm, 0, 1, 0);
+    glColor3f(1,0,0);
     m_rLArm.draw(pass);
 
     glPopMatrix();
@@ -106,10 +111,12 @@ void Torse::draw(int pass)
     glTranslatef(-(m_width/2.0*1.1), 0, m_length*0.80);
     glRotatef(180, 0, 0, 1);
     glRotatef(m_angUArm, 0, 1, 0);
+    glColor3f(0,0,1);
     m_lUArm.draw(pass);
 
     glTranslatef(m_lUArm.getLength(), 0, 0);
     glRotatef(m_angLArm, 0, 1, 0);
+    glColor3f(1,0,0);
     m_lLArm.draw(pass);
 
     glPopMatrix();
@@ -123,11 +130,13 @@ void Torse::draw(int pass)
     glPushMatrix();
     glTranslatef(m_width/2.0*0.7, 0, 0.0);
     glRotatef(m_angLeg, 1, 0, 0);
+    glColor3f(0,0,1);
     m_rULeg.draw(pass);
 
     glTranslatef(0.0, 0.0, -m_rULeg.getLength());
     if (m_angLeg > 0)
         glRotatef(-m_angLeg, 1, 0, 0);
+    glColor3f(1,0,0);
     m_rLLeg.draw(pass);
 
     glPopMatrix();
@@ -136,11 +145,13 @@ void Torse::draw(int pass)
     glPushMatrix();
     glTranslatef(-(m_width/2.0*0.7), 0, 0);
     glRotatef(-m_angLeg, 1, 0, 0);
+    glColor3f(0,0,1);
     m_lULeg.draw(pass);
 
     glTranslatef(0, 0, -m_lULeg.getLength());
     if (m_angLeg < 0)
         glRotatef(m_angLeg, 1, 0, 0);
+    glColor3f(1,0,0);
     m_lLLeg.draw(pass);
 
     glPopMatrix();
