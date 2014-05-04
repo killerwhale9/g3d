@@ -29,6 +29,7 @@ class Torse : public Renderable
 
         // Body parts
         Cylinder m_figure;
+        Cylinder m_bottle;
         Arm m_lUArm, // Left Upper arm
             m_rUArm,
             m_lLArm, // Left Lower arm

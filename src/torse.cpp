@@ -10,6 +10,7 @@ Torse::Torse() :
     m_headRadius(1.2f),
     m_precision(50),
     m_figure(m_length, m_width, m_precision),
+    m_bottle(3.f, 1.f, m_precision),
     m_lUArm(),
     m_rUArm(),
     m_lLArm(),
@@ -38,15 +39,22 @@ void Torse::draw(int pass)
     //glRotatef(45, 1, 0, 0);
     //glRotatef(45, 0, 0, 1);
     //glRotatef(m_tmp, 1, 1, 1);
+
+    // Torse
     m_figure.draw(pass);
+
+    // Bottle
+    glPushMatrix();
+    glTranslatef(0, 1.3f, 0);
+    m_bottle.draw(pass);
+    glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, 0, m_length);
     //glTranslatef(0, m_headRadius, m_headRadius);
     glRotatef(90, 0, 1, 0);
     glRotatef(90, 0, 0, 1);
-    //glutSolidSphere(m_headRadius, m_precision, m_precision);
-    glutSolidTeapot(m_headRadius);
+    glutSolidSphere(m_headRadius, m_precision, m_precision);
     glPopMatrix();
 
     //Change arms orientation
