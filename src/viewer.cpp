@@ -79,6 +79,7 @@ void Viewer::init()
 
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
+    addRenderable(new objReader("models/submarine.obj", "gfx/submarine.jpg"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
     flock = new Flock(env);

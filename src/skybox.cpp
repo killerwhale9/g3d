@@ -8,6 +8,7 @@ Skybox::Skybox() {}
 
 void Skybox::draw(int pass) {
 	// Configuration des états OpenGL
+        glPushAttrib(GL_ENABLE_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_CUBE_MAP_ARB); 
 	glDisable(GL_LIGHTING);
@@ -26,7 +27,7 @@ void Skybox::draw(int pass) {
 
 	// Réinitialisation des états OpenGL
 	glDisable(GL_TEXTURE_CUBE_MAP_ARB); 
-	glEnable(GL_LIGHTING);
+        glPopAttrib(); // lighting
 
 }
 

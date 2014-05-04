@@ -11,7 +11,7 @@ Chest::Chest() : m_model(objManager::getObj("chest")), m_viewer(NULL),
 void Chest::draw(int pass)
 {
     glPushMatrix();
-    glScalef(0.25, 0.25, 0.25);
+    glTranslatef(m_pos.x, m_pos.y, m_pos.z);
     glRotatef(90, 1, 0, 0);
     m_model.draw(pass);
     glPopMatrix();
