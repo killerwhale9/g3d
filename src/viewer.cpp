@@ -85,7 +85,7 @@ void Viewer::init()
     addRenderable(new Chest());
     flock = new Flock(env);
     addRenderable(flock);
-    //addRenderable(new Weed());
+    addRenderable(new Weed());
     //addRenderable(new Flock());
 
     //Useless XXX
