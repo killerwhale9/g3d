@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <cmath>
 #include <ctime>
+#include <stdlib.h>
 
 
 Bubble::Bubble(float r, float x, float y, float z) :
@@ -12,7 +13,7 @@ Bubble::Bubble(float r, float x, float y, float z) :
     m_dx(0),
     m_dy(0),
     m_dz(0.1f),
-    m_precision(50)
+    m_precision(8)
 {
 }
 
@@ -31,8 +32,8 @@ void Bubble::draw(int pass)
 
 void Bubble::animate()
 {
-    m_dx += ((random()%3)-1)*0.001f;
-    m_dy += ((random()%3)-1)*0.001f;
+    m_dx += ((rand()%3)-1)*0.001f;
+    m_dy += ((rand()%3)-1)*0.001f;
     m_x += m_dx;
     m_y += m_dy;
     m_z += m_dz;

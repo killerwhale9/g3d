@@ -12,6 +12,7 @@
 #include "objManager.hpp"
 #include "chest.hpp"
 #include "stone.hpp"
+#include "bubble.hpp"
 #include "glm/gtx/noise.hpp"
 #include "skybox.hpp"
 #include "weed.hpp"
@@ -79,6 +80,7 @@ void Viewer::init()
 
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
+    addRenderable(new objReader("models/submarine.obj", "gfx/submarine.jpg"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
     flock = new Flock(env);
@@ -100,6 +102,20 @@ void Viewer::init()
             //}
         //}
     //}
+
+    // on ajoute en dernier les bulles
+    addRenderable(new Bubble(0.3f,5,0,4));
+    addRenderable(new Bubble(0.3f,5,0,4));
+    addRenderable(new Bubble(0.3f,5,0,4));
+    addRenderable(new Bubble(0.3f,5,0,4));
+    addRenderable(new Bubble(0.3f,5,0,4));
+    addRenderable(new Bubble(0.3f,5,0,4));
+    addRenderable(new Bubble(0.3f,5,0,4));
+    addRenderable(new Bubble(0.3f,5,0,4));
+    addRenderable(new Bubble(0.3f,5,0,4));
+    addRenderable(new Bubble(0.3f,5,0,4));
+    addRenderable(new Bubble(0.3f,5,0,4));
+    addRenderable(new Bubble(0.3f,5,0,4));
 
     list<Renderable *>::iterator it;
     for (it = renderableList.begin(); it != renderableList.end(); ++it) {

@@ -10,15 +10,22 @@
 #else
 #include <GLUT/glut.h>
 #endif
+#include "globals.hpp"
+#include "glm/vec3.hpp"
+
+class Animation;
 
 class Torse : public Renderable
 {
     public:
+        friend class Animation;
         void draw(int pass);
+        virtual void animate();
         Torse();
 
         inline float getWidth() const { return m_width; }
         inline float getLength() const { return m_length; }
+        const glm::vec3& getCurrentRotation(frame_type);
     private:
         // Values for sizing the body
         // Lengths
@@ -45,6 +52,25 @@ class Torse : public Renderable
         int m_dirLeg; // Derivate of the angle
 
         int m_tmp;
+        uint32_t m_frame;
+
+        // rotation actuelles
+        glm::vec3 m_angULArm,
+                  m_angLLArm,
+                  m_angURArm,
+                  m_angLRArm,
+                  m_angULLeg,
+                  m_angLLLeg,
+                  m_angURLeg,
+                  m_angLRLeg,
+                  m_angHead,
+                  m_angTorse;
+
+        Animation *m_animSwim;
+
+        Animation *m_currentAnim;
+
+        void setAnimation(Animation* a);
 
 };
 
