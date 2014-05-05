@@ -28,19 +28,17 @@ void Animation::generateInterpolation(Torse &me)
                     // add the interpolations
                     //std::cout<<"("<<f1.rot[0]<<","<<f1.rot[1]<<","<<f1.rot[2]<<")\n";
                     //std::cout<<"[2]Interpolated a frame of type "<<f1.type<<" for frame "<<i<<"\n";
-                    if (f1.rot != f2.rot) { // makes no sense to interpolate
-                        for (uint32_t j = i+1; j < k; j++) {
-                            m_frames[j].push_back(Frame(f1, f2, j-i, n));
-                            //std::cout<<"[2]Interpolated a frame of type "<<f1.type<<" for frame "<<j<<"\n";
-                        }
-                        //std::cout<<"("<<f2.rot[0]<<","<<f2.rot[1]<<","<<f2.rot[2]<<")\n";
-                        //std::cout<<"[2]Interpolated a frame of type "<<f1.type<<" for frame "<<k<<"\n";
-                        // we add first and last
-                        m_frames[i].push_back(f1);
-                        m_frames[k].push_back(f2);
-                        found = true;
-                        break; // exit this for
+                    for (uint32_t j = i+1; j < k; j++) {
+                        m_frames[j].push_back(Frame(f1, f2, j-i, n));
+                        //std::cout<<"[2]Interpolated a frame of type "<<f1.type<<" for frame "<<j<<"\n";
                     }
+                    //std::cout<<"("<<f2.rot[0]<<","<<f2.rot[1]<<","<<f2.rot[2]<<")\n";
+                    //std::cout<<"[2]Interpolated a frame of type "<<f1.type<<" for frame "<<k<<"\n";
+                    // we add first and last
+                    m_frames[i].push_back(f1);
+                    m_frames[k].push_back(f2);
+                    found = true;
+                    break; // exit this for
                 }
             }
             if (!found) {// we still can add the first one 

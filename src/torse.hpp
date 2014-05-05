@@ -49,7 +49,7 @@ class Torse : public Renderable
             m_lLLeg,
             m_rLLeg;
         Fin m_lFin,
-			m_rFin;
+            m_rFin;
 
         uint32_t m_frame, m_bubbles;
         Viewer *m_viewer;

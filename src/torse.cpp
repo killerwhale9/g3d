@@ -6,7 +6,6 @@ using namespace std;
 #include "animation.hpp"
 #include "bubble.hpp"
 #include "viewer.hpp"
-#include "fin.hpp"
 #include <stdlib.h>
 
 Torse::Torse() :
@@ -30,11 +29,9 @@ Torse::Torse() :
     m_animSwim(new Animation(30)),
     m_animGetUp(new Animation(20)),
     m_animSwimTrans(new Animation(20)),
-    m_animAim(new Animation(60)),
+    m_animAim(new Animation(20)),
     m_currentAnim(NULL),
-    m_pos(0, -30, 10),
-	m_lFin(),
-	m_rFin()
+    m_pos(0, -30, 10)
 {
     float tmp = 10;
     m_animSwim->addFrame(0, e_torse, glm::vec3(-90, 0, -tmp));
@@ -97,14 +94,14 @@ Torse::Torse() :
 
     // Animation pour sortir l'arme et viser
     m_animAim->addFrameFromCurrent(0);
-    m_animAim->addFrame(19, e_armUL, glm::vec3(10, 75, 180));
-    m_animAim->addFrame(19, e_armLL, glm::vec3(0, 0, 0));
-    m_animAim->addFrame(39, e_armUL, glm::vec3(10, 75, 180));
-    m_animAim->addFrame(39, e_armLL, glm::vec3(0, 0, 90));
-    m_animAim->addFrame(59, e_armUL, glm::vec3(-90, 75, 180));
-    m_animAim->addFrame(59, e_armLL, glm::vec3(0, 0, 90));
-    m_animAim->addFrame(59, e_armUR, glm::vec3(-30, 75, 180));
-    m_animAim->addFrame(59, e_armLR, glm::vec3(0, 45, 0));
+    m_animAim->addFrame(7, e_armUL, glm::vec3(10, 75, 180));
+    m_animAim->addFrame(7, e_armLL, glm::vec3(0, 0, 0));
+    m_animAim->addFrame(13, e_armUL, glm::vec3(10, 75, 180));
+    m_animAim->addFrame(13, e_armLL, glm::vec3(0, 0, 90));
+    m_animAim->addFrame(19, e_armUL, glm::vec3(-90, 75, 180));
+    m_animAim->addFrame(19, e_armLL, glm::vec3(0, 0, 90));
+    m_animAim->addFrame(19, e_armUR, glm::vec3(-30, 75, 180));
+    m_animAim->addFrame(19, e_armLR, glm::vec3(0, 45, 0));
 
     setAnimation(m_animSwim);
     animate();// otherwise it all angs are at 0
@@ -206,11 +203,6 @@ void Torse::draw(int pass)
     glColor3f(1,0,0);
     m_rLLeg.draw(pass);
 
-	glTranslatef(0.0, 0.0, -m_rLLeg.getLength());
-	glTranslatef(0.0, 0.5, 0.0);
-    glRotatef(-60, 1, 0, 0);
-	m_rFin.draw(pass);
-	
     glPopMatrix();
 
     //Left leg
@@ -228,11 +220,6 @@ void Torse::draw(int pass)
     glRotatef(m_angLLLeg.z, 0, 0, 1);
     glColor3f(1,0,0);
     m_lLLeg.draw(pass);
-
-	glTranslatef(0.0, 0.0, -m_rLLeg.getLength());
-	glTranslatef(0.0, 0.5, 0.0);
-    glRotatef(-60, 1, 0, 0);
-	m_lFin.draw(pass);
 
     glPopMatrix();
 
