@@ -28,9 +28,10 @@ class CameraAnimation : public Renderable {
         std::vector<CameraFrame*> m_original, m_frames;
         uint32_t m_ind;
         qglviewer::Camera *m_cam;
+        bool *m_active;
 
     public:
-        CameraAnimation(uint32_t nbFrames, qglviewer::Camera &cam);
+        CameraAnimation(uint32_t nbFrames, qglviewer::Camera &cam, bool &active);
         ~CameraAnimation();
         inline void addFrame(int i, const CameraFrame &frame) { m_original[i] = (new CameraFrame(frame)); }
         inline void addFrame(int i, const glm::vec3 &pos, const glm::vec3 &look, bool interpolate) {

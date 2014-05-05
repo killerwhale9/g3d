@@ -21,7 +21,7 @@
 #include <sstream>
 #include <ctime>
 
-Viewer::Viewer() : currentCaustic(0)
+Viewer::Viewer() : currentCaustic(0), useCustomCamera(false)
 {
     lightDiffuseColor[0] = 0.66;
     lightDiffuseColor[1] = 1.0;
@@ -78,7 +78,7 @@ void Viewer::init()
     glEnable(GL_NORMALIZE); // les nomrmales ne sont plus affectées par les scale
 
     // Création de la caméra et animation
-    CameraAnimation &cam = *(new CameraAnimation(30*100, *camera()));
+    CameraAnimation &cam = *(new CameraAnimation(30*100, *camera(), useCustomCamera));
 
     cam.addFrame(0, glm::vec3(0, 0, 50), glm::vec3(0, 0, 0), true);
     cam.addFrame(30, glm::vec3(0, 0, 50), glm::vec3(0, -50, 0), true);
@@ -368,6 +368,8 @@ void Viewer::keyPressEvent(QKeyEvent *e)
             noise_octaves += modifiers==Qt::NoButton?-1:1;
             std::cout<<"noise_octaves:"<<noise_octaves<<"\n";
             noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
+    } else if (e->key() == Qt::Key_C) {
+        useCustomCamera = !useCustomCamera;
     } else {
         // if the event is not handled here, process it as default
         QGLViewer::keyPressEvent(e);

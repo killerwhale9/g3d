@@ -1,7 +1,7 @@
 #include "cameraAnimation.hpp"
 
 void CameraAnimation::animate() {
-    if (m_ind < m_frames.size()) {
+    if (*m_active && m_ind < m_frames.size()) {
         if (m_frames[m_ind]) {
             m_cam->setPosition(qglviewer::Vec(m_frames[m_ind]->pos));
             m_cam->lookAt(qglviewer::Vec(m_frames[m_ind]->look));
@@ -44,8 +44,8 @@ CameraFrame::CameraFrame(const CameraFrame &a, const CameraFrame &b, int i, int 
 
 }
 
-CameraAnimation::CameraAnimation(uint32_t nbFrames, qglviewer::Camera &cam) : m_original(nbFrames), m_frames(nbFrames),
-    m_ind(0), m_cam(&cam)
+CameraAnimation::CameraAnimation(uint32_t nbFrames, qglviewer::Camera &cam, bool &active) : m_original(nbFrames), m_frames(nbFrames),
+    m_ind(0), m_cam(&cam), m_active(&active)
 {
     for (uint32_t i = 0; i < nbFrames; ++i)
         m_original[i] = m_frames[i] = NULL;
