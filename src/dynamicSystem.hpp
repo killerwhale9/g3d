@@ -61,7 +61,7 @@ private:
 
 public:
 	DynamicSystem();	// TODO add general parameters (viscosity...)
-	virtual ~DynamicSystem();
+	~DynamicSystem();
 
 	// Position of the firt particle ca be set through mouse movements
 	const Vec &getFixedParticlePosition() const;
@@ -107,7 +107,7 @@ public:
 	void init(Viewer &);
 
 	// Draw the particle-spring system
-	void draw();
+	void draw(int pass);
 
 	// Update positions and velocities of dynamic objects
 	void animate();

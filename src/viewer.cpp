@@ -18,6 +18,7 @@
 #include "skybox.hpp"
 #include "weed.hpp"
 #include "torse.hpp"
+#include "dynamicSystem.hpp"
 #include "cameraAnimation.hpp"
 #include "coral.hpp"
 #include <sstream>
@@ -91,6 +92,9 @@ void Viewer::init()
 
     // end with the skybox or begin TODO
     addRenderable(new Skybox());
+    
+    //Rope
+    addRenderable(new DynamicSystem());
 
     //Corals
     float coralOffsetX=0;

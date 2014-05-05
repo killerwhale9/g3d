@@ -40,7 +40,7 @@ public:
 	const Particle *getParticle1() const;
 	const Particle *getParticle2() const;
 	
-	void draw() const;
+	void draw(int pass) const;
 };
 
 #endif // _SPRING_H_

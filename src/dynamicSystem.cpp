@@ -103,9 +103,6 @@ void DynamicSystem::init(Viewer &viewer)
 	viewer.manipulatedFrame()->setPosition(getFixedParticlePosition());
 	viewer.setSceneRadius(10.0f);
 
-	//glEnable(GL_TEXTURE_2D);
-    tx_nyan = TextureManager::loadTexture("oddish.png", "nyan", false);
-
 }
 
 
@@ -131,65 +128,26 @@ void DynamicSystem::createSystemScene()
 
         prevPos = pos;
     }
-
-    particles.push_back(new Particle(Vec(1.0, 3.0, particleRadius), Vec(-2.0, 0.0, 0.0), particleMass, particleRadius));
-    particles.push_back(new Particle(Vec(-1.0, 3.0, particleRadius*3.0), Vec(5.0, 0.0, 0.0), particleMass, particleRadius*3.0));
-    particles.back()->blue = true;
-
-    particles.push_back(new Particle(Vec(3.0, 3.0, particleRadius), Vec(-3.0, 0.0, 10.0), particleMass, particleRadius));
-    particles.push_back(new Particle(Vec(70.0, 1.0, particleRadius*40), Vec(-35, 0.0,0.0), particleMass*40, particleRadius*40));
-
-    for (int i = 0; i < 0; i++) {
-    	particles.push_back(new Particle(Vec(-2.0, 3.0, 5.0+i*(particleRadius+1.0)), Vec(0, 0.0, 0.0), particleMass, particleRadius));
-    	particles.back()->blue = (i%2);
-    }
-
-	
-	// .. then create a chain of particles
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////
-void DynamicSystem::draw()
+void DynamicSystem::draw(int pass)
 {
 	// Particles
 	glColor3f(1,0,0);
-    /*glEnable(GL_TEXTURE_2D);*/
 	vector<Particle *>::iterator itP;
 	for (itP = particles.begin(); itP != particles.end(); ++itP) {
-		(*itP)->draw();
+		(*itP)->draw(pass);
 	}
-    glDisable(GL_TEXTURE_2D);
 
 	// Springs
 	glColor3f(1.0, 0.28, 0.0);
 	glLineWidth(5.0);
 	vector<Spring *>::iterator itS;
 	for (itS = springs.begin(); itS != springs.end(); ++itS) {
-		(*itS)->draw();
+		(*itS)->draw(pass);
 	}
-
-	// Ground :
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, tx_nyan);
-	glColor3f(1.0, 1.0, 1.0);
-	glNormal3f(0.0, 0.0, 1.0);
-	glBegin(GL_QUADS);
-
-    glTexCoord2f( 0.0f, 0.0f );
-	glVertex3f(-10.0f, -10.0f, 0.0f);
-    
-    glTexCoord2f( 0.0f, 1.0f );
-	glVertex3f(-10.0f, 10.0f,  0.0f);
-    
-    glTexCoord2f( 1.0f, 1.0f );
-	glVertex3f( 10.0f, 10.0f,  0.0f);
-    
-    glTexCoord2f( 1.0f, 0.0f );
-	glVertex3f( 10.0f, -10.0f, 0.0f);
-	
-	glEnd();
-    glDisable(GL_TEXTURE_2D);
 }
 
 
@@ -294,7 +252,7 @@ void DynamicSystem::collisionParticleParticle(Particle *p1, Particle *p2)
 
     p.normalize();
 
-    std::cout<<"Collision\n";
+    //std::cout<<"Collision\n";
 
     Vec vel(p1->getVelocity() - p2->getVelocity());
 

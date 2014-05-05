@@ -48,7 +48,7 @@ const Particle *Spring::getParticle2() const
 }
 
 
-void Spring::draw() const
+void Spring::draw(int pass) const
 {
 	glBegin(GL_LINES);
 	Vec pos1 = p1->getPosition();
