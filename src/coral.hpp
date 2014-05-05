@@ -16,9 +16,15 @@ class Coral : public Renderable
 		static const int defaultAngle = 35;
 		static const int defaultDepth = 5;
 
+		static const float minMult = 3.0;
+		static const float maxMult = 5.0;
+
         void draw(int pass);
         void drawSub(int pass, int angle);
-        Coral(int depth, int x, int y);
+        Coral(int depth, int x, int y, float mutl);
+        static inline float randomBetween(float min, float max) {
+            return min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(max-min)));
+        };
 
     private:
 		int m_nbBranch;
@@ -27,6 +33,7 @@ class Coral : public Renderable
         int m_x;
         int m_y;
         bool m_initialized;
+        float m_pivot;
         GLuint m_list;
 		Cylinder m_coral; //root
 		std::vector<Coral> m_smallCorals;

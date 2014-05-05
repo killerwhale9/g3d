@@ -30,6 +30,7 @@ Torse::Torse() :
     m_animGetUp(new Animation(20)),
     m_animSwimTrans(new Animation(20)),
     m_animAim(new Animation(20)),
+    m_animRecoil(new Animation(10)),
     m_currentAnim(NULL),
     m_pos(0, -30, 10)
 {
@@ -102,6 +103,11 @@ Torse::Torse() :
     m_animAim->addFrame(19, e_armLL, glm::vec3(0, 0, 90));
     m_animAim->addFrame(19, e_armUR, glm::vec3(-30, 75, 180));
     m_animAim->addFrame(19, e_armLR, glm::vec3(0, 45, 0));
+
+    // Animation pour le recul apres le coup de feu
+    m_animRecoil->addFrameFromCurrent(0);
+    m_animRecoil->addFrame(9, e_legUL, glm::vec3(75, 35, 0));
+    m_animRecoil->addFrame(9, e_legUR, glm::vec3(75, -35, 0));
 
     setAnimation(m_animSwim);
     animate();// otherwise it all angs are at 0
@@ -276,18 +282,24 @@ void Torse::animate()
         else if (m_currentAnim == m_animGetUp)
             setAnimation(m_animAim);
         else if (m_currentAnim == m_animAim)
+            setAnimation(m_animRecoil);
+        else if (m_currentAnim == m_animRecoil)
             setAnimation(m_animSwimTrans);
         else if (m_currentAnim == m_animSwimTrans)
             setAnimation(m_animSwim);
     }
+
     if (m_currentAnim == m_animSwim)
         m_pos.y += 0.3f;
-    else
-        m_pos.y += 0.075f;
+    else if (m_currentAnim == m_animRecoil)
+        m_pos.y -= 0.3f;
+
     m_bubbles++;
-    if (m_bubbles >= 30*2) {
+    if (m_bubbles >= 20*2) {
         m_bubbles = 0;
         m_viewer->addRenderable(new Bubble(0.0065*(rand()%40), m_pos.x, m_pos.y, m_pos.z));
+        m_viewer->addRenderable(new Bubble(0.0065*(rand()%40), m_pos.x, m_pos.y, m_pos.z+0.3f));
+        m_viewer->addRenderable(new Bubble(0.0065*(rand()%40), m_pos.x, m_pos.y, m_pos.z+0.9f));
     }
 }
 
