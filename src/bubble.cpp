@@ -22,6 +22,8 @@ void Bubble::draw(int pass)
     glPushMatrix();
     glTranslatef(m_x, m_y, m_z);
     glEnable(GL_BLEND);
+    if (pass == PASS_NORMAL)
+        glBindTexture(GL_TEXTURE_2D, 0);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glColor4f(0.1f, 0.1f, 0.25f, 0.25f);
     //glColor4f(0.1f, 0.1f, 0.25f, 1.0f);
@@ -36,5 +38,5 @@ void Bubble::animate()
     m_dy += ((rand()%3)-1)*0.001f;
     m_x += m_dx;
     m_y += m_dy;
-    m_z += m_dz;
+    m_z += m_dz*5.f;
 }

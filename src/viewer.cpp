@@ -11,6 +11,7 @@
 #include "TextureManager.hpp"
 #include "objManager.hpp"
 #include "chest.hpp"
+#include "submarine.hpp"
 #include "stone.hpp"
 #include "bubble.hpp"
 #include "glm/gtx/noise.hpp"
@@ -80,9 +81,9 @@ void Viewer::init()
 
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
-    addRenderable(new objReader("models/submarine.obj", "gfx/submarine.jpg"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
+    addRenderable(new Submarine());
     flock = new Flock(env);
     addRenderable(flock);
     addRenderable(new Weed());
@@ -191,6 +192,7 @@ void Viewer::loadTextures()
 
 
     // obj
+    objManager::loadObj("models/submarine.obj", "gfx/submarine.jpg", "submarine");
     objManager::loadObj("models/treasure_chest.obj", "gfx/treasure_chest.jpg", "chest");
     objManager::loadObj("models/stone1.obj", "gfx/stones/stone1.jpg", "stone1");
     objManager::loadObj("models/stone2.obj", "gfx/stones/stone2.jpg", "stone2");

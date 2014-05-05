@@ -26,6 +26,8 @@ class Torse : public Renderable
         inline float getWidth() const { return m_width; }
         inline float getLength() const { return m_length; }
         const glm::vec3& getCurrentRotation(frame_type);
+        inline void setPosition(const glm::vec3 &p) { m_pos = p; }
+        inline virtual void init(Viewer& v) {m_viewer = &v;};
     private:
         // Values for sizing the body
         // Lengths
@@ -41,18 +43,13 @@ class Torse : public Renderable
             m_rUArm,
             m_lLArm, // Left Lower arm
             m_rLArm;
-        float m_angUArm, // Angle of the upper arm
-              m_angLArm; // Angle of the lower arm
-        int m_dirArm; // Derivate of the angle
         Leg m_lULeg,
             m_rULeg,
             m_lLLeg,
             m_rLLeg;
-        float m_angLeg; // Angle of the Leg
-        int m_dirLeg; // Derivate of the angle
 
-        int m_tmp;
-        uint32_t m_frame;
+        uint32_t m_frame, m_bubbles;
+        Viewer *m_viewer;
 
         // rotation actuelles
         glm::vec3 m_angULArm,
@@ -69,6 +66,8 @@ class Torse : public Renderable
         Animation *m_animSwim;
 
         Animation *m_currentAnim;
+
+        glm::vec3 m_pos;
 
         void setAnimation(Animation* a);
 

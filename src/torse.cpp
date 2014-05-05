@@ -4,6 +4,9 @@ using namespace std;
 #include "cylinder.hpp"
 #include <cmath>
 #include "animation.hpp"
+#include "bubble.hpp"
+#include "viewer.hpp"
+#include <stdlib.h>
 
 Torse::Torse() :
     m_length(4.f),
@@ -16,21 +19,16 @@ Torse::Torse() :
     m_rUArm(m_precision),
     m_lLArm(m_precision),
     m_rLArm(m_precision),
-    m_angUArm(0.0f),
-    m_angLArm(0.0f),
-    m_dirArm(+1),
     m_lULeg(m_precision),
     m_rULeg(m_precision),
     m_lLLeg(m_precision),
     m_rLLeg(m_precision),
-    m_angLeg(0.0f),
-    m_dirLeg(+1),
-
-    m_tmp(0),
     m_frame(0),
-
+    m_bubbles(0),
+    m_viewer(NULL),
     m_animSwim(new Animation(30)),
-    m_currentAnim(NULL)
+    m_currentAnim(NULL),
+    m_pos(0, -30, 10)
 {
     float tmp = 10;
     m_animSwim->addFrame(0, e_torse, glm::vec3(-90, 0, -tmp));
@@ -65,6 +63,7 @@ Torse::Torse() :
     m_animSwim->addFrame(29, e_armUR, glm::vec3(0, 75, 10));
 
     setAnimation(m_animSwim);
+    animate();// otherwise it all angs are at 0
 
 }
 
@@ -79,8 +78,8 @@ void Torse::draw(int pass)
     glPushMatrix();
     if (pass == PASS_NORMAL)
         glBindTexture(GL_TEXTURE_2D, 0);
-    m_tmp = (m_tmp+1)%360;
-    //cout<<m_tmp<<"\n";
+
+    glTranslatef(m_pos.x, m_pos.y, m_pos.z);
 
     //glRotatef(45, 0, 1, 0);
     //glRotatef(45, 1, 0, 0);
@@ -96,7 +95,7 @@ void Torse::draw(int pass)
 
     // Bottle
     glPushMatrix();
-    glTranslatef(0, -1.3f, 0);
+    glTranslatef(0, -1.3f, 0.1f);
     glColor3f(1,1,0);
     m_bottle.draw(pass);
     glPopMatrix();
@@ -110,38 +109,6 @@ void Torse::draw(int pass)
     glColor3f(1,1,0);
     glutSolidSphere(m_headRadius, m_precision, m_precision);
     glPopMatrix();
-
-    //Change arms orientation
-    m_angUArm += m_dirArm;
-
-    if (m_dirArm > 0) {
-        //Arm going down
-        if (m_angUArm < 0) {
-            //First half
-            if (m_angLArm < 0) {
-                m_angLArm += m_dirArm;
-            }
-        } else {
-            //Second half
-            if (m_angUArm <= 30) {
-                m_angLArm -= m_dirArm;
-            } else {
-                m_angLArm += m_dirArm;
-            }
-        }
-    } else {
-        //Arm going up
-        if (m_angLArm + m_angUArm <= -90) {
-            m_angLArm = -90 - m_angUArm;
-        } else {
-            m_angLArm += m_dirArm;
-        }
-    }
-
-    if (m_angUArm >= 60 || m_angUArm <= -50)
-        m_dirArm = -m_dirArm;
-
-    //cout<<"angUArm:"<<m_angUArm<<" angLArm:"<<m_angLArm<<"\n";
 
     //Right arm
     glPushMatrix();
@@ -178,11 +145,6 @@ void Torse::draw(int pass)
     m_lLArm.draw(pass);
 
     glPopMatrix();
-
-    //Change legs orientation
-    m_angLeg += m_dirLeg;
-    if (m_angLeg >= 25 || m_angLeg <= -25)
-        m_dirLeg = -m_dirLeg;
 
     //Right leg
     glPushMatrix();
@@ -266,5 +228,11 @@ void Torse::animate()
 {
     m_currentAnim->update(*this, m_frame);
     m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
+    m_pos.y += 0.3f;
+    m_bubbles++;
+    if (m_bubbles >= 30*2) {
+        m_bubbles = 0;
+        m_viewer->addRenderable(new Bubble(0.0065*(rand()%40), m_pos.x, m_pos.y, m_pos.z));
+    }
 }
 
