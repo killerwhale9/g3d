@@ -6,6 +6,7 @@ using namespace std;
 #include "animation.hpp"
 #include "bubble.hpp"
 #include "viewer.hpp"
+#include "fin.hpp"
 #include <stdlib.h>
 
 Torse::Torse() :
@@ -30,7 +31,9 @@ Torse::Torse() :
     m_animGetUp(new Animation(20)),
     m_animSwimTrans(new Animation(20)),
     m_currentAnim(NULL),
-    m_pos(0, -30, 10)
+    m_pos(0, -30, 10),
+	m_lFin(),
+	m_rFin()
 {
     float tmp = 10;
     m_animSwim->addFrame(0, e_torse, glm::vec3(-90, 0, -tmp));
@@ -191,6 +194,11 @@ void Torse::draw(int pass)
     glColor3f(1,0,0);
     m_rLLeg.draw(pass);
 
+	glTranslatef(0.0, 0.0, -m_rLLeg.getLength());
+	glTranslatef(0.0, 0.5, 0.0);
+    glRotatef(-60, 1, 0, 0);
+	m_rFin.draw(pass);
+	
     glPopMatrix();
 
     //Left leg
@@ -208,6 +216,11 @@ void Torse::draw(int pass)
     glRotatef(m_angLLLeg.z, 0, 0, 1);
     glColor3f(1,0,0);
     m_lLLeg.draw(pass);
+
+	glTranslatef(0.0, 0.0, -m_rLLeg.getLength());
+	glTranslatef(0.0, 0.5, 0.0);
+    glRotatef(-60, 1, 0, 0);
+	m_lFin.draw(pass);
 
     glPopMatrix();
 
