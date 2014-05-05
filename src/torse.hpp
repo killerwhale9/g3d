@@ -14,6 +14,7 @@
 #include "glm/vec3.hpp"
 #include "fin.hpp"
 #include "objReader.hpp"
+#include "dynamicSystem.hpp"
 
 class Animation;
 
@@ -37,6 +38,8 @@ class Torse : public Renderable
               m_width, // size of the memebers eg: radius as they're cylinders
               m_headRadius;
         int m_precision; // number of faces
+
+DynamicSystem m_syst;
 
         // Body parts
         Cylinder m_figure;
