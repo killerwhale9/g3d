@@ -142,9 +142,9 @@ void objReader::draw(int pass)
             }
                 glVertex3fv((GLfloat*)&m_vertices[*vx]);
                 //std::cout<<"v["<<*vx<<"] = ("<<
-                    //m_vertices[*vx].vec()[0]<<","<<
-                    //m_vertices[*vx].vec()[1]<<","<<
-                    //m_vertices[*vx].vec()[2]<<
+                    //m_vertices[*vx][0]<<","<<
+                    //m_vertices[*vx][1]<<","<<
+                    //m_vertices[*vx][2]<<
                     //")\n";
         }
         glEnd();
