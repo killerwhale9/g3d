@@ -59,4 +59,5 @@ void Shark::animate()
         m_pos.z -= (altitude-profondeur)/fps;
         m_rot += rotation/fps;
     }
+    m_timer++;
 }

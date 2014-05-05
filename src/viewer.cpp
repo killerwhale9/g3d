@@ -140,8 +140,8 @@ void Viewer::init()
     //addRenderable(new objReader("models/portalbutton.obj", "gfx/button.jpg"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     //addRenderable(new Chest());
-    //addRenderable(new Submarine());
-    //addRenderable(new Shark());
+    addRenderable(new Submarine());
+    addRenderable(new Shark());
     guy = new Torse();
     addRenderable(guy);
     flock = new Flock(env, "fish");
