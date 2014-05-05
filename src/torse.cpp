@@ -9,20 +9,20 @@ Torse::Torse() :
     m_length(4.f),
     m_width(2.f),
     m_headRadius(1.2f),
-    m_precision(50),
+    m_precision(16),
     m_figure(m_length, m_width, m_precision),
     m_bottle(3.f, 1.f, m_precision),
-    m_lUArm(),
-    m_rUArm(),
-    m_lLArm(),
-    m_rLArm(),
+    m_lUArm(m_precision),
+    m_rUArm(m_precision),
+    m_lLArm(m_precision),
+    m_rLArm(m_precision),
     m_angUArm(0.0f),
     m_angLArm(0.0f),
     m_dirArm(+1),
-    m_lULeg(),
-    m_rULeg(),
-    m_lLLeg(),
-    m_rLLeg(),
+    m_lULeg(m_precision),
+    m_rULeg(m_precision),
+    m_lLLeg(m_precision),
+    m_rLLeg(m_precision),
     m_angLeg(0.0f),
     m_dirLeg(+1),
 
@@ -32,19 +32,37 @@ Torse::Torse() :
     m_animSwim(new Animation(30)),
     m_currentAnim(NULL)
 {
-    m_animSwim->addFrame(0, e_torse, glm::vec3(90, 0, 0));
+    float tmp = 10;
+    m_animSwim->addFrame(0, e_torse, glm::vec3(-90, 0, -tmp));
+    m_animSwim->addFrame(0, e_head, glm::vec3(15, 0, tmp));
+
     m_animSwim->addFrame(0, e_legUL, glm::vec3(15, 0, 0));
-    //m_animSwim->addFrame(0, e_legLL);
+    m_animSwim->addFrame(0, e_legLL, glm::vec3(0, 0, 0));
     m_animSwim->addFrame(0, e_legUR, glm::vec3(-15, 0, 0));
-    //m_animSwim->addFrame(0, e_legLR);
+    m_animSwim->addFrame(0, e_legLR, glm::vec3(-tmp, 0, 0));
 
+    m_animSwim->addFrame(0, e_armUL, glm::vec3(0, -75, 180));
+    m_animSwim->addFrame(0, e_armUR, glm::vec3(0, 75, 10));
+    m_animSwim->addFrame(0, e_armLL, glm::vec3(0, 0, 0));
+    m_animSwim->addFrame(0, e_armLR, glm::vec3(0, 0, 0));
+
+    m_animSwim->addFrame(14, e_torse, glm::vec3(-90, 0, tmp));
+    m_animSwim->addFrame(14, e_head, glm::vec3(15, 0, -tmp));
     m_animSwim->addFrame(14, e_legUL, glm::vec3(-15, 0, 0));
+    m_animSwim->addFrame(14, e_legLL, glm::vec3(-tmp, 0, 0));
     m_animSwim->addFrame(14, e_legUR, glm::vec3(15, 0, 0));
+    m_animSwim->addFrame(14, e_legLR, glm::vec3(0, 0, 0));
+    m_animSwim->addFrame(14, e_armUL, glm::vec3(0, -75, 170));
+    m_animSwim->addFrame(14, e_armUR, glm::vec3(0, 75, 0));
 
-    m_animSwim->addFrame(29, e_torse, glm::vec3(90, 0, 0));
+    m_animSwim->addFrame(29, e_torse, glm::vec3(-90, 0, -tmp));
+    m_animSwim->addFrame(29, e_head, glm::vec3(15, 0, tmp));
     m_animSwim->addFrame(29, e_legUL, glm::vec3(15, 0, 0));
-    //m_animSwim->addFrame(0, e_legLL);
+    m_animSwim->addFrame(29, e_legLL, glm::vec3(0, 0, 0));
     m_animSwim->addFrame(29, e_legUR, glm::vec3(-15, 0, 0));
+    m_animSwim->addFrame(29, e_legLR, glm::vec3(-tmp, 0, 0));
+    m_animSwim->addFrame(29, e_armUL, glm::vec3(0, -75, 180));
+    m_animSwim->addFrame(29, e_armUR, glm::vec3(0, 75, 10));
 
     setAnimation(m_animSwim);
 
@@ -59,6 +77,8 @@ void Torse::setAnimation(Animation* a)
 void Torse::draw(int pass)
 {
     glPushMatrix();
+    if (pass == PASS_NORMAL)
+        glBindTexture(GL_TEXTURE_2D, 0);
     m_tmp = (m_tmp+1)%360;
     //cout<<m_tmp<<"\n";
 

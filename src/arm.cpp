@@ -5,10 +5,10 @@ using namespace std;
 #include <cmath>
 
 
-Arm::Arm() :
+Arm::Arm(int prec) :
     m_length(2.0),
     m_width(1.0),
-    m_precision(50),
+    m_precision(prec),
     m_figure(m_length, m_width, m_precision)
 {
 }

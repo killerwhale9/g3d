@@ -13,7 +13,7 @@ class Arm : public Renderable
 {
     public:
         void draw(int pass);
-        Arm();
+        Arm(int prec);
         inline float getWidth() const { return m_width; }
         inline float getLength() const { return m_length; }
     private:
