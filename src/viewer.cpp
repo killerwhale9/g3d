@@ -141,11 +141,9 @@ void Viewer::init()
 
 
     glDisable(GL_LIGHT0);
-    //glEnable(GL_LIGHT1);
-    //glEnable(GL_LIGHT2);
-    glDisable(GL_LIGHT1);
-    glDisable(GL_LIGHT2);
-    glEnable(GL_LIGHT3);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHT2);
+    glDisable(GL_LIGHT3);
     glDisable(GL_LIGHT4);
     glDisable(GL_LIGHT5);
     glDisable(GL_LIGHT6);
@@ -164,7 +162,7 @@ void Viewer::init()
     //glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.5);
 
 	//diver light
-
+    /*
 	GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	glLightfv(GL_LIGHT3, GL_AMBIENT,  white);
@@ -178,6 +176,7 @@ void Viewer::init()
 
 	glLightfv(GL_LIGHT3, GL_POSITION, positionL3);
 	glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, light3_direction);
+    */
 
     // fog
     fogColor[0] = 0.333;
