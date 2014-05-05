@@ -87,7 +87,6 @@ void Viewer::init()
     addRenderable(new Submarine());
     flock = new Flock(env);
     addRenderable(flock);
-    addRenderable(new Weed());
     //addRenderable(new Flock());
 
     //Useless XXX
@@ -119,10 +118,12 @@ void Viewer::init()
     addRenderable(new Bubble(0.3f,5,0,4));
     addRenderable(new Bubble(0.3f,5,0,4));
 
+
     list<Renderable *>::iterator it;
     for (it = renderableList.begin(); it != renderableList.end(); ++it) {
         (*it)->init(*this);
     }
+
 
     glDisable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
@@ -157,6 +158,9 @@ void Viewer::init()
     glFogfv (GL_FOG_COLOR, fogColor);
     glFogf (GL_FOG_DENSITY, density);
     glHint (GL_FOG_HINT, GL_NICEST);
+	
+    //addRenderable(new Weed());
+
 }
 
 void Viewer::loadTextures()
