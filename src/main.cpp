@@ -21,7 +21,6 @@ int main(int argc, char** argv)
 
     // build your scene here
 
-    viewer.addRenderable(new Torse());
     float coralOffsetX=0;
     float coralOffsetY=0;
     int i=0;

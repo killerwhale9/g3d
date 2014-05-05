@@ -13,6 +13,7 @@
 #include "globals.hpp"
 #include "glm/vec3.hpp"
 #include "fin.hpp"
+#include "objReader.hpp"
 
 class Animation;
 
@@ -77,6 +78,10 @@ class Torse : public Renderable
         glm::vec3 m_pos;
 
         void setAnimation(Animation* a);
+
+
+        objReader& m_rpg;
+        int m_weapon;
 
 };
 

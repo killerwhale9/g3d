@@ -17,6 +17,7 @@
 #include "glm/gtx/noise.hpp"
 #include "skybox.hpp"
 #include "weed.hpp"
+#include "torse.hpp"
 #include "cameraAnimation.hpp"
 #include <sstream>
 #include <ctime>
@@ -98,6 +99,7 @@ void Viewer::init()
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
     addRenderable(new Submarine());
+    addRenderable(new Torse());
     flock = new Flock(env);
     addRenderable(flock);
     //addRenderable(new Flock());
@@ -211,6 +213,7 @@ void Viewer::loadTextures()
 
     // obj
     objManager::loadObj("models/submarine.obj", "gfx/submarine.jpg", "submarine");
+    objManager::loadObj("models/rpg.obj", "gfx/rpg.jpg", "rpg");
     objManager::loadObj("models/treasure_chest.obj", "gfx/treasure_chest.jpg", "chest");
     objManager::loadObj("models/stone1.obj", "gfx/stones/stone1.jpg", "stone1");
     objManager::loadObj("models/stone2.obj", "gfx/stones/stone2.jpg", "stone2");

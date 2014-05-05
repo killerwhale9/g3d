@@ -8,6 +8,7 @@ using namespace std;
 #include "viewer.hpp"
 #include <stdlib.h>
 #include "glm/gtx/rotate_vector.hpp"
+#include "objManager.hpp"
 
 Torse::Torse() :
     m_length(4.f),
@@ -33,7 +34,9 @@ Torse::Torse() :
     m_animAim(new Animation(20)),
     m_animRecoil(new Animation(10)),
     m_currentAnim(NULL),
-    m_pos(0, -30, 10)
+    m_pos(0, -30, 10),
+    m_weapon(1),
+    m_rpg(objManager::getObj("rpg"))
 {
     float tmp = 10;
     m_animSwim->addFrame(0, e_torse, glm::vec3(-90, 0, -tmp));
@@ -191,6 +194,12 @@ void Torse::draw(int pass)
     glRotatef(m_angLLArm.z, 0, 0, 1);
     glColor3f(1,0,0);
     m_lLArm.draw(pass);
+
+    //Weapon
+    glPushMatrix();
+    glTranslatef(m_lUArm.getLength(), 0, 0);
+    m_rpg.draw(pass);
+    glPopMatrix();
 
     glPopMatrix();
 
