@@ -120,7 +120,7 @@ Torse::Torse() :
     setAnimation(m_animSwim);
     animate();// otherwise it all angs are at 0
 
-    m_tube.init();
+    m_tube.init(Vec(getHeadPos()));
 
 }
 
