@@ -2,9 +2,10 @@
 using namespace std;
 #include "coral.hpp"
 #include "TextureManager.hpp"
+#include <cstdlib>
 
-Coral::Coral(int depth, int x, int y) : 
-	m_coral(depth/4.0,depth/4.0*0.3,5)
+Coral::Coral(int depth, int x, int y, float mult) : 
+	m_coral(depth/mult,depth/mult*0.3,5)
 {
 	m_depth=depth;
 	m_nbBranch = 2;
@@ -12,11 +13,12 @@ Coral::Coral(int depth, int x, int y) :
     m_x = x;
     m_y = y;
     m_initialized = false;
+    m_pivot = randomBetween(0.0, 90.0);
 
 	//Recursive
 	if (depth > 0) {
 		for (int i=0; i < m_nbBranch; i++) {
-			m_smallCorals.push_back(Coral(depth-1, 0, 0));
+			m_smallCorals.push_back(Coral(depth-1, 0, 0, randomBetween(minMult,maxMult)));
 		}
 	}
 }
@@ -55,6 +57,8 @@ void Coral::draw(int pass)
     //On le bouge
     glTranslatef(m_x, m_y, 0);
 
+    glRotatef(m_pivot, 0.0, 0.0, 1.0);
+
     glCallList(m_list);
 
     glPopMatrix();
@@ -84,3 +88,5 @@ void Coral::drawSub(int pass, int angle)
     glPopMatrix();
 
 }
+
+

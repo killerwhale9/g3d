@@ -17,10 +17,11 @@
 #include "glm/gtx/noise.hpp"
 #include "skybox.hpp"
 #include "weed.hpp"
+#include "cameraAnimation.hpp"
 #include <sstream>
 #include <ctime>
 
-Viewer::Viewer() : currentCaustic(0)
+Viewer::Viewer() : currentCaustic(0), useCustomCamera(false)
 {
     lightDiffuseColor[0] = 0.66;
     lightDiffuseColor[1] = 1.0;
@@ -76,13 +77,23 @@ void Viewer::init()
 
     glEnable(GL_NORMALIZE); // les nomrmales ne sont plus affectées par les scale
 
+    // Création de la caméra et animation
+    CameraAnimation &cam = *(new CameraAnimation(30*100, *camera(), useCustomCamera));
+
+    cam.addFrame(0, glm::vec3(0, 0, 50), glm::vec3(0, 0, 0), true);
+    cam.addFrame(30, glm::vec3(0, 0, 50), glm::vec3(0, -50, 0), true);
+    cam.addFrame(80, glm::vec3(0, 0, 50), glm::vec3(0, 0, 0), false);
+    cam.interpolate();
+
+    addRenderable(&cam);
+
     // end with the skybox or begin TODO
     addRenderable(new Skybox());
 
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
-    addRenderable(new objReader("models/rpg.obj", "gfx/rpg.jpg"));
-    addRenderable(new objReader("models/missile.obj", "gfx/missile.jpg"));
+    //addRenderable(new objReader("models/rpg.obj", "gfx/rpg.jpg"));
+    //addRenderable(new objReader("models/missile.obj", "gfx/missile.jpg"));
     //addRenderable(new objReader("models/portalbutton.obj", "gfx/button.jpg"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
@@ -357,6 +368,8 @@ void Viewer::keyPressEvent(QKeyEvent *e)
             noise_octaves += modifiers==Qt::NoButton?-1:1;
             std::cout<<"noise_octaves:"<<noise_octaves<<"\n";
             noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
+    } else if (e->key() == Qt::Key_C) {
+        useCustomCamera = !useCustomCamera;
     } else {
         // if the event is not handled here, process it as default
         QGLViewer::keyPressEvent(e);
