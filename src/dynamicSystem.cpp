@@ -45,10 +45,16 @@ const Vec &DynamicSystem::getFixedParticlePosition() const
 	return particles[0]->getPosition();	// no check on 0!
 }
 
-void DynamicSystem::setFixedParticlePosition(const Vec &pos)
+void DynamicSystem::setBeginingPosition(const Vec &pos)
 {
 	if (particles.size() > 0)
 		particles[0]->setPosition(pos);
+}
+
+void DynamicSystem::setEndPosition(const Vec &pos)
+{
+	if (particles.size() > 0)
+		particles[particles.size()-1]->setPosition(pos);
 }
 
 void DynamicSystem::setGravity(bool onOff)
@@ -120,7 +126,7 @@ void DynamicSystem::createSystemScene()
         vel(0.0, 0.0, 0.0);
     for (int i = 0; i < nParts; ++i) {
         pos = initPos + Vec(0.0, -distanceBetweenParticles*(i+1), 0.0);
-        particles.push_back(new Particle(pos, vel, particleMass, particleRadius));
+        particles.push_back(new Particle(pos, vel, i==nParts-1?0.0:particleMass, particleRadius));
         l0 = pos - prevPos;
 
         Spring *spr = new Spring(particles[i], particles[i+1], springStiffness, l0.norm(), springDamping);
@@ -148,6 +154,7 @@ void DynamicSystem::draw(int pass)
 	for (itS = springs.begin(); itS != springs.end(); ++itS) {
 		(*itS)->draw(pass);
 	}
+	glLineWidth(1.0);
 }
 
 
@@ -306,7 +313,3 @@ void DynamicSystem::keyPressEvent(QKeyEvent* e, Viewer& viewer)
 	}
 }	
 
-void DynamicSystem::mouseMoveEvent(QMouseEvent*, Viewer& v)
-{
-        setFixedParticlePosition(v.manipulatedFrame()->position());
-}
