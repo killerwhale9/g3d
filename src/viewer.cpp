@@ -25,7 +25,7 @@
 #include <sstream>
 #include <ctime>
 
-Viewer::Viewer() : currentCaustic(0), useCustomCamera(false)
+Viewer::Viewer() : currentCaustic(0), useCustomCamera(false), useCaustics(true)
 {
     lightDiffuseColor[0] = 0.66;
     lightDiffuseColor[1] = 1.0;
@@ -143,7 +143,7 @@ void Viewer::init()
     addRenderable(new Submarine());
     addRenderable(new Shark());
     addRenderable(new Torse());
-    flock = new Flock(env);
+    flock = new Flock(env, "fish");
     addRenderable(flock);
     //addRenderable(new Flock());
 
@@ -244,7 +244,7 @@ void Viewer::loadTextures()
         key.str("");
         key<<"fish"<<i;
         file<<"gfx/fishes/TropicalFish"<<(i<10?"0":"")<<i<<".jpg";
-        TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
+        //TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
     }
 
 	//Skybox
@@ -257,6 +257,7 @@ void Viewer::loadTextures()
 
 
     // obj
+    objManager::loadObj("models/TropicalFish.obj", "gfx/TropicalFish.jpg", "fish");
     objManager::loadObj("models/submarine.obj", "gfx/submarine.jpg", "submarine");
     objManager::loadObj("models/rpg.obj", "gfx/rpg.jpg", "rpg");
     objManager::loadObj("models/missile.obj", "gfx/missile.jpg", "missile");
@@ -297,62 +298,64 @@ void Viewer::draw()
         (*it)->draw(PASS_NORMAL);
     }
 
-    // === SECOND PASS CAUSTICS :3 ===
-    /* Disable depth buffer update and exactly match depth
-       buffer values for slightly faster rendering. */
-    glDepthMask(GL_FALSE);
-    glDepthFunc(GL_EQUAL);
+    if (useCaustics) {
+        // === SECOND PASS CAUSTICS :3 ===
+        /* Disable depth buffer update and exactly match depth
+           buffer values for slightly faster rendering. */
+        glDepthMask(GL_FALSE);
+        glDepthFunc(GL_EQUAL);
 
-    /* Multiply the source color (from the caustic luminance
-       texture) with the previous color from the normal pass.  The
-       caustics are modulated into the scene. */
-    glBlendFunc(GL_ZERO, GL_SRC_COLOR);
-    glEnable(GL_BLEND);
-    glEnable(GL_TEXTURE_2D);
+        /* Multiply the source color (from the caustic luminance
+           texture) with the previous color from the normal pass.  The
+           caustics are modulated into the scene. */
+        glBlendFunc(GL_ZERO, GL_SRC_COLOR);
+        glEnable(GL_BLEND);
+        glEnable(GL_TEXTURE_2D);
 
-    GLfloat sPlane[4] = { 0.05, 0.03, 0.0, 0.0 };
-    GLfloat tPlane[4] = { 0.0, 0.03, 0.05, 0.0 };
-    GLfloat causticScale = 1.0;
+        GLfloat sPlane[4] = { 0.05, 0.03, 0.0, 0.0 };
+        GLfloat tPlane[4] = { 0.0, 0.03, 0.05, 0.0 };
+        GLfloat causticScale = 1.0;
 
-    /* The causticScale determines how large the caustic "ripples" will
-       be.  See the "Increate/Decrease ripple size" menu options. */
+        /* The causticScale determines how large the caustic "ripples" will
+           be.  See the "Increate/Decrease ripple size" menu options. */
 
-    sPlane[0] = 0.05 * causticScale;
-    sPlane[1] = 0.03 * causticScale;
+        sPlane[0] = 0.05 * causticScale;
+        sPlane[1] = 0.03 * causticScale;
 
-    tPlane[1] = 0.03 * causticScale;
-    tPlane[2] = 0.05 * causticScale;
+        tPlane[1] = 0.03 * causticScale;
+        tPlane[2] = 0.05 * causticScale;
 
-    /* Set current color to "white" and disable lighting
-       to emulate OpenGL 1.1's GL_REPLACE texture environment. */
-    glColor3f(1.0, 1.0, 1.0);
-    glDisable(GL_LIGHTING);
+        /* Set current color to "white" and disable lighting
+           to emulate OpenGL 1.1's GL_REPLACE texture environment. */
+        glColor3f(1.0, 1.0, 1.0);
+        glDisable(GL_LIGHTING);
 
-    /* Generate the S & T coordinates for the caustic textures
-       from the object coordinates. */
+        /* Generate the S & T coordinates for the caustic textures
+           from the object coordinates. */
 
-    glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
-    glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
-    glTexGenfv(GL_S, GL_OBJECT_PLANE, sPlane);
-    glTexGenfv(GL_T, GL_OBJECT_PLANE, tPlane);
-    glEnable(GL_TEXTURE_GEN_S);
-    glEnable(GL_TEXTURE_GEN_T);
+        glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+        glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+        glTexGenfv(GL_S, GL_OBJECT_PLANE, sPlane);
+        glTexGenfv(GL_T, GL_OBJECT_PLANE, tPlane);
+        glEnable(GL_TEXTURE_GEN_S);
+        glEnable(GL_TEXTURE_GEN_T);
 
-    glBindTexture(GL_TEXTURE_2D, causticsTex[currentCaustic]);
+        glBindTexture(GL_TEXTURE_2D, causticsTex[currentCaustic]);
 
-    // draw every objects in renderableList
-    for(it = renderableList.begin(); it != renderableList.end(); ++it) {
-        (*it)->draw(PASS_CAUSTIC);
+        // draw every objects in renderableList
+        for(it = renderableList.begin(); it != renderableList.end(); ++it) {
+            (*it)->draw(PASS_CAUSTIC);
+        }
+        if (toogleLight)
+            glEnable(GL_LIGHTING);
+        glDisable(GL_TEXTURE_GEN_S);
+        glDisable(GL_TEXTURE_GEN_T);
+
+        /* Restore fragment operations to normal. */
+        glDepthMask(GL_TRUE);
+        glDepthFunc(GL_LESS);
+        glDisable(GL_BLEND);
     }
-    if (toogleLight)
-        glEnable(GL_LIGHTING);
-    glDisable(GL_TEXTURE_GEN_S);
-    glDisable(GL_TEXTURE_GEN_T);
-
-    /* Restore fragment operations to normal. */
-    glDepthMask(GL_TRUE);
-    glDepthFunc(GL_LESS);
-    glDisable(GL_BLEND);
 
 }
 
@@ -424,6 +427,8 @@ void Viewer::keyPressEvent(QKeyEvent *e)
             noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
     } else if (e->key() == Qt::Key_C) {
         useCustomCamera = !useCustomCamera;
+    } else if (e->key() == Qt::Key_X) {
+        useCaustics = !useCaustics;
     } else {
         // if the event is not handled here, process it as default
         QGLViewer::keyPressEvent(e);

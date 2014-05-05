@@ -33,7 +33,7 @@ class Viewer : public QGLViewer
         NoiseTerrain *noise;
         Flock *flock;
     	GLfloat fogColor[4];
-        bool useCustomCamera;
+        bool useCustomCamera, useCaustics;
 
         /* Scene methods */
     protected :
