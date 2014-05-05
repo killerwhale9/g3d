@@ -258,7 +258,7 @@ void Torse::draw(int pass)
 
     glPopMatrix();
 
-    m_tube.setFixedParticlePosition(Vector[]={1.0,1.0,1.0});
+    m_tube.setFixedParticlePosition(Vec(1.0,1.0,1.0));
     m_tube.draw(pass);
 
     glPopMatrix();
