@@ -231,6 +231,7 @@ void Viewer::loadTextures()
     // obj
     objManager::loadObj("models/submarine.obj", "gfx/submarine.jpg", "submarine");
     objManager::loadObj("models/rpg.obj", "gfx/rpg.jpg", "rpg");
+    objManager::loadObj("models/missile.obj", "gfx/missile.jpg", "missile");
     objManager::loadObj("models/treasure_chest.obj", "gfx/treasure_chest.jpg", "chest");
     objManager::loadObj("models/stone1.obj", "gfx/stones/stone1.jpg", "stone1");
     objManager::loadObj("models/stone2.obj", "gfx/stones/stone2.jpg", "stone2");
