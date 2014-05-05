@@ -134,6 +134,13 @@ void DynamicSystem::createSystemScene(Vec v)
 
         prevPos = pos;
     }
+
+    //particles.push_back(new Particle(Vec(1.0, 3.0, particleRadius), Vec(-2.0, 0.0, 0.0), particleMass, particleRadius));
+    particles.push_back(new Particle(Vec(-1.0, 3.0, particleRadius*3.0), Vec(5.0, 0.0, 0.0), particleMass, particleRadius*3.0));
+    particles.back()->blue = true;
+    particles.push_back(new Particle(Vec(3.0, 3.0, particleRadius), Vec(-3.0, 0.0, 10.0), particleMass, particleRadius));
+    //particles.push_back(new Particle(Vec(70.0, 1.0, particleRadius*40), Vec(-35, 0.0,0.0), particleMass*40, particleRadius*40));
+
 }
 
 
