@@ -29,6 +29,7 @@ Torse::Torse() :
     m_animSwim(new Animation(30)),
     m_animGetUp(new Animation(20)),
     m_animSwimTrans(new Animation(20)),
+    m_animAim(new Animation(60)),
     m_currentAnim(NULL),
     m_pos(0, -30, 10)
 {
@@ -90,6 +91,17 @@ Torse::Torse() :
     m_animSwimTrans->addFrame(19, e_armUR, glm::vec3(0, 75, 10));
     m_animSwimTrans->addFrame(19, e_armLL, glm::vec3(0, 0, 0));
     m_animSwimTrans->addFrame(19, e_armLR, glm::vec3(0, 0, 0));
+
+    // Animation pour sortir l'arme et viser
+    m_animAim->addFrameFromCurrent(0);
+    m_animAim->addFrame(19, e_armUL, glm::vec3(10, 75, 180));
+    m_animAim->addFrame(19, e_armLL, glm::vec3(0, 0, 0));
+    m_animAim->addFrame(39, e_armUL, glm::vec3(10, 75, 180));
+    m_animAim->addFrame(39, e_armLL, glm::vec3(0, 0, 90));
+    m_animAim->addFrame(59, e_armUL, glm::vec3(-90, 75, 180));
+    m_animAim->addFrame(59, e_armLL, glm::vec3(0, 0, 90));
+    m_animAim->addFrame(59, e_armUR, glm::vec3(-30, 75, 180));
+    m_animAim->addFrame(59, e_armLR, glm::vec3(0, 45, 0));
 
     setAnimation(m_animSwim);
     animate();// otherwise it all angs are at 0
@@ -262,6 +274,8 @@ void Torse::animate()
         if(m_currentAnim == m_animSwim)
             setAnimation(m_animGetUp);
         else if (m_currentAnim == m_animGetUp)
+            setAnimation(m_animAim);
+        else if (m_currentAnim == m_animAim)
             setAnimation(m_animSwimTrans);
         else if (m_currentAnim == m_animSwimTrans)
             setAnimation(m_animSwim);
