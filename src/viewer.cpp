@@ -162,21 +162,6 @@ void Viewer::init()
         //}
     //}
 
-    // on ajoute en dernier les bulles
-    addRenderable(new Bubble(0.3f,5,0,4));
-    addRenderable(new Bubble(0.3f,5,0,4));
-    addRenderable(new Bubble(0.3f,5,0,4));
-    addRenderable(new Bubble(0.3f,5,0,4));
-    addRenderable(new Bubble(0.3f,5,0,4));
-    addRenderable(new Bubble(0.3f,5,0,4));
-    addRenderable(new Bubble(0.3f,5,0,4));
-    addRenderable(new Bubble(0.3f,5,0,4));
-    addRenderable(new Bubble(0.3f,5,0,4));
-    addRenderable(new Bubble(0.3f,5,0,4));
-    addRenderable(new Bubble(0.3f,5,0,4));
-    addRenderable(new Bubble(0.3f,5,0,4));
-
-
     list<Renderable *>::iterator it;
     for (it = renderableList.begin(); it != renderableList.end(); ++it) {
         (*it)->init(*this);

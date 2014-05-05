@@ -39,7 +39,8 @@ Torse::Torse() :
     m_viewMissile(0),
     m_posMissile(0),
     m_rpg(objManager::getObj("rpg")),
-    m_missile(objManager::getObj("missile"))
+    m_missile(objManager::getObj("missile")),
+    m_tube()
 {
     float tmp = 10;
     m_animSwim->addFrame(0, e_torse, glm::vec3(-90, 0, -tmp));
@@ -119,6 +120,7 @@ Torse::Torse() :
     setAnimation(m_animSwim);
     animate();// otherwise it all angs are at 0
 
+    m_tube.init();
 }
 
 void Torse::setAnimation(Animation* a)
@@ -255,6 +257,9 @@ void Torse::draw(int pass)
     m_lLLeg.draw(pass);
 
     glPopMatrix();
+
+    m_tube.setFixedParticlePosition(Vec(1.0,1.0,1.0));
+    m_tube.draw(pass);
 
     glPopMatrix();
 }
