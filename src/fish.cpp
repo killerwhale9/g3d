@@ -411,7 +411,6 @@ void Fish::draw(int pass) {
     // Body
     glRotatef( 180 - velRatio * m_swimAngle, 0, 1, 0 );
     //glutSolidCone( 0.1, 0.5, 5, 1 );
-    glScalef(0.005, 0.005, 0.005);
     glColor4f(1.f, 1.f, 1.f, 1.f);
     m_model.draw(pass);
     //glPushMatrix();
