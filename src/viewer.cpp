@@ -90,34 +90,44 @@ void Viewer::init()
 
     addRenderable(&cam);
 
-    // end with the skybox or begin TODO
+    // begin with the skybox
     addRenderable(new Skybox());
 
-    //Corals
-    float coralOffsetX=0;
-    float coralOffsetY=0;
-    int i=0;
-    for (i=0; i < 25; i++) {
-        coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))*10;
-        coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))*10;
-        addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
-                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
-                    noise->getZ(coralOffsetX, coralOffsetY)));
-    }
-    for (i=0; i < 20; i++) {
-        coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))+3)*10;
-        coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+3)*10;
-        addRenderable(new Coral(Coral::defaultDepth, coralOffsetX+3, coralOffsetY,
-                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
-                    noise->getZ(coralOffsetX, coralOffsetY)));
+    noise = new NoiseTerrain();
+    noise_zoom = 50;
+    noise_persistence = 0.95;
+    noise_octaves = 13;
 
-    }
-    for (i=0; i < 10; i++) {
-        coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY+7.0 ,1.0))+5)*10;
-        coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+1)*10;
-        addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
-                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
-                    noise->getZ(coralOffsetX, coralOffsetY)));
+    noise->generateClouds(100, 100, noise_zoom, noise_persistence, noise_octaves);
+    addRenderable(noise);
+
+    //Corals
+    if (false) { // XXX Je desactive ça, c'est trop lent
+        float coralOffsetX=0;
+        float coralOffsetY=0;
+        int i=0;
+        for (i=0; i < 25; i++) {
+            coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))*10;
+            coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))*10;
+            addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
+                        Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                        noise->getZ(coralOffsetX, coralOffsetY)));
+        }
+        for (i=0; i < 20; i++) {
+            coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))+3)*10;
+            coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+3)*10;
+            addRenderable(new Coral(Coral::defaultDepth, coralOffsetX+3, coralOffsetY,
+                        Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                        noise->getZ(coralOffsetX, coralOffsetY)));
+
+        }
+        for (i=0; i < 10; i++) {
+            coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY+7.0 ,1.0))+5)*10;
+            coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+1)*10;
+            addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
+                        Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                        noise->getZ(coralOffsetX, coralOffsetY)));
+        }
     }
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
