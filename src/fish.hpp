@@ -92,7 +92,7 @@ class Fish : public Renderable
         glm::vec3 m_colour;            // Body m_colour
         glm::vec3 m_direction;         // Estimated m_direction
         bool m_leader;             // Is 
-        objReader &m_model;
+        objReader *m_model;
 
 };
 
