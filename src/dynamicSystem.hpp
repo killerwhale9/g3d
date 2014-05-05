@@ -104,7 +104,7 @@ private:
 // Renderable methods
 public:
 	// Init the particle-spring system
-	void init(Viewer &);
+	void init();
 
 	// Draw the particle-spring system
 	void draw(int pass);

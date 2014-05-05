@@ -54,6 +54,7 @@ DynamicSystem m_syst;
             m_rLLeg;
         Fin m_lFin,
             m_rFin;
+        DynamicSystem m_tube;
 
         uint32_t m_frame, m_bubbles;
         Viewer *m_viewer;

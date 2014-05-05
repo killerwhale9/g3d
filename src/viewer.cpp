@@ -95,7 +95,7 @@ void Viewer::init()
     addRenderable(new Skybox());
     
     //Rope
-    addRenderable(new DynamicSystem());
+    //addRenderable(new DynamicSystem());
 
     noise = new NoiseTerrain();
     noise_zoom = 50;
