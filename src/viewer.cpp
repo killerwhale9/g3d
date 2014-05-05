@@ -81,6 +81,8 @@ void Viewer::init()
 
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
+    addRenderable(new objReader("models/rpg.obj", "gfx/rpg.jpg"));
+    addRenderable(new objReader("models/missile.obj", "gfx/missile.jpg"));
     //addRenderable(new objReader("models/portalbutton.obj", "gfx/button.jpg"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
