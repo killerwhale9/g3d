@@ -19,6 +19,7 @@
 #include "skybox.hpp"
 #include "weed.hpp"
 #include "torse.hpp"
+#include "dynamicSystem.hpp"
 #include "cameraAnimation.hpp"
 #include "coral.hpp"
 #include <sstream>
@@ -92,6 +93,9 @@ void Viewer::init()
 
     // begin with the skybox
     addRenderable(new Skybox());
+    
+    //Rope
+    addRenderable(new DynamicSystem());
 
     noise = new NoiseTerrain();
     noise_zoom = 50;
@@ -271,6 +275,7 @@ void Viewer::loadTextures()
     objManager::loadObj("models/TropicalFish.obj", "gfx/TropicalFish.jpg", "fish");
     objManager::loadObj("models/submarine.obj", "gfx/submarine.jpg", "submarine");
     objManager::loadObj("models/rpg.obj", "gfx/rpg.jpg", "rpg");
+    objManager::loadObj("models/missile.obj", "gfx/missile.jpg", "missile");
     objManager::loadObj("models/treasure_chest.obj", "gfx/treasure_chest.jpg", "chest");
     objManager::loadObj("models/stone1.obj", "gfx/stones/stone1.jpg", "stone1");
     objManager::loadObj("models/stone2.obj", "gfx/stones/stone2.jpg", "stone2");

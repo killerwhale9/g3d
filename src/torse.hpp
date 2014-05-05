@@ -81,7 +81,10 @@ class Torse : public Renderable
 
 
         objReader& m_rpg;
-        int m_weapon;
+        objReader& m_missile;
+        int m_viewRpg;
+        int m_viewMissile;
+        float m_posMissile;
 
 };
 

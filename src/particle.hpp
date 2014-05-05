@@ -30,7 +30,7 @@ public:
 	void incrPosition(const Vec &pos);	// position += pos
 	void incrVelocity(const Vec &vel);	// velocity += vel
 	
-	void draw() const;
+	void draw(int pass) const;
 };
 
 // output stream operator, as non-member

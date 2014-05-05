@@ -35,8 +35,11 @@ Torse::Torse() :
     m_animRecoil(new Animation(10)),
     m_currentAnim(NULL),
     m_pos(0, -30, 10),
-    m_weapon(1),
-    m_rpg(objManager::getObj("rpg"))
+    m_viewRpg(0),
+    m_viewMissile(0),
+    m_posMissile(0),
+    m_rpg(objManager::getObj("rpg")),
+    m_missile(objManager::getObj("missile"))
 {
     float tmp = 10;
     m_animSwim->addFrame(0, e_torse, glm::vec3(-90, 0, -tmp));
@@ -198,7 +201,17 @@ void Torse::draw(int pass)
     //Weapon
     glPushMatrix();
     glTranslatef(m_lUArm.getLength(), 0, 0);
-    m_rpg.draw(pass);
+    glRotatef(90, 1, 0, 0);
+    glRotatef(-90, 0, 0, 1);
+    glScalef(3.0f, 3.0f, 3.0f);
+    if (m_viewRpg == 1){
+        m_rpg.draw(pass);
+    }
+    if (m_viewMissile == 1) {
+        glTranslatef(0,0,m_posMissile);
+        m_missile.draw(pass);
+    }
+    glBindTexture(GL_TEXTURE_2D, 0);
     glPopMatrix();
 
     glPopMatrix();
@@ -285,6 +298,16 @@ void Torse::animate()
 {
     m_currentAnim->update(*this, m_frame);
     m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
+    if (m_frame == 13 && m_currentAnim == m_animAim) {
+        m_viewMissile = 1;
+        m_viewRpg = 1;
+    }
+    if (m_currentAnim == m_animRecoil) {
+        m_posMissile += 1.0f;
+    }
+    if (m_currentAnim == m_animSwimTrans) {
+        m_viewMissile = 0;
+    }
     if (m_frame == 0){
         // XXX TESTING
         if(m_currentAnim == m_animSwim)
