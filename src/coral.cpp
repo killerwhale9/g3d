@@ -4,12 +4,8 @@ using namespace std;
 #include "TextureManager.hpp"
 #include <cstdlib>
 
-static inline float randomBetween(float min, float max) {
-    return min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(max-min)));
-}
-
-Coral::Coral(int depth, int x, int y) : 
-	m_coral(depth/4.0,depth/4.0*0.3,5)
+Coral::Coral(int depth, int x, int y, float mult) : 
+	m_coral(depth/mult,depth/mult*0.3,5)
 {
 	m_depth=depth;
 	m_nbBranch = 2;
@@ -22,7 +18,7 @@ Coral::Coral(int depth, int x, int y) :
 	//Recursive
 	if (depth > 0) {
 		for (int i=0; i < m_nbBranch; i++) {
-			m_smallCorals.push_back(Coral(depth-1, 0, 0));
+			m_smallCorals.push_back(Coral(depth-1, 0, 0, randomBetween(minMult,maxMult)));
 		}
 	}
 }

@@ -28,17 +28,18 @@ int main(int argc, char** argv)
     for (i=0; i < 25; i++) {
         coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0));
         coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0));
-        viewer.addRenderable(new Coral(Coral::defaultDepth, coralOffsetX*10, coralOffsetY*10));
+        viewer.addRenderable(new Coral(Coral::defaultDepth, coralOffsetX*10, coralOffsetY*10, Coral::randomBetween(Coral::minMult,Coral::maxMult)));
     }
     for (i=0; i < 20; i++) {
         coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0));
         coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0));
-        viewer.addRenderable(new Coral(Coral::defaultDepth, (coralOffsetX+3)*10, (coralOffsetY+3)*10));
+        viewer.addRenderable(new Coral(Coral::defaultDepth, (coralOffsetX+3)*10, (coralOffsetY+3)*10, Coral::randomBetween(Coral::minMult,Coral::maxMult)));
+
     }
     for (i=0; i < 10; i++) {
         coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY+7.0 ,1.0));
         coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0));
-        viewer.addRenderable(new Coral(Coral::defaultDepth, (coralOffsetX+5)*10, (coralOffsetY+1)*10));
+        viewer.addRenderable(new Coral(Coral::defaultDepth, (coralOffsetX+5)*10, (coralOffsetY+1)*10, Coral::randomBetween(Coral::minMult,Coral::maxMult)));
     }
 
 
