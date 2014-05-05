@@ -14,11 +14,13 @@
 #include "submarine.hpp"
 #include "stone.hpp"
 #include "bubble.hpp"
+#include "shark.hpp"
 #include "glm/gtx/noise.hpp"
 #include "skybox.hpp"
 #include "weed.hpp"
 #include "torse.hpp"
 #include "cameraAnimation.hpp"
+#include "coral.hpp"
 #include <sstream>
 #include <ctime>
 
@@ -88,9 +90,45 @@ void Viewer::init()
 
     addRenderable(&cam);
 
-    // end with the skybox or begin TODO
+    // begin with the skybox
     addRenderable(new Skybox());
 
+    noise = new NoiseTerrain();
+    noise_zoom = 50;
+    noise_persistence = 0.95;
+    noise_octaves = 13;
+
+    noise->generateClouds(100, 100, noise_zoom, noise_persistence, noise_octaves);
+    addRenderable(noise);
+
+    //Corals
+    if (false) { // XXX Je desactive ça, c'est trop lent
+        float coralOffsetX=0;
+        float coralOffsetY=0;
+        int i=0;
+        for (i=0; i < 25; i++) {
+            coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))*10;
+            coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))*10;
+            addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
+                        Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                        noise->getZ(coralOffsetX, coralOffsetY)));
+        }
+        for (i=0; i < 20; i++) {
+            coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))+3)*10;
+            coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+3)*10;
+            addRenderable(new Coral(Coral::defaultDepth, coralOffsetX+3, coralOffsetY,
+                        Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                        noise->getZ(coralOffsetX, coralOffsetY)));
+
+        }
+        for (i=0; i < 10; i++) {
+            coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY+7.0 ,1.0))+5)*10;
+            coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+1)*10;
+            addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
+                        Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                        noise->getZ(coralOffsetX, coralOffsetY)));
+        }
+    }
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
     //addRenderable(new objReader("models/rpg.obj", "gfx/rpg.jpg"));
@@ -99,6 +137,7 @@ void Viewer::init()
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
     addRenderable(new Submarine());
+    addRenderable(new Shark());
     addRenderable(new Torse());
     flock = new Flock(env);
     addRenderable(flock);
@@ -238,6 +277,9 @@ void Viewer::loadTextures()
     objManager::loadObj("models/stone3.obj", "gfx/stones/stone3.jpg", "stone3");
     objManager::loadObj("models/stone4.obj", "gfx/stones/stone4.jpg", "stone4");
     objManager::loadObj("models/stone5.obj", "gfx/stones/stone5.jpg", "stone5");
+    objManager::loadObj("models/shark.obj", "gfx/shark.jpg", "shark");
+    objManager::loadObj("models/shark_eyes.obj", "gfx/shark_eyes.jpg", "shark_eyes");
+    objManager::loadObj("models/shark_teeth.obj", "gfx/shark_teeth.jpg", "shark_teeth");
 }
 
 
