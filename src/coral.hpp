@@ -27,6 +27,7 @@ class Coral : public Renderable
         int m_x;
         int m_y;
         bool m_initialized;
+        float m_pivot;
         GLuint m_list;
 		Cylinder m_coral; //root
 		std::vector<Coral> m_smallCorals;
