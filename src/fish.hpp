@@ -21,7 +21,7 @@ class Fish : public Renderable
         Fish( float x, float y, float z, 
                 float dirx, float diry, float dirz,
                 float vx, float vy, float vz,
-                float rand);
+                float rand, const std::string &model);
         ~Fish();
         // Update step
         bool update( float dt, uint32_t schoolID, std::vector< Fish > &school, glm::vec3 globalGoal,
@@ -92,6 +92,7 @@ class Fish : public Renderable
         glm::vec3 m_colour;            // Body m_colour
         glm::vec3 m_direction;         // Estimated m_direction
         bool m_leader;             // Is 
+        objReader &m_model;
 
 };
 

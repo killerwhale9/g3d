@@ -205,11 +205,15 @@ void Torse::draw(int pass)
     glRotatef(-90, 0, 0, 1);
     glScalef(3.0f, 3.0f, 3.0f);
     if (m_viewRpg == 1){
+        glColor3f(1.f, 1.f, 1.f);
         m_rpg.draw(pass);
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
     if (m_viewMissile == 1) {
         glTranslatef(0,0,m_posMissile);
+        glColor3f(1.f, 1.f, 1.f);
         m_missile.draw(pass);
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
     glBindTexture(GL_TEXTURE_2D, 0);
     glPopMatrix();

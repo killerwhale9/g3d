@@ -18,6 +18,7 @@
 #include "fish.hpp"
 #include "environment.hpp"
 #include "glm/geometric.hpp"
+#include "objManager.hpp"
 
 // Simulation Parameters
 #define MAX_VELOCITY 1.40      // Maximum velocity
@@ -43,7 +44,7 @@ float mypi = 3.14;
 
 
 // Default Constructor
-Fish::Fish() {
+Fish::Fish() : m_model(objManager::getObj("fish1")) {
     m_pos = glm::vec3( 0, 0, 0 );
     m_oldPos = m_pos;
     m_vel = glm::vec3( 0, 0, 0 );
@@ -97,7 +98,7 @@ inline glm::vec3 checkedNormalize(const glm::vec3 v)
 Fish::Fish( float x, float y, float z,
         float dirx, float diry, float dirz,
         float vx, float vy, float vz,
-        float rand) {
+        float rand, const std::string &model) : m_model(objManager::getObj(model)) {
     m_pos = glm::vec3( x, y, z );
     m_oldPos = m_pos;
     m_vel = glm::vec3( vx, vy, vz );
@@ -387,7 +388,7 @@ void Fish::draw(int pass) {
 
 
     // Draw Actual "Fish"
-    glColor3f( m_colour[0], m_colour[1], m_colour[2] );
+    //glColor3f( m_colour[0], m_colour[1], m_colour[2] );
 
     // Draw "Fish"
     float velRatio = glm::length(m_vel) / MAX_VELOCITY;
@@ -404,24 +405,27 @@ void Fish::draw(int pass) {
     glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, sp );
 
     // Head
-    glRotatef( velRatio * 0.8 * m_swimAngle, 0, 1, 0 );
-    glutSolidCone( 0.2, 0.4, 5, 1 );
+    //glRotatef( velRatio * 0.8 * m_swimAngle, 0, 1, 0 );
+    //glutSolidCone( 0.2, 0.4, 5, 1 );
 
     // Body
     glRotatef( 180 - velRatio * m_swimAngle, 0, 1, 0 );
-    glutSolidCone( 0.1, 0.5, 5, 1 );
-    glPushMatrix();
-    glTranslatef( 0, 0, 0.1 );
-    glRotatef( -65, 1, 0, 0 );
-    glutSolidCone( 0.08, 0.3, 5, 1 );
-    glPopMatrix();
+    //glutSolidCone( 0.1, 0.5, 5, 1 );
+    glScalef(0.005, 0.005, 0.005);
+    glColor4f(1.f, 1.f, 1.f, 1.f);
+    m_model.draw(pass);
+    //glPushMatrix();
+    //glTranslatef( 0, 0, 0.1 );
+    //glRotatef( -65, 1, 0, 0 );
+    //glutSolidCone( 0.08, 0.3, 5, 1 );
+    //glPopMatrix();
 
-    // Tail
-    glTranslatef( 0, 0, 0.5 );
-    glRotatef( 180 + velRatio * 1.2 * m_swimAngle, 0, 1, 0 );
-    glTranslatef( 0, 0, -0.2 );
-    glScalef( 0.5, 1, 1 );
-    glutSolidCone( 0.2, 0.2, 5, 1 );
+    //// Tail
+    //glTranslatef( 0, 0, 0.5 );
+    //glRotatef( 180 + velRatio * 1.2 * m_swimAngle, 0, 1, 0 );
+    //glTranslatef( 0, 0, -0.2 );
+    //glScalef( 0.5, 1, 1 );
+    //glutSolidCone( 0.2, 0.2, 5, 1 );
     glPopMatrix();
 
     glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, amDef );

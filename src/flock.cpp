@@ -14,7 +14,7 @@ void Flock::draw(int pass)
     glPopAttrib();
 }
 
-Flock::Flock(Environment &e) : step(0), env(e), dx(0), dy(0)
+Flock::Flock(Environment &e, const std::string &fishModel) : step(0), env(e), dx(0), dy(0), model(fishModel)
 {
 
 }
@@ -65,7 +65,7 @@ void Flock::init(Viewer& v)
                 1 * (rand() / (float) RAND_MAX),
                 1 * (rand() / (float) RAND_MAX),
                 1 * (rand() / (float) RAND_MAX),
-                1 * (rand() / (float) RAND_MAX));
+                1 * (rand() / (float) RAND_MAX), model);
         school.push_back( *newFish );
     }
 
