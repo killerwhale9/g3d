@@ -62,6 +62,22 @@ void NoiseTerrain::drawHMap()
     glPopMatrix();
 }
 
+float NoiseTerrain::getZ(float x, float y)
+{
+    x/=TERRAIN_WIDTH;
+    x+=0.5;
+    x*=m_w;
+    y/=TERRAIN_HEIGHT;
+    y+=0.5;
+    y*=m_h;
+    float px = x-floor(x);
+    float py = y-floor(y);
+    float p = (px+py)/2.f;
+
+    return m_hmap[(int)x+((int)y)*m_w]*p+
+           m_hmap[(int)x+1+((int)y+1)*m_w]*(1-p);
+}
+
 
 void NoiseTerrain::triangle_t::computeNormal(uint32_t w, uint32_t h) {
     for (uint32_t i = 0; i < 3; i++)
@@ -134,6 +150,9 @@ void NoiseTerrain::computeNormals()
     }
 }
 
+double* NoiseTerrain::getHMap() {
+    return m_hmap;
+}
 /*
 void NoiseTerrain::computeNormals()
 {

@@ -52,7 +52,6 @@ class NoiseTerrain : public Renderable {
     /////// VARS ///////
 
     double *m_hmap; // 2d heighmap acces with x+y*w
-    uint32_t m_w, m_h;
     glm::vec3 *m_normals;
     std::list<triangle_t*> *m_triangles;
     std::list<triangle_t*> m_trianglePool;
@@ -62,7 +61,11 @@ public:
     NoiseTerrain();
     ~NoiseTerrain();
 
+    uint32_t m_w, m_h;
+
     void generateClouds(uint32_t w, uint32_t h, double zoom, double persistence, int octaves);
+
+    float getZ(float x, float y);
 
     void draw(int pass) {
         glPushMatrix();
@@ -117,6 +120,7 @@ public:
     void computeNormals();
     void drawHMap();
 
+    double* getHMap(); 
 };
 
 #endif

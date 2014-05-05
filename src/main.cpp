@@ -22,26 +22,6 @@ int main(int argc, char** argv)
     // build your scene here
 
     viewer.addRenderable(new Torse());
-    float coralOffsetX=0;
-    float coralOffsetY=0;
-    int i=0;
-    for (i=0; i < 25; i++) {
-        coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0));
-        coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0));
-        viewer.addRenderable(new Coral(Coral::defaultDepth, coralOffsetX*10, coralOffsetY*10, Coral::randomBetween(Coral::minMult,Coral::maxMult)));
-    }
-    for (i=0; i < 20; i++) {
-        coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0));
-        coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0));
-        viewer.addRenderable(new Coral(Coral::defaultDepth, (coralOffsetX+3)*10, (coralOffsetY+3)*10, Coral::randomBetween(Coral::minMult,Coral::maxMult)));
-
-    }
-    for (i=0; i < 10; i++) {
-        coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY+7.0 ,1.0));
-        coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0));
-        viewer.addRenderable(new Coral(Coral::defaultDepth, (coralOffsetX+5)*10, (coralOffsetY+1)*10, Coral::randomBetween(Coral::minMult,Coral::maxMult)));
-    }
-
 
     //viewer.addRenderable(new DynamicSystem());
     viewer.noise = new NoiseTerrain();
@@ -52,6 +32,31 @@ int main(int argc, char** argv)
     viewer.noise->generateClouds(100, 100, viewer.noise_zoom, viewer.noise_persistence, viewer.noise_octaves);
     viewer.addRenderable(viewer.noise);
 
+    float coralOffsetX=0;
+    float coralOffsetY=0;
+    int i=0;
+    for (i=0; i < 25; i++) {
+        coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))*10;
+        coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))*10;
+        viewer.addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
+                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                    viewer.noise->getZ(coralOffsetX, coralOffsetY)));
+    }
+    for (i=0; i < 20; i++) {
+        coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))+3)*10;
+        coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+3)*10;
+        viewer.addRenderable(new Coral(Coral::defaultDepth, coralOffsetX+3, coralOffsetY,
+                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                    viewer.noise->getZ(coralOffsetX, coralOffsetY)));
+
+    }
+    for (i=0; i < 10; i++) {
+        coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY+7.0 ,1.0))+5)*10;
+        coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+1)*10;
+        viewer.addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
+                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                    viewer.noise->getZ(coralOffsetX, coralOffsetY)));
+    }
 
     viewer.setWindowTitle("viewer");
     // Make the viewer window visible on screen.

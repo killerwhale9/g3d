@@ -4,6 +4,7 @@
 #include <vector>
 #include "renderable.hpp"
 #include "cylinder.hpp"
+#include "viewer.hpp"
 #ifndef __APPLE__
 #include <GL/glut.h>
 #else
@@ -21,7 +22,7 @@ class Coral : public Renderable
 
         void draw(int pass);
         void drawSub(int pass, int angle);
-        Coral(int depth, int x, int y, float mutl);
+        Coral(int depth, int x, int y, float mutl, float h);
         static inline float randomBetween(float min, float max) {
             return min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(max-min)));
         };
@@ -34,6 +35,7 @@ class Coral : public Renderable
         int m_y;
         bool m_initialized;
         float m_pivot;
+        float m_height;
         GLuint m_list;
 		Cylinder m_coral; //root
 		std::vector<Coral> m_smallCorals;
