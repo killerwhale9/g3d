@@ -119,7 +119,7 @@ void DynamicSystem::createSystemScene()
 	Vec initPos = Vec(0.0, 0.0, 8.0);
 	particles.push_back(new Particle(initPos, Vec(), 0.0, particleRadius));
 
-    int nParts(20);
+    int nParts(5);
 
     Vec pos, prevPos(initPos),
         l0,
