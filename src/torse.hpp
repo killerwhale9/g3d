@@ -31,6 +31,8 @@ class Torse : public Renderable
         const glm::vec3& getCurrentRotation(frame_type);
         inline void setPosition(const glm::vec3 &p) { m_pos = p; }
         inline virtual void init(Viewer& v) {m_viewer = &v;};
+        glm::vec3 getHeadPos();
+        glm::vec3 getLookAt();
     private:
         // Values for sizing the body
         // Lengths

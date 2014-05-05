@@ -25,7 +25,7 @@
 #include <sstream>
 #include <ctime>
 
-Viewer::Viewer() : currentCaustic(0), useCustomCamera(false), useCaustics(true)
+Viewer::Viewer() : currentCaustic(0), useCustomCamera(false), useCaustics(true), flock(NULL)
 {
     lightDiffuseColor[0] = 0.66;
     lightDiffuseColor[1] = 1.0;
@@ -92,10 +92,10 @@ void Viewer::init()
     addRenderable(&cam);
 
     // begin with the skybox
-    addRenderable(new Skybox());
+    //addRenderable(new Skybox());
     
     //Rope
-    addRenderable(new DynamicSystem());
+    //addRenderable(new DynamicSystem());
 
     noise = new NoiseTerrain();
     noise_zoom = 50;
@@ -139,13 +139,13 @@ void Viewer::init()
     //addRenderable(new objReader("models/missile.obj", "gfx/missile.jpg"));
     //addRenderable(new objReader("models/portalbutton.obj", "gfx/button.jpg"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
-    addRenderable(new Chest());
-    addRenderable(new Submarine());
-    addRenderable(new Shark());
-    addRenderable(new Torse());
+    //addRenderable(new Chest());
+    //addRenderable(new Submarine());
+    //addRenderable(new Shark());
+    guy = new Torse();
+    addRenderable(guy);
     flock = new Flock(env, "fish");
     addRenderable(flock);
-    //addRenderable(new Flock());
 
     //Useless XXX
     //for (int32_t y = -TERRAIN_HEIGHT/2; y < TERRAIN_HEIGHT/2; ++y) {
@@ -184,9 +184,9 @@ void Viewer::init()
 
 
     glDisable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
-    glEnable(GL_LIGHT2);
-    glDisable(GL_LIGHT3);
+    glDisable(GL_LIGHT1);
+    glDisable(GL_LIGHT2);
+    glEnable(GL_LIGHT3);
     glDisable(GL_LIGHT4);
     glDisable(GL_LIGHT5);
     glDisable(GL_LIGHT6);
@@ -204,22 +204,15 @@ void Viewer::init()
     glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.005);
     //glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.5);
 
-	//diver light
-    /*
-	GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    //diver light
+    GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-	glLightfv(GL_LIGHT3, GL_AMBIENT,  white);
-	glLightfv(GL_LIGHT3, GL_DIFFUSE,  white);
- 	glLightfv(GL_LIGHT3, GL_SPECULAR, white);
- 	glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 3.0f);
-	glLightf(GL_LIGHT3, GL_SPOT_EXPONENT, 1.0f);
+    glLightfv(GL_LIGHT3, GL_AMBIENT,  white);
+    glLightfv(GL_LIGHT3, GL_DIFFUSE,  white);
+    glLightfv(GL_LIGHT3, GL_SPECULAR, white);
+    glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 3.0f);
+    glLightf(GL_LIGHT3, GL_SPOT_EXPONENT, 1.0f);
 
-	GLfloat positionL3[4]= {4.0, 4.0, 5.0, 1.0};
-	GLfloat light3_direction[] = {0.0f, 0.0f, -1.0f};
-
-	glLightfv(GL_LIGHT3, GL_POSITION, positionL3);
-	glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, light3_direction);
-    */
 
     // fog
     fogColor[0] = 0.333;
@@ -294,13 +287,25 @@ void Viewer::draw()
     // greenish light for the ambient
     glLightfv(GL_LIGHT2, GL_POSITION, lightPosition);
 
-    GLfloat fishLight[4];
-    Fish *f = flock->getLeader();
-    fishLight[0] = f->getPos()[0];
-    fishLight[1] = f->getPos()[1];
-    fishLight[2] = f->getPos()[2];
-    fishLight[3] = 1.f;
-    glLightfv(GL_LIGHT1, GL_POSITION, fishLight);
+    //GLfloat fishLight[4];
+    //if (flock) {
+        //Fish *f = flock->getLeader();
+        //fishLight[0] = f->getPos()[0];
+        //fishLight[1] = f->getPos()[1];
+        //fishLight[2] = f->getPos()[2];
+        //fishLight[3] = 1.f;
+        //glLightfv(GL_LIGHT1, GL_POSITION, fishLight);
+    //}
+
+    glm::vec3 pos = guy->getHeadPos(),
+        dir = guy->getLookAt();
+    GLfloat positionL3[4]= {pos.x, pos.y, pos.z, 1.0};
+    glLightfv(GL_LIGHT3, GL_POSITION, positionL3);
+    GLfloat light3_direction[] = {dir.x, dir.y, dir.z, 1.f};
+    //std::cout<<"dir:"<<dir.x<<","<<dir.y<<","<<dir.z<<"\n";
+    //std::cout<<"pos:"<<pos.x<<","<<pos.y<<","<<pos.z<<"\n";
+
+    glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, light3_direction);
 
 
 

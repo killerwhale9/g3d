@@ -34,7 +34,7 @@ Torse::Torse() :
     m_animAim(new Animation(20)),
     m_animRecoil(new Animation(10)),
     m_currentAnim(NULL),
-    m_pos(0, -30, 10),
+    m_pos(0, -30, 25),
     m_viewRpg(0),
     m_viewMissile(0),
     m_posMissile(0),
@@ -345,5 +345,23 @@ void Torse::animate()
                         m_pos.y + pos.y + (random()%10)*0.1f,
                         m_pos.z + pos.z + (random()%10)*0.1f));
     }
+}
+
+glm::vec3 Torse::getHeadPos()
+{
+    glm::vec3 pos(0, 0, m_length);
+    pos = glm::rotateX(pos, m_angTorse.x);
+    pos = glm::rotateY(pos, m_angTorse.y);
+    pos = glm::rotateZ(pos, m_angTorse.z);
+    return m_pos + pos;
+}
+
+glm::vec3 Torse::getLookAt()
+{
+    glm::vec3 dir(0, 1, 0);
+    dir = glm::rotateX(dir, m_angTorse.x);
+    dir = glm::rotateY(dir, m_angTorse.y);
+    dir = glm::rotateZ(dir, m_angTorse.z);
+    return dir;
 }
 
