@@ -44,7 +44,7 @@ float mypi = 3.14;
 
 
 // Default Constructor
-Fish::Fish() : m_model(objManager::getObj("fish1")) {
+Fish::Fish() : m_model(&objManager::getObj("fish1")) {
     m_pos = glm::vec3( 0, 0, 0 );
     m_oldPos = m_pos;
     m_vel = glm::vec3( 0, 0, 0 );
@@ -98,7 +98,7 @@ inline glm::vec3 checkedNormalize(const glm::vec3 v)
 Fish::Fish( float x, float y, float z,
         float dirx, float diry, float dirz,
         float vx, float vy, float vz,
-        float rand, const std::string &model) : m_model(objManager::getObj(model)) {
+        float rand, const std::string &model) : m_model(&objManager::getObj(model)) {
     m_pos = glm::vec3( x, y, z );
     m_oldPos = m_pos;
     m_vel = glm::vec3( vx, vy, vz );
@@ -412,7 +412,7 @@ void Fish::draw(int pass) {
     glRotatef( 180 - velRatio * m_swimAngle, 0, 1, 0 );
     //glutSolidCone( 0.1, 0.5, 5, 1 );
     glColor4f(1.f, 1.f, 1.f, 1.f);
-    m_model.draw(pass);
+    m_model->draw(pass);
     //glPushMatrix();
     //glTranslatef( 0, 0, 0.1 );
     //glRotatef( -65, 1, 0, 0 );
