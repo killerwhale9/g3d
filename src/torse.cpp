@@ -121,6 +121,7 @@ Torse::Torse() :
     animate();// otherwise it all angs are at 0
 
     m_tube.init();
+    m_tube.setFixedParticlePosition(Vec(4.0,4.0,4.0));
 }
 
 void Torse::setAnimation(Animation* a)
@@ -258,7 +259,7 @@ void Torse::draw(int pass)
 
     glPopMatrix();
 
-    m_tube.setFixedParticlePosition(Vec(1.0,1.0,1.0));
+    m_tube.animate();
     m_tube.draw(pass);
 
     glPopMatrix();
