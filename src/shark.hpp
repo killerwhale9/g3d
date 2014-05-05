@@ -21,6 +21,8 @@ class Shark : public Renderable {
     void draw(int pass);
     void animate();
     inline virtual void init(Viewer& v) {m_viewer = &v;};
+    private:
+    float m_rot;
 };
 
 #endif

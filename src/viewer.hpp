@@ -14,6 +14,7 @@
 #include <list>
 #include "NoiseTerrain.hpp"
 #include "flock.hpp"
+#include "torse.hpp"
 #include "environment.hpp"
 #define NUM_PATTERNS 32
 using namespace std;
@@ -34,6 +35,7 @@ class Viewer : public QGLViewer
         Flock *flock;
     	GLfloat fogColor[4];
         bool useCustomCamera, useCaustics;
+        Torse *guy;
 
         /* Scene methods */
     protected :
