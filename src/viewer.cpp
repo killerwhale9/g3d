@@ -14,6 +14,7 @@
 #include "submarine.hpp"
 #include "stone.hpp"
 #include "bubble.hpp"
+#include "shark.hpp"
 #include "glm/gtx/noise.hpp"
 #include "skybox.hpp"
 #include "weed.hpp"
@@ -99,6 +100,7 @@ void Viewer::init()
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
     addRenderable(new Chest());
     addRenderable(new Submarine());
+    addRenderable(new Shark());
     addRenderable(new Torse());
     flock = new Flock(env);
     addRenderable(flock);
@@ -238,6 +240,9 @@ void Viewer::loadTextures()
     objManager::loadObj("models/stone3.obj", "gfx/stones/stone3.jpg", "stone3");
     objManager::loadObj("models/stone4.obj", "gfx/stones/stone4.jpg", "stone4");
     objManager::loadObj("models/stone5.obj", "gfx/stones/stone5.jpg", "stone5");
+    objManager::loadObj("models/shark.obj", "gfx/shark.jpg", "shark");
+    objManager::loadObj("models/shark_eyes.obj", "gfx/shark_eyes.jpg", "shark_eyes");
+    objManager::loadObj("models/shark_teeth.obj", "gfx/shark_teeth.jpg", "shark_teeth");
 }
 
 
