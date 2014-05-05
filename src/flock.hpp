@@ -33,6 +33,7 @@ class Flock : public Renderable {
 
     int dx;
     int dy;
+    std::string model;
 
     public:
     virtual void draw(int pass);
@@ -41,7 +42,7 @@ class Flock : public Renderable {
 
     inline Fish* getLeader() { return &school[0]; }
 
-    Flock(Environment &e);
+    Flock(Environment &e, const std::string &fishModel);
     ~Flock();
 
 };

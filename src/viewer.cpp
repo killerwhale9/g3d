@@ -139,7 +139,7 @@ void Viewer::init()
     addRenderable(new Submarine());
     addRenderable(new Shark());
     addRenderable(new Torse());
-    flock = new Flock(env);
+    flock = new Flock(env, "fish");
     addRenderable(flock);
     //addRenderable(new Flock());
 
@@ -255,7 +255,7 @@ void Viewer::loadTextures()
         key.str("");
         key<<"fish"<<i;
         file<<"gfx/fishes/TropicalFish"<<(i<10?"0":"")<<i<<".jpg";
-        TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
+        //TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
     }
 
 	//Skybox
@@ -268,6 +268,7 @@ void Viewer::loadTextures()
 
 
     // obj
+    objManager::loadObj("models/TropicalFish.obj", "gfx/TropicalFish.jpg", "fish");
     objManager::loadObj("models/submarine.obj", "gfx/submarine.jpg", "submarine");
     objManager::loadObj("models/rpg.obj", "gfx/rpg.jpg", "rpg");
     objManager::loadObj("models/treasure_chest.obj", "gfx/treasure_chest.jpg", "chest");
