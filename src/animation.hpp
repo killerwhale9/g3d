@@ -13,6 +13,7 @@
 #include <stdint.h>
 #include "glm/vec3.hpp"
 #include "globals.hpp"
+#define CURRENT_VALUE (-361.f)
 
 class Torse;
 
@@ -22,7 +23,7 @@ class Frame {
     glm::vec3 rot; // une valeur négative = prends la valeur courante
     frame_type type;
     Frame(const glm::vec3 v, frame_type t) : rot(v), type(t) {}
-    Frame(frame_type t) : rot(-360, -360, -360), type(t) {} // prends les valeurs antérieures
+    Frame(frame_type t) : rot(CURRENT_VALUE, CURRENT_VALUE, CURRENT_VALUE), type(t) {} // prends les valeurs antérieures
     Frame(const Frame &o) : rot(o.rot), type(o.type) {}
     Frame(const Frame &a, const Frame &b, uint32_t i, uint32_t n); // interpolates
     inline bool operator==(const Frame& b) { return type == b.type; }
@@ -51,6 +52,7 @@ class Animation {
     inline void addFrame(int index, Frame& f) { m_original[index].push_back(f); }
     inline void addFrame(int index, frame_type type, const glm::vec3& angles) { m_original[index].push_back(Frame(angles, type));}
     inline void addFrame(int index, frame_type type) { m_original[index].push_back(Frame(type));}
+    void addFrameFromCurrent(int index);
 };
 
 #endif

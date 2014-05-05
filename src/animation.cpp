@@ -9,7 +9,7 @@ void Animation::generateInterpolation(Torse &me)
     m_frames.resize(m_original.size());
     for(uint32_t i = 0; i < m_original.size(); ++i) {
         for (std::list<Frame>::iterator it(m_original[i].begin()); it != m_original[i].end(); ++it) {
-            std::cout<<"[1]List at index "<<i<<" is not empty\n";
+            //std::cout<<"[1]List at index "<<i<<" is not empty\n";
             bool found = false;
             for (uint32_t k = i+1; k < m_original.size(); ++k) {
                 std::list<Frame>::iterator next(find(m_original[k].begin(), m_original[k].end(), *it));
@@ -19,22 +19,22 @@ void Animation::generateInterpolation(Torse &me)
                           f2(*next);
                     // if any value is neg copy current value from me
                     for (int j = 0; j < 3; j++) {
-                        if (f1.rot[j] < -360.f)
+                        if (f1.rot[j] <= -360.f)
                             f1.rot[j] = me.getCurrentRotation(f1.type)[j];
                         // avoir -1 dans les deux c'est stupide...
-                        if (f2.rot[j] < -360.f)
+                        if (f2.rot[j] <= -360.f)
                             f2.rot[j] = me.getCurrentRotation(f2.type)[j];
                     }
                     // add the interpolations
-                    std::cout<<"("<<f1.rot[0]<<","<<f1.rot[1]<<","<<f1.rot[2]<<")\n";
-                    std::cout<<"[2]Interpolated a frame of type "<<f1.type<<" for frame "<<i<<"\n";
+                    //std::cout<<"("<<f1.rot[0]<<","<<f1.rot[1]<<","<<f1.rot[2]<<")\n";
+                    //std::cout<<"[2]Interpolated a frame of type "<<f1.type<<" for frame "<<i<<"\n";
                     if (f1.rot != f2.rot) { // makes no sense to interpolate
                         for (uint32_t j = i+1; j < k; j++) {
                             m_frames[j].push_back(Frame(f1, f2, j-i, n));
-                            std::cout<<"[2]Interpolated a frame of type "<<f1.type<<" for frame "<<j<<"\n";
+                            //std::cout<<"[2]Interpolated a frame of type "<<f1.type<<" for frame "<<j<<"\n";
                         }
-                        std::cout<<"("<<f2.rot[0]<<","<<f2.rot[1]<<","<<f2.rot[2]<<")\n";
-                        std::cout<<"[2]Interpolated a frame of type "<<f1.type<<" for frame "<<k<<"\n";
+                        //std::cout<<"("<<f2.rot[0]<<","<<f2.rot[1]<<","<<f2.rot[2]<<")\n";
+                        //std::cout<<"[2]Interpolated a frame of type "<<f1.type<<" for frame "<<k<<"\n";
                         // we add first and last
                         m_frames[i].push_back(f1);
                         m_frames[k].push_back(f2);
@@ -45,7 +45,7 @@ void Animation::generateInterpolation(Torse &me)
             }
             if (!found) {// we still can add the first one 
                 for (int j = 0; j < 3; j++) {
-                    if (it->rot[j] < -360.f)
+                    if (it->rot[j] <= -360.f)
                         it->rot[j] = me.getCurrentRotation(it->type)[j];
                 }
                 m_frames[i].push_back(*it);
@@ -60,7 +60,7 @@ Frame::Frame(const Frame &a, const Frame &b, uint32_t i, uint32_t n) :
         a.rot[2] +(b.rot[2]-a.rot[2])*((double)i/n)
        ),
     type(a.type)
-{std::cout<<"("<<rot[0]<<","<<rot[1]<<","<<rot[2]<<")\n";}
+{}
 
 void Frame::correct()
 {
@@ -109,4 +109,19 @@ void Animation::update(Torse &me, uint32_t frame)
                 break;
         }
     }
+}
+
+void Animation::addFrameFromCurrent(int index)
+{
+    m_original[index].push_back(Frame(e_torse));
+    m_original[index].push_back(Frame(e_head));
+    m_original[index].push_back(Frame(e_armUL));
+    m_original[index].push_back(Frame(e_armUR));
+    m_original[index].push_back(Frame(e_armLL));
+    m_original[index].push_back(Frame(e_armLR));
+    m_original[index].push_back(Frame(e_legUL));
+    m_original[index].push_back(Frame(e_legLL));
+    m_original[index].push_back(Frame(e_legUR));
+    m_original[index].push_back(Frame(e_legLR));
+
 }

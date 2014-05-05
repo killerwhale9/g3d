@@ -63,7 +63,9 @@ class Torse : public Renderable
                   m_angHead,
                   m_angTorse;
 
-        Animation *m_animSwim;
+        Animation *m_animSwim,
+                  *m_animGetUp,
+                  *m_animSwimTrans;
 
         Animation *m_currentAnim;
 

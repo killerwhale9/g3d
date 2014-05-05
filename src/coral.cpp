@@ -4,7 +4,7 @@ using namespace std;
 #include "TextureManager.hpp"
 
 Coral::Coral(int depth, int x, int y) : 
-	m_coral(depth/10.0,depth/10.0*0.3,25)
+	m_coral(depth/10.0,depth/10.0*0.3,5)
 {
 	m_depth=depth;
 	m_nbBranch = 2;

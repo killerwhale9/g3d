@@ -27,6 +27,8 @@ Torse::Torse() :
     m_bubbles(0),
     m_viewer(NULL),
     m_animSwim(new Animation(30)),
+    m_animGetUp(new Animation(20)),
+    m_animSwimTrans(new Animation(20)),
     m_currentAnim(NULL),
     m_pos(0, -30, 10)
 {
@@ -61,6 +63,33 @@ Torse::Torse() :
     m_animSwim->addFrame(29, e_legLR, glm::vec3(-tmp, 0, 0));
     m_animSwim->addFrame(29, e_armUL, glm::vec3(0, -75, 180));
     m_animSwim->addFrame(29, e_armUR, glm::vec3(0, 75, 10));
+
+
+    // animation pour se redresser
+    m_animGetUp->addFrameFromCurrent(0);
+    m_animGetUp->addFrame(19, e_torse, glm::vec3(-5, 0, 0));
+    m_animGetUp->addFrame(19, e_head, glm::vec3(20, 0, 0));
+    m_animGetUp->addFrame(19, e_armUL, glm::vec3(0, -75, 180));
+    m_animGetUp->addFrame(19, e_armLL, glm::vec3());
+    m_animGetUp->addFrame(19, e_armUR, glm::vec3(0, 75, 10));
+    m_animGetUp->addFrame(19, e_armLR, glm::vec3());
+    m_animGetUp->addFrame(19, e_legUL, glm::vec3(0, 15, 0));
+    m_animGetUp->addFrame(19, e_legLL, glm::vec3());
+    m_animGetUp->addFrame(19, e_legUR, glm::vec3(0, -15, 0));
+    m_animGetUp->addFrame(19, e_legLR, glm::vec3());
+
+    // Animation pour se remettre à nager
+    m_animSwimTrans->addFrameFromCurrent(0);
+    m_animSwimTrans->addFrame(19, e_torse, glm::vec3(-90, 0, -tmp));
+    m_animSwimTrans->addFrame(19, e_head, glm::vec3(15, 0, tmp));
+    m_animSwimTrans->addFrame(19, e_legUL, glm::vec3(15, 0, 0));
+    m_animSwimTrans->addFrame(19, e_legLL, glm::vec3(0, 0, 0));
+    m_animSwimTrans->addFrame(19, e_legUR, glm::vec3(-15, 0, 0));
+    m_animSwimTrans->addFrame(19, e_legLR, glm::vec3(-tmp, 0, 0));
+    m_animSwimTrans->addFrame(19, e_armUL, glm::vec3(0, -75, 180));
+    m_animSwimTrans->addFrame(19, e_armUR, glm::vec3(0, 75, 10));
+    m_animSwimTrans->addFrame(19, e_armLL, glm::vec3(0, 0, 0));
+    m_animSwimTrans->addFrame(19, e_armLR, glm::vec3(0, 0, 0));
 
     setAnimation(m_animSwim);
     animate();// otherwise it all angs are at 0
@@ -228,7 +257,19 @@ void Torse::animate()
 {
     m_currentAnim->update(*this, m_frame);
     m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
-    m_pos.y += 0.3f;
+    if (m_frame == 0){
+        // XXX TESTING
+        if(m_currentAnim == m_animSwim)
+            setAnimation(m_animGetUp);
+        else if (m_currentAnim == m_animGetUp)
+            setAnimation(m_animSwimTrans);
+        else if (m_currentAnim == m_animSwimTrans)
+            setAnimation(m_animSwim);
+    }
+    if (m_currentAnim == m_animSwim)
+        m_pos.y += 0.3f;
+    else
+        m_pos.y += 0.075f;
     m_bubbles++;
     if (m_bubbles >= 30*2) {
         m_bubbles = 0;
