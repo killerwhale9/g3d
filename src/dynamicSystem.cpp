@@ -68,7 +68,7 @@ void DynamicSystem::setCollisionsDetection(bool onOff)
 
 
 ///////////////////////////////////////////////////////////////////////////////
-void DynamicSystem::init(Viewer &viewer)
+void DynamicSystem::init()
 {
 	toggleGravity = true;
 	toggleViscosity = true;
@@ -99,9 +99,9 @@ void DynamicSystem::init(Viewer &viewer)
 // 	createTestCollisions();
 
 	// add a manipulatedFrame to move particle 0 with the mouse
-        viewer.setManipulatedFrame(new qglviewer::ManipulatedFrame());
+/*        viewer.setManipulatedFrame(new qglviewer::ManipulatedFrame());
 	viewer.manipulatedFrame()->setPosition(getFixedParticlePosition());
-	viewer.setSceneRadius(10.0f);
+	viewer.setSceneRadius(10.0f);*/
 
 }
 
@@ -298,7 +298,7 @@ void DynamicSystem::keyPressEvent(QKeyEvent* e, Viewer& viewer)
 	} else if ((e->key()==Qt::Key_Home) && (modifiers==Qt::NoButton)) {
 		// stop the animation, and reinit the scene
 		viewer.stopAnimation();
-		init(viewer);
+		init();
 		viewer.manipulatedFrame()->setPosition(getFixedParticlePosition());
 		toggleGravity = true;
 		toggleViscosity = true;
