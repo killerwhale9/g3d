@@ -19,6 +19,7 @@
 #include "weed.hpp"
 #include "torse.hpp"
 #include "cameraAnimation.hpp"
+#include "coral.hpp"
 #include <sstream>
 #include <ctime>
 
@@ -91,6 +92,32 @@ void Viewer::init()
     // end with the skybox or begin TODO
     addRenderable(new Skybox());
 
+    //Corals
+    float coralOffsetX=0;
+    float coralOffsetY=0;
+    int i=0;
+    for (i=0; i < 25; i++) {
+        coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))*10;
+        coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))*10;
+        addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
+                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                    noise->getZ(coralOffsetX, coralOffsetY)));
+    }
+    for (i=0; i < 20; i++) {
+        coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))+3)*10;
+        coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+3)*10;
+        addRenderable(new Coral(Coral::defaultDepth, coralOffsetX+3, coralOffsetY,
+                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                    noise->getZ(coralOffsetX, coralOffsetY)));
+
+    }
+    for (i=0; i < 10; i++) {
+        coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY+7.0 ,1.0))+5)*10;
+        coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+1)*10;
+        addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
+                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                    noise->getZ(coralOffsetX, coralOffsetY)));
+    }
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
     //addRenderable(new objReader("models/rpg.obj", "gfx/rpg.jpg"));
