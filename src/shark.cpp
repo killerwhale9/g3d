@@ -1,14 +1,6 @@
 #include "shark.hpp"
 #include "objManager.hpp"
-
-#define fps 30
-#define altitude 10.0f
-#define profondeur (-0.0f)
-#define rotation 45
-#define vitesselente 0.1f
-#define vitesserapide 1.0f
-#define distanceFaceAFace 1.0f
-#define distanceRecule 10.0f
+#include "const.hpp"
 
 Shark::Shark() :
     m_body(objManager::getObj("shark")),
@@ -16,7 +8,7 @@ Shark::Shark() :
     m_eyes(objManager::getObj("shark_eyes")),
     m_viewer(NULL),
     m_timer(0),
-    m_pos(0, fps*4*vitesselente + fps*1*vitesserapide + distanceFaceAFace, altitude),
+    m_pos(0, fps*4*vitesseLenteRequin + fps*1*vitesseRapideRequin + distanceFaceAFace, altitudeAction),
     m_rot(0)
 {}
 
@@ -36,11 +28,11 @@ void Shark::animate()
 {
     if (m_timer > fps*4 && m_timer < fps*8) {
         //Le requin avance doucement
-        m_pos.y -= vitesselente;
+        m_pos.y -= vitesseLenteRequin;
     }
     if (m_timer > fps*11 && m_timer < fps*12) {
         //Le requin avance rapidement
-        m_pos.y -= vitesserapide;
+        m_pos.y -= vitesseRapideRequin;
     }
     if (m_timer > fps*15 && m_timer < fps*16) {
         //Bisou
@@ -52,12 +44,15 @@ void Shark::animate()
     }
     if (m_timer > fps*18 && m_timer < fps*19) {
         //Le requin recule
-        m_pos.y -= distanceRecule/fps;
+        m_pos.y += distanceReculeRequin/fps;
     }
     if (m_timer > fps*19 && m_timer < fps*20) {
+        //Le requin se tourne
+        m_rot += rotationRequin/fps;
+    }
+    if (m_timer > fps*20 && m_timer < fps*21) {
         //Le requin s'enfonce
-        m_pos.z -= (altitude-profondeur)/fps;
-        m_rot += rotation/fps;
+        m_pos.z -= (altitudeAction-profondeurRequin)/fps;
     }
     m_timer++;
 }
