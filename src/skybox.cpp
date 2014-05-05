@@ -24,6 +24,7 @@ void Skybox::draw(int pass) {
 
 	// Réactivation de l'écriture dans le DepthBuffer
 	glDepthMask(GL_TRUE);
+	glEnable(GL_LIGHTING);
 
 	// Réinitialisation des états OpenGL
 	glDisable(GL_TEXTURE_CUBE_MAP_ARB); 
