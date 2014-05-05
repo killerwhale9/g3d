@@ -4,7 +4,7 @@ using namespace std;
 #include "TextureManager.hpp"
 #include <cstdlib>
 
-Coral::Coral(int depth, int x, int y, float mult) : 
+Coral::Coral(int depth, int x, int y, float mult, float h) : 
 	m_coral(depth/mult,depth/mult*0.3,5)
 {
 	m_depth=depth;
@@ -14,11 +14,12 @@ Coral::Coral(int depth, int x, int y, float mult) :
     m_y = y;
     m_initialized = false;
     m_pivot = randomBetween(0.0, 90.0);
+    m_height = h;
 
 	//Recursive
 	if (depth > 0) {
 		for (int i=0; i < m_nbBranch; i++) {
-			m_smallCorals.push_back(Coral(depth-1, 0, 0, randomBetween(minMult,maxMult)));
+			m_smallCorals.push_back(Coral(depth-1, 0, 0, randomBetween(minMult,maxMult), h));
 		}
 	}
 }
@@ -52,10 +53,8 @@ void Coral::draw(int pass)
     glPushMatrix();
         if (pass == PASS_NORMAL)
             TextureManager::bindTexture("corail1");
-    //Sur le sol c'est bien aussi
-    glTranslatef(4,0.2,0.2);
     //On le bouge
-    glTranslatef(m_x, m_y, 0);
+    glTranslatef(m_x, m_y, m_height);
 
     glRotatef(m_pivot, 0.0, 0.0, 1.0);
 

@@ -141,9 +141,11 @@ void Viewer::init()
 
 
     glDisable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
-    glEnable(GL_LIGHT2);
-    glDisable(GL_LIGHT3);
+    //glEnable(GL_LIGHT1);
+    //glEnable(GL_LIGHT2);
+    glDisable(GL_LIGHT1);
+    glDisable(GL_LIGHT2);
+    glEnable(GL_LIGHT3);
     glDisable(GL_LIGHT4);
     glDisable(GL_LIGHT5);
     glDisable(GL_LIGHT6);
@@ -160,6 +162,22 @@ void Viewer::init()
     //glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, .0);
     glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.005);
     //glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.5);
+
+	//diver light
+
+	GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	glLightfv(GL_LIGHT3, GL_AMBIENT,  white);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE,  white);
+ 	glLightfv(GL_LIGHT3, GL_SPECULAR, white);
+ 	glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 3.0f);
+	glLightf(GL_LIGHT3, GL_SPOT_EXPONENT, 1.0f);
+
+	GLfloat positionL3[4]= {4.0, 4.0, 5.0, 1.0};
+	GLfloat light3_direction[] = {0.0f, 0.0f, -1.0f};
+
+	glLightfv(GL_LIGHT3, GL_POSITION, positionL3);
+	glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, light3_direction);
 
     // fog
     fogColor[0] = 0.333;
@@ -236,6 +254,8 @@ void Viewer::draw()
     fishLight[2] = f->getPos()[2];
     fishLight[3] = 1.f;
     glLightfv(GL_LIGHT1, GL_POSITION, fishLight);
+
+
 
     // === FIRST PASS NORMAL ===
     //glDisable(GL_TEXTURE_2D);
