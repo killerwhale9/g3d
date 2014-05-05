@@ -65,7 +65,8 @@ public:
 
 	// Position of the firt particle ca be set through mouse movements
 	const Vec &getFixedParticlePosition() const;
-	void setFixedParticlePosition(const Vec &pos);
+	void setEndPosition(const Vec &pos);
+	void setBeginingPosition(const Vec &pos);
 
 	// Activate/desactivate gravity during the simulation
 	void setGravity(bool onOff);
@@ -76,7 +77,6 @@ public:
 
 	// event response
 	void keyPressEvent(QKeyEvent*, Viewer&);
-	void mouseMoveEvent(QMouseEvent*, Viewer&);
 	
 private:
 	// Reset the scene (remove all particles and springs)

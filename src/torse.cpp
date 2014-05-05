@@ -121,7 +121,6 @@ Torse::Torse() :
     animate();// otherwise it all angs are at 0
 
     m_tube.init();
-    m_tube.setFixedParticlePosition(Vec(getHeadPos()));
 }
 
 void Torse::setAnimation(Animation* a)
@@ -349,7 +348,8 @@ void Torse::animate()
                         m_pos.y + pos.y + (random()%10)*0.1f,
                         m_pos.z + pos.z + (random()%10)*0.1f));
     }
-    m_tube.setFixedParticlePosition(Vec(getHeadPos()));
+    m_tube.setBeginingPosition(Vec(getHeadPos()));
+    m_tube.setEndPosition(Vec(getHeadPos()));
     m_tube.animate();
 }
 
