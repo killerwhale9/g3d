@@ -7,6 +7,7 @@ using namespace std;
 #include "bubble.hpp"
 #include "viewer.hpp"
 #include <stdlib.h>
+#include "glm/gtx/rotate_vector.hpp"
 
 Torse::Torse() :
     m_length(4.f),
@@ -297,9 +298,16 @@ void Torse::animate()
     m_bubbles++;
     if (m_bubbles >= 20*2) {
         m_bubbles = 0;
-        m_viewer->addRenderable(new Bubble(0.0065*(rand()%40), m_pos.x, m_pos.y, m_pos.z));
-        m_viewer->addRenderable(new Bubble(0.0065*(rand()%40), m_pos.x, m_pos.y, m_pos.z+0.3f));
-        m_viewer->addRenderable(new Bubble(0.0065*(rand()%40), m_pos.x, m_pos.y, m_pos.z+0.9f));
+        glm::vec3 pos(0, 0, m_length);
+        pos = glm::rotateX(pos, m_angTorse.x);
+        pos = glm::rotateY(pos, m_angTorse.y);
+        pos = glm::rotateZ(pos, m_angTorse.z);
+        int nb_bubbles = random() % 7 +1;
+        for (int i = 0; i < nb_bubbles; i++)
+            m_viewer->addRenderable(new Bubble(0.0065*(rand()%40),
+                        m_pos.x + pos.x + (random()%10)*0.1f,
+                        m_pos.y + pos.y + (random()%10)*0.1f,
+                        m_pos.z + pos.z + (random()%10)*0.1f));
     }
 }
 
