@@ -11,7 +11,7 @@
 #include "objReader.hpp"
 
 class Shark : public Renderable {
-    objReader &m_body, &m_teeth, &m_eyes;
+    objReader &m_body, &m_teeth, &m_eyes, &m_chest;
     Viewer *m_viewer;
     uint32_t m_timer;
     glm::vec3 m_pos;
@@ -23,6 +23,7 @@ class Shark : public Renderable {
     inline virtual void init(Viewer& v) {m_viewer = &v;};
     private:
     float m_rot;
+    bool m_showChest;
 };
 
 #endif
