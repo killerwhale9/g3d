@@ -11,6 +11,12 @@ NOTE : Utiliser le launcher à la racine du programme afin d'éviter les problè
 
 ---------------------------------------
 
+Lancement de l'animation
+
+Afin de bien synchroniser le déplacement de la caméra avec celles des entités, il est conseillé d'appuyer sur C puis seulement après d'appuyer sur Entrer pour lancer l'animation.
+
+---------------------------------------
+
 Touches du viewer rajoutées :
     C : Caméra auto-dirigée
     X : Activation/désactivation des caustics
