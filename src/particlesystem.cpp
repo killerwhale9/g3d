@@ -1,5 +1,5 @@
 #include "particlesystem.hpp"
-#include "time.h"
+#include <ctime>
 
 #define lifetimeMin 10
 #define lifetimeMax 60
@@ -27,4 +27,9 @@ void ParticleSystem::draw(int pass)
 
 void ParticleSystem::animate()
 {
+}
+
+ParticleSystem::~ParticleSystem()
+{
+
 }
