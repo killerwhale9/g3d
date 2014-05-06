@@ -19,7 +19,7 @@ int main(int argc, char** argv)
     // Instantiate the viewer.
     Viewer viewer;
 
-    viewer.addRenderable(new ParticleSystem(glm::vec3()));
+    //viewer.addRenderable(new ParticleSystem(glm::vec3()));
 
     viewer.setWindowTitle("viewer");
     // Make the viewer window visible on screen.
