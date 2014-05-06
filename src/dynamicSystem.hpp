@@ -97,14 +97,14 @@ private:
 // 			Vec& x2, Vec& v2, double r2, double invm2,
 // 			double rebound );
 
-	void createSystemScene();
+	void createSystemScene(Vec v);
 	void createTestCollisions();
 
 
 // Renderable methods
 public:
 	// Init the particle-spring system
-	void init();
+	void init(Vec v);
 
 	// Draw the particle-spring system
 	void draw(int pass);

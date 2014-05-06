@@ -74,7 +74,7 @@ void DynamicSystem::setCollisionsDetection(bool onOff)
 
 
 ///////////////////////////////////////////////////////////////////////////////
-void DynamicSystem::init()
+void DynamicSystem::init(Vec v)
 {
 	toggleGravity = true;
 	toggleViscosity = true;
@@ -100,7 +100,7 @@ void DynamicSystem::init()
 	springInitLength = 0.5;
 	springDamping = 1.0;
 
-	createSystemScene();
+	createSystemScene(v);
 	// or another method, e.g. to test collisions on simple cases...
 // 	createTestCollisions();
 
@@ -113,13 +113,13 @@ void DynamicSystem::init()
 
 
 ///////////////////////////////////////////////////////////////////////////////
-void DynamicSystem::createSystemScene()
+void DynamicSystem::createSystemScene(Vec v)
 {
 	// add a fixed particle
-	Vec initPos = Vec(0.0, 0.0, 8.0);
+	Vec initPos = v;
 	particles.push_back(new Particle(initPos, Vec(), 0.0, particleRadius));
 
-    int nParts(20);
+    int nParts(5);
 
     Vec pos, prevPos(initPos),
         l0,
@@ -134,6 +134,13 @@ void DynamicSystem::createSystemScene()
 
         prevPos = pos;
     }
+
+    //particles.push_back(new Particle(Vec(1.0, 3.0, particleRadius), Vec(-2.0, 0.0, 0.0), particleMass, particleRadius));
+    particles.push_back(new Particle(Vec(-1.0, 3.0, particleRadius*3.0), Vec(5.0, 0.0, 0.0), particleMass, particleRadius*3.0));
+    particles.back()->blue = true;
+    particles.push_back(new Particle(Vec(3.0, 3.0, particleRadius), Vec(-3.0, 0.0, 10.0), particleMass, particleRadius));
+    //particles.push_back(new Particle(Vec(70.0, 1.0, particleRadius*40), Vec(-35, 0.0,0.0), particleMass*40, particleRadius*40));
+
 }
 
 
@@ -305,7 +312,7 @@ void DynamicSystem::keyPressEvent(QKeyEvent* e, Viewer& viewer)
 	} else if ((e->key()==Qt::Key_Home) && (modifiers==Qt::NoButton)) {
 		// stop the animation, and reinit the scene
 		viewer.stopAnimation();
-		init();
+		//init();
 		viewer.manipulatedFrame()->setPosition(getFixedParticlePosition());
 		toggleGravity = true;
 		toggleViscosity = true;
