@@ -95,9 +95,9 @@ void Viewer::init()
     cam.addFrame(320, glm::vec3(-30, -BEG_DIST+180*SWIM_SPD, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+10, COMMON_HEIGHT), true);
     cam.addFrame(570, glm::vec3(-30, -BEG_DIST+180*SWIM_SPD, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+10, 0), false);
     cam.addFrame(630, glm::vec3(-30, -BEG_DIST+180*SWIM_SPD, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+10, 0), false);
-    cam.addFrame(700, glm::vec3(0, -BEG_DIST+140*SWIM_SPD, COMMON_HEIGHT+20), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+20, COMMON_HEIGHT), true);
-    cam.addFrame(800, glm::vec3(0, -BEG_DIST+140*SWIM_SPD, COMMON_HEIGHT+20), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+20, COMMON_HEIGHT), false);
-    cam.addFrame(1500, glm::vec3(0, -BEG_DIST+220*SWIM_SPD, COMMON_HEIGHT+20), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+20, COMMON_HEIGHT), true);
+    cam.addFrame(700, glm::vec3(0, -BEG_DIST+140*SWIM_SPD, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+20, COMMON_HEIGHT), true);
+    cam.addFrame(800, glm::vec3(0, -BEG_DIST+140*SWIM_SPD, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+20, COMMON_HEIGHT), false);
+    cam.addFrame(1500, glm::vec3(0, -BEG_DIST+220*SWIM_SPD, COMMON_HEIGHT+20), glm::vec3(0, -BEG_DIST+280*SWIM_SPD+20, COMMON_HEIGHT), true);
 
     cam.interpolate();
 

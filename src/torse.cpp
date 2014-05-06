@@ -257,6 +257,11 @@ void Torse::draw(int pass)
     glColor3f(175/255.0f,175/255.0f,175/255.0f);
     m_rLLeg.draw(pass);
 
+    glTranslatef(0.0, 0.0, -m_rLLeg.getLength());
+    glTranslatef(0.0, 0.5, 0.0);
+    glRotatef(-60, 1, 0, 0);
+    m_rFin.draw(pass);
+
     glPopMatrix();
 
     //Left leg
@@ -276,6 +281,11 @@ void Torse::draw(int pass)
     //glColor3f(1,0,0);
     glColor3f(175/255.0f,175/255.0f,175/255.0f);
     m_lLLeg.draw(pass);
+    
+    glTranslatef(0.0, 0.0, -m_rLLeg.getLength());
+    glTranslatef(0.0, 0.5, 0.0);
+    glRotatef(-60, 1, 0, 0);
+    m_lFin.draw(pass);
 
     glPopMatrix();
 
