@@ -313,21 +313,21 @@ void Torse::animate()
     if (m_timer < fps*4) {
         m_pos.y += SWIM_SPD;
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
-    } else if (m_timer > fps*7 && m_timer < fps*8) {
+    } else if (m_timer > fps*7 && m_timer < fps*9) {
         m_pos.y += SWIM_SPD;
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
-    } else if (m_timer < fps*9 && m_timer > fps*8) {
+    } else if (m_timer < fps*10 && m_timer > fps*9) {
         //if (m_currentAnim != m_) TODO animation lève tête
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
-    } else if (m_timer > 16*fps && m_timer < 17*fps) {
+    } else if (m_timer > 20*fps && m_timer < 21*fps) {
         if (m_currentAnim != m_animGetUp)
             setAnimation(m_animGetUp);
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
-    } else if (m_timer < 18*fps && m_timer > 17*fps) {
+    } else if (m_timer < 24*fps && m_timer > 23*fps) {
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
         if (m_currentAnim != m_animAim)
             setAnimation(m_animAim);
-    } else if (m_timer > 18*fps) {
+    } else if (m_timer > 24*fps) {
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
         if (m_frame == 0) {
             if (m_currentAnim == m_animAim) {

@@ -46,13 +46,13 @@ void Shark::animate()
         //Le requin recule
         m_pos.y += distanceReculeRequin/fps;
     }
-    if (m_timer > fps*19 && m_timer < fps*20) {
+    if (m_timer > fps*19 && m_timer < fps*19.3) {
         //Le requin se tourne
-        m_rot += rotationRequin/fps;
+        m_rot += rotationRequin/(fps*.3);
     }
-    if (m_timer > fps*20 && m_timer < fps*21) {
+    if (m_timer > fps*19.3 && m_timer < fps*19.6) {
         //Le requin s'enfonce
-        m_pos.z -= (altitudeAction-profondeurRequin)/fps;
+        m_pos.z -= (altitudeAction-profondeurRequin)/(fps*.3);
     }
     m_timer++;
 }
