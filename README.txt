@@ -20,6 +20,7 @@ Afin de bien synchroniser le déplacement de la caméra avec celles des entités
 Touches du viewer rajoutées :
     C : Caméra auto-dirigée
     X : Activation/désactivation des caustics
+    L : Activation/Déactivation de la lumière
 
 Travail réalisé mais non intégré par manque de temps :
     Système de particules
