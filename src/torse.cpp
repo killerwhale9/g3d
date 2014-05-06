@@ -30,11 +30,12 @@ Torse::Torse() :
     m_frame(0),
     m_bubbles(0),
     m_viewer(NULL),
-    m_animSwim(new Animation(fps)),
-    m_animGetUp(new Animation(fps)),
-    m_animSwimTrans(new Animation(fps)),
-    m_animAim(new Animation(fps)),
+    m_animSwim(new Animation(30)),
+    m_animGetUp(new Animation(30)),
+    m_animSwimTrans(new Animation(30)),
+    m_animAim(new Animation(30)),
     m_animRecoil(new Animation(10)),
+    m_animHeadUp(new Animation(30)),
     m_currentAnim(NULL),
     m_pos(0, -BEG_DIST, COMMON_HEIGHT),
     m_viewRpg(0),
@@ -121,6 +122,11 @@ Torse::Torse() :
     m_animRecoil->addFrame(9, e_legUL, glm::vec3(75, 35, 0));
     m_animRecoil->addFrame(9, e_legUR, glm::vec3(75, -35, 0));
 
+    // ANimation pour lever la tête face au requin
+    // Animation pour le recul apres le coup de feu
+    m_animHeadUp->addFrameFromCurrent(0);
+    m_animHeadUp->addFrame(29, e_head, glm::vec3(35, 0, 0));
+
     setAnimation(m_animSwim);
     animate();// otherwise it all angs are at 0
 
@@ -152,13 +158,13 @@ void Torse::draw(int pass)
     glRotatef(m_angTorse.z, 0, 0, 1);
 
     // Torse
-    glColor3f(0,0,1);
+    glColor3f(152/255.0f,87/255.0f,23/255.0f);
     m_figure.draw(pass);
 
     // Bottle
     glPushMatrix();
     glTranslatef(0, -1.3f, 0.1f);
-    glColor3f(1,1,0);
+    glColor3f(237/255.0f,255/255.0f,12/255.0f);
     m_bottle.draw(pass);
     glPopMatrix();
 
@@ -168,7 +174,7 @@ void Torse::draw(int pass)
     glRotatef(m_angHead.x, 1, 0, 0);
     glRotatef(m_angHead.y, 0, 1, 0);
     glRotatef(m_angHead.z, 0, 0, 1);
-    glColor3f(1,1,0);
+    glColor3f(175/255.0f,175/255.0f,175/255.0f);
     glutSolidSphere(m_headRadius, m_precision, m_precision);
     glPopMatrix();
 
@@ -178,14 +184,16 @@ void Torse::draw(int pass)
     glRotatef(m_angURArm.x, 1, 0, 0);
     glRotatef(m_angURArm.y, 0, 1, 0);
     glRotatef(m_angURArm.z, 0, 0, 1);
-    glColor3f(0,0,1);
+    //glColor3f(0,0,1);
+    glColor3f(237/255.0f,255/255.0f,12/255.0f);
     m_rUArm.draw(pass);
 
     glTranslatef(m_rUArm.getLength(), 0, 0);
     glRotatef(m_angLRArm.x, 1, 0, 0);
     glRotatef(m_angLRArm.y, 0, 1, 0);
     glRotatef(m_angLRArm.z, 0, 0, 1);
-    glColor3f(1,0,0);
+    //glColor3f(1,0,0);
+    glColor3f(175/255.0f,175/255.0f,175/255.0f);
     m_rLArm.draw(pass);
 
     glPopMatrix();
@@ -196,21 +204,23 @@ void Torse::draw(int pass)
     glRotatef(m_angULArm.x, 1, 0, 0);
     glRotatef(m_angULArm.y, 0, 1, 0);
     glRotatef(m_angULArm.z, 0, 0, 1);
-    glColor3f(0,0,1);
+    //glColor3f(0,0,1);
+    glColor3f(237/255.0f,255/255.0f,12/255.0f);
     m_lUArm.draw(pass);
 
     glTranslatef(m_lUArm.getLength(), 0, 0);
     glRotatef(m_angLLArm.x, 1, 0, 0);
     glRotatef(m_angLLArm.y, 0, 1, 0);
     glRotatef(m_angLLArm.z, 0, 0, 1);
-    glColor3f(1,0,0);
+    //glColor3f(1,0,0);
+    glColor3f(175/255.0f,175/255.0f,175/255.0f);
     m_lLArm.draw(pass);
 
     //Weapon
     glPushMatrix();
     glTranslatef(m_lUArm.getLength(), 0, 0);
     glRotatef(90, 1, 0, 0);
-    glRotatef(-47, 0, 1, 0);
+    glRotatef(-53, 0, 1, 0);
     glRotatef(-90, 0, 0, 1);
     glScalef(3.0f, 3.0f, 3.0f);
     if (m_viewRpg == 1){
@@ -235,14 +245,16 @@ void Torse::draw(int pass)
     glRotatef(m_angURLeg.x, 1, 0, 0);
     glRotatef(m_angURLeg.y, 0, 1, 0);
     glRotatef(m_angURLeg.z, 0, 0, 1);
-    glColor3f(0,0,1);
+    //glColor3f(0,0,1);
+    glColor3f(118/255.0f,32/255.0f,1/255.0f);
     m_rULeg.draw(pass);
 
     glTranslatef(0.0, 0.0, -m_rULeg.getLength());
     glRotatef(m_angLRLeg.x, 1, 0, 0);
     glRotatef(m_angLRLeg.y, 0, 1, 0);
     glRotatef(m_angLRLeg.z, 0, 0, 1);
-    glColor3f(1,0,0);
+    //glColor3f(1,0,0);
+    glColor3f(175/255.0f,175/255.0f,175/255.0f);
     m_rLLeg.draw(pass);
 
     glPopMatrix();
@@ -253,14 +265,16 @@ void Torse::draw(int pass)
     glRotatef(m_angULLeg.x, 1, 0, 0);
     glRotatef(m_angULLeg.y, 0, 1, 0);
     glRotatef(m_angULLeg.z, 0, 0, 1);
-    glColor3f(0,0,1);
+    //glColor3f(0,0,1);
+    glColor3f(118/255.0f,32/255.0f,1/255.0f);
     m_lULeg.draw(pass);
 
     glTranslatef(0, 0, -m_lULeg.getLength());
     glRotatef(m_angLLLeg.x, 1, 0, 0);
     glRotatef(m_angLLLeg.y, 0, 1, 0);
     glRotatef(m_angLLLeg.z, 0, 0, 1);
-    glColor3f(1,0,0);
+    //glColor3f(1,0,0);
+    glColor3f(175/255.0f,175/255.0f,175/255.0f);
     m_lLLeg.draw(pass);
 
     glPopMatrix();
@@ -318,7 +332,8 @@ void Torse::animate()
         m_pos.y += SWIM_SPD;
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
     } else if (m_timer < fps*10 && m_timer > fps*9) {
-        //if (m_currentAnim != m_) TODO animation lève tête
+        if (m_currentAnim != m_animHeadUp)
+            setAnimation(m_animHeadUp);
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
     } else if (m_timer > 20*fps && m_timer < 21*fps) {
         if (m_currentAnim != m_animGetUp)
@@ -330,7 +345,11 @@ void Torse::animate()
             setAnimation(m_animAim);
     } else if (m_timer > 24*fps) {
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
-        m_pos.y += SWIM_SPD;
+        if (m_currentAnim == m_animAim) {
+            m_pos.y -= 0.3;
+        } else {
+            m_pos.y += SWIM_SPD;
+        }
         if (m_frame == 0) {
             if (m_currentAnim == m_animAim) {
                 setAnimation(m_animRecoil);

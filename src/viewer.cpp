@@ -90,14 +90,22 @@ void Viewer::init()
     cam.addFrame(30, glm::vec3(0, -BEG_DIST+20+30*SWIM_SPD, COMMON_HEIGHT+10), glm::vec3(0, -BEG_DIST+SWIM_SPD*30, COMMON_HEIGHT), true);
     cam.addFrame(60, glm::vec3(20, -BEG_DIST+10+60*SWIM_SPD, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+60*SWIM_SPD, COMMON_HEIGHT), true);
     cam.addFrame(62, glm::vec3(0, 0, 50), glm::vec3(0, 0, 0), false);
-    cam.addFrame(120, glm::vec3(0, fps*4*vitesseLenteRequin + fps*1*vitesseRapideRequin + distanceFaceAFace, 50), glm::vec3(0, -BEG_DIST+120*SWIM_SPD+20, COMMON_HEIGHT+20), false);
+    cam.addFrame(120, glm::vec3(10, BEG_SHARK, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+120*SWIM_SPD+20, COMMON_HEIGHT), false);
+    cam.addFrame(190, glm::vec3(10, BEG_SHARK, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+120*SWIM_SPD+20, COMMON_HEIGHT), false);
+    cam.addFrame(320, glm::vec3(-30, -BEG_DIST+180*SWIM_SPD, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+10, COMMON_HEIGHT), true);
+    cam.addFrame(570, glm::vec3(-30, -BEG_DIST+180*SWIM_SPD, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+10, 0), false);
+    cam.addFrame(630, glm::vec3(-30, -BEG_DIST+180*SWIM_SPD, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+10, 0), false);
+    cam.addFrame(700, glm::vec3(0, -BEG_DIST+140*SWIM_SPD, COMMON_HEIGHT+20), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+20, COMMON_HEIGHT), true);
+    cam.addFrame(800, glm::vec3(0, -BEG_DIST+140*SWIM_SPD, COMMON_HEIGHT+20), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+20, COMMON_HEIGHT), false);
+    cam.addFrame(1500, glm::vec3(0, -BEG_DIST+220*SWIM_SPD, COMMON_HEIGHT+20), glm::vec3(0, -BEG_DIST+180*SWIM_SPD+20, COMMON_HEIGHT), true);
+
     cam.interpolate();
 
     addRenderable(&cam);
 
     // begin with the skybox
-    //addRenderable(new Skybox());
-    
+    addRenderable(new Skybox());
+
     noise = new NoiseTerrain();
     noise_zoom = 50;
     noise_persistence = 0.95;
@@ -107,32 +115,23 @@ void Viewer::init()
     addRenderable(noise);
 
     //Corals
-    if (false) { // XXX Je desactive ça, c'est trop lent
-        float coralOffsetX=0;
-        float coralOffsetY=0;
-        int i=0;
-        for (i=0; i < 25; i++) {
-            coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))*10;
-            coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))*10;
-            addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
-                        Coral::randomBetween(Coral::minMult,Coral::maxMult),
-                        noise->getZ(coralOffsetX, coralOffsetY)));
-        }
-        for (i=0; i < 20; i++) {
-            coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))+3)*10;
-            coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+3)*10;
-            addRenderable(new Coral(Coral::defaultDepth, coralOffsetX+3, coralOffsetY,
-                        Coral::randomBetween(Coral::minMult,Coral::maxMult),
-                        noise->getZ(coralOffsetX, coralOffsetY)));
+    float coralOffsetX=0;
+    float coralOffsetY=0;
+    int i=0;
+    for (i=0; i < 25; i++) {
+        coralOffsetX = glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))*10;
+        coralOffsetY = glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))*10;
+        addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
+                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                    noise->getZ(coralOffsetX, coralOffsetY)));
+    }
+    for (i=0; i < 20; i++) {
+        coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY ,1.0))+3)*10;
+        coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+3)*10;
+        addRenderable(new Coral(Coral::defaultDepth, coralOffsetX+3, coralOffsetY,
+                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
+                    noise->getZ(coralOffsetX, coralOffsetY)));
 
-        }
-        for (i=0; i < 10; i++) {
-            coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY+7.0 ,1.0))+5)*10;
-            coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+1)*10;
-            addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
-                        Coral::randomBetween(Coral::minMult,Coral::maxMult),
-                        noise->getZ(coralOffsetX, coralOffsetY)));
-        }
     }
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
@@ -150,17 +149,17 @@ void Viewer::init()
 
     //Useless XXX
     //for (int32_t y = -TERRAIN_HEIGHT/2; y < TERRAIN_HEIGHT/2; ++y) {
-        //for (int32_t x = -TERRAIN_WIDTH/2; x < TERRAIN_WIDTH/2; x++) {
-            //float nn = glm::simplex(glm::vec2(x, y));
-            //if (nn > 0.78) {
-                //Stone *s = new Stone();
-                //s->m_size = nn*10.f;
-                //s->m_pos.x = x;
-                //s->m_pos.y = y;
-                //s->m_pos.z = 0.2; // TODO get z from the terrain
-                //addRenderable(s);
-            //}
-        //}
+    //for (int32_t x = -TERRAIN_WIDTH/2; x < TERRAIN_WIDTH/2; x++) {
+    //float nn = glm::simplex(glm::vec2(x, y));
+    //if (nn > 0.78) {
+    //Stone *s = new Stone();
+    //s->m_size = nn*10.f;
+    //s->m_pos.x = x;
+    //s->m_pos.y = y;
+    //s->m_pos.z = 0.2; // TODO get z from the terrain
+    //addRenderable(s);
+    //}
+    //}
     //}
 
     list<Renderable *>::iterator it;
@@ -170,8 +169,8 @@ void Viewer::init()
 
 
     glDisable(GL_LIGHT0);
-    glDisable(GL_LIGHT1);
-    glDisable(GL_LIGHT2);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHT2);
     glEnable(GL_LIGHT3);
     glDisable(GL_LIGHT4);
     glDisable(GL_LIGHT5);
@@ -180,14 +179,14 @@ void Viewer::init()
 
     // fish light
     glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, .0);
-    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.25);
-    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.005);
+    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.9);
+    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.1);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, lightDiffuseColor);
 
     // ambient light
     glLightfv(GL_LIGHT2, GL_AMBIENT, lightDiffuseColor);
     //glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, .0);
-    glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.005);
+    glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.9);
     //glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.5);
 
     //diver light
@@ -212,7 +211,7 @@ void Viewer::init()
     glFogfv (GL_FOG_COLOR, fogColor);
     glFogf (GL_FOG_DENSITY, density);
     glHint (GL_FOG_HINT, GL_NICEST);
-	
+
     //addRenderable(new Weed());
 
 }
@@ -241,8 +240,8 @@ void Viewer::loadTextures()
         //TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
     }
 
-	//Skybox
-	//Pour garder les noms de fichiers explicites et pas des "i", on charge à la main
+    //Skybox
+    //Pour garder les noms de fichiers explicites et pas des "i", on charge à la main
     TextureManager::loadTexture("gfx/skybox/back.jpg", "sky_back");
     TextureManager::loadTexture("gfx/skybox/front.jpg", "sky_front");
     TextureManager::loadTexture("gfx/skybox/left.jpg", "sky_left");
@@ -275,12 +274,12 @@ void Viewer::draw()
 
     //GLfloat fishLight[4];
     //if (flock) {
-        //Fish *f = flock->getLeader();
-        //fishLight[0] = f->getPos()[0];
-        //fishLight[1] = f->getPos()[1];
-        //fishLight[2] = f->getPos()[2];
-        //fishLight[3] = 1.f;
-        //glLightfv(GL_LIGHT1, GL_POSITION, fishLight);
+    //Fish *f = flock->getLeader();
+    //fishLight[0] = f->getPos()[0];
+    //fishLight[1] = f->getPos()[1];
+    //fishLight[2] = f->getPos()[2];
+    //fishLight[3] = 1.f;
+    //glLightfv(GL_LIGHT1, GL_POSITION, fishLight);
     //}
 
     glm::vec3 pos = guy->getHeadPos(),
@@ -420,17 +419,17 @@ void Viewer::keyPressEvent(QKeyEvent *e)
             glDisable(GL_LIGHTING);       
         // ... and so on with all events to handle here!
     } else if (e->key() == Qt::Key_H) {
-            noise_zoom += modifiers==Qt::NoButton?-1.0:1.0;
-            std::cout<<"zoom:"<<noise_zoom<<"\n";
-            noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
+        noise_zoom += modifiers==Qt::NoButton?-1.0:1.0;
+        std::cout<<"zoom:"<<noise_zoom<<"\n";
+        noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
     } else if (e->key() == Qt::Key_K) {
-            noise_persistence += modifiers==Qt::NoButton?-0.05:0.05;
-            std::cout<<"noise_persistence:"<<noise_persistence<<"\n";
-            noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
+        noise_persistence += modifiers==Qt::NoButton?-0.05:0.05;
+        std::cout<<"noise_persistence:"<<noise_persistence<<"\n";
+        noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
     } else if (e->key() == Qt::Key_J) {
-            noise_octaves += modifiers==Qt::NoButton?-1:1;
-            std::cout<<"noise_octaves:"<<noise_octaves<<"\n";
-            noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
+        noise_octaves += modifiers==Qt::NoButton?-1:1;
+        std::cout<<"noise_octaves:"<<noise_octaves<<"\n";
+        noise->generateClouds(s, s, noise_zoom, noise_persistence, noise_octaves);
     } else if (e->key() == Qt::Key_C) {
         useCustomCamera = !useCustomCamera;
     } else if (e->key() == Qt::Key_X) {
