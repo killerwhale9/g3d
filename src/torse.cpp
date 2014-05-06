@@ -113,6 +113,8 @@ Torse::Torse() :
     m_animAim->addFrame(19, e_armLL, glm::vec3(0, 0, 90));
     m_animAim->addFrame(19, e_armUR, glm::vec3(-30, 75, 180));
     m_animAim->addFrame(19, e_armLR, glm::vec3(0, 45, 0));
+    m_animAim->addFrame(15, e_torse);
+    m_animAim->addFrame(19, e_torse, glm::vec3(0, 0, -10));
 
     // Animation pour le recul apres le coup de feu
     m_animRecoil->addFrameFromCurrent(0);
@@ -212,6 +214,7 @@ void Torse::draw(int pass)
     glPushMatrix();
     glTranslatef(m_lUArm.getLength(), 0, 0);
     glRotatef(90, 1, 0, 0);
+    glRotatef(-47, 0, 1, 0);
     glRotatef(-90, 0, 0, 1);
     glScalef(3.0f, 3.0f, 3.0f);
     if (m_viewRpg == 1){
@@ -335,6 +338,7 @@ void Torse::animate()
             setAnimation(m_animAim);
     } else if (m_timer > 24*fps) {
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
+        m_pos.y += SWIM_SPD;
         if (m_frame == 0) {
             if (m_currentAnim == m_animAim) {
                 setAnimation(m_animRecoil);
