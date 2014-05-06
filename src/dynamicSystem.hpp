@@ -67,7 +67,7 @@ public:
 	const Vec &getFixedParticlePosition() const;
 	void setEndPosition(const Vec &pos);
 	void setBeginingPosition(const Vec &pos);
-
+    void setEndParticlePosition(const Vec &pos);
 	// Activate/desactivate gravity during the simulation
 	void setGravity(bool onOff);
 	// Activate/desactivate viscosity during the simulation

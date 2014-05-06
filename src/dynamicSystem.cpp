@@ -54,6 +54,12 @@ void DynamicSystem::setBeginingPosition(const Vec &pos)
 void DynamicSystem::setEndPosition(const Vec &pos)
 {
 	if (particles.size() > 0)
+		particles[springs.size()]->setPosition(pos);
+}
+
+void DynamicSystem::setEndParticlePosition(const Vec &pos)
+{
+	if (particles.size() > 0)
 		particles[particles.size()-1]->setPosition(pos);
 }
 
@@ -134,12 +140,8 @@ void DynamicSystem::createSystemScene(Vec v)
 
         prevPos = pos;
     }
-
-    //particles.push_back(new Particle(Vec(1.0, 3.0, particleRadius), Vec(-2.0, 0.0, 0.0), particleMass, particleRadius));
-    particles.push_back(new Particle(Vec(-1.0, 3.0, particleRadius*3.0), Vec(5.0, 0.0, 0.0), particleMass, particleRadius*3.0));
+    particles.push_back(new Particle(Vec(v), Vec(0.0, 0.0, 0.0), 0, particleRadius*5.0));
     particles.back()->blue = true;
-    particles.push_back(new Particle(Vec(3.0, 3.0, particleRadius), Vec(-3.0, 0.0, 10.0), particleMass, particleRadius));
-    //particles.push_back(new Particle(Vec(70.0, 1.0, particleRadius*40), Vec(-35, 0.0,0.0), particleMass*40, particleRadius*40));
 
 }
 
@@ -149,15 +151,14 @@ void DynamicSystem::draw(int pass)
 {
 	// Particles
 	glColor3f(1,0,0);
-	vector<Particle *>::iterator itP;
-	for (itP = particles.begin(); itP != particles.end(); ++itP) {
-		(*itP)->draw(pass);
+	vector<Spring *>::iterator itS;
+	for (itS = springs.begin(); itS != springs.end(); ++itS) {
+		(*itS)->draw(pass);
 	}
 
 	// Springs
 	glColor3f(1.0, 0.28, 0.0);
 	glLineWidth(5.0);
-	vector<Spring *>::iterator itS;
 	for (itS = springs.begin(); itS != springs.end(); ++itS) {
 		(*itS)->draw(pass);
 	}
