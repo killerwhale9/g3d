@@ -78,7 +78,8 @@ DynamicSystem m_syst;
                   *m_animGetUp,
                   *m_animSwimTrans,
                   *m_animAim,
-                  *m_animRecoil;
+                  *m_animRecoil,
+                  *m_animHeadUp;
 
         Animation *m_currentAnim;
 
