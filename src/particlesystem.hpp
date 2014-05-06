@@ -35,6 +35,7 @@ class ParticleSystem : public Renderable
 
         glm::vec3 m_pos;
         std::list<Particle *> m_particles;
+        int m_timer;
         //Renderable methods
     public:
         void draw(int pass);
