@@ -6,6 +6,7 @@
 #include "NoiseTerrain.hpp"
 #include "TextureManager.hpp"
 #include "glm/gtx/noise.hpp"
+#include "particlesystem.hpp"
 
 int main(int argc, char** argv)
 {
