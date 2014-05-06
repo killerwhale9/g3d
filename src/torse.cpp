@@ -36,7 +36,7 @@ Torse::Torse() :
     m_animAim(new Animation(fps)),
     m_animRecoil(new Animation(10)),
     m_currentAnim(NULL),
-    m_pos(0, -BEG_DIST, 25),
+    m_pos(0, -BEG_DIST, COMMON_HEIGHT),
     m_viewRpg(0),
     m_viewMissile(0),
     m_posMissile(0),

@@ -12,5 +12,6 @@
 
 #define BEG_DIST 46.f
 #define SWIM_SPD 0.3f
+#define COMMON_HEIGHT 25.f
 
 #endif
