@@ -196,8 +196,6 @@ void DynamicSystem::animate()
 
 
 //======== 2. Integration scheme
-	// update particles velocity (qu. 1)
-	// TODO!
 
 	// update particles speed
 	for (itP = particles.begin(); itP != particles.end(); ++itP) {
@@ -218,9 +216,10 @@ void DynamicSystem::animate()
 //======== 3. Collisions
 	if (handleCollisions) {
 		//TO DO: discuss multi-collisions and order!
-		for (itP = particles.begin(); itP != particles.end(); ++itP) {
-			collisionParticleGround(*itP);
-		}	
+                // XXX Not neede here
+		//for (itP = particles.begin(); itP != particles.end(); ++itP) {
+			//collisionParticleGround(*itP);
+		//}	
 		for(unsigned int i = 0; i < particles.size(); ++i) {
 			for(unsigned int j = 1; j < particles.size(); ++j) {
 				if ( i != j) {
@@ -242,7 +241,7 @@ void DynamicSystem::collisionParticleGround(Particle *p)
 		return;
 
 	// particle-plane distance
-	double penetration = (p->getPosition() - groundPosition) * groundNormal; // Modifier pour noiseterrain XXX TODO
+	double penetration = (p->getPosition() - groundPosition) * groundNormal;
 	penetration -= p->getRadius();
 	if (penetration >= 0)
 		return;

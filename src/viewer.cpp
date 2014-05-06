@@ -145,7 +145,7 @@ void Viewer::init()
     guy = new Torse();
     addRenderable(guy);
     flock = new Flock(env, "fish");
-    addRenderable(flock);
+    //addRenderable(flock);
 
     //Useless XXX
     //for (int32_t y = -TERRAIN_HEIGHT/2; y < TERRAIN_HEIGHT/2; ++y) {
@@ -302,6 +302,7 @@ void Viewer::draw()
     for(it = renderableList.begin(); it != renderableList.end(); ++it) {
         (*it)->draw(PASS_NORMAL);
     }
+    flock->draw(PASS_NORMAL); // XXX no caustics here
 
     if (useCaustics) {
         // === SECOND PASS CAUSTICS :3 ===

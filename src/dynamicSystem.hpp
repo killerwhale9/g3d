@@ -60,7 +60,7 @@ private:
 	GLuint tx_nyan;
 
 public:
-	DynamicSystem();	// TODO add general parameters (viscosity...)
+	DynamicSystem();
 	virtual ~DynamicSystem();
 
 	// Position of the firt particle ca be set through mouse movements

@@ -3,7 +3,7 @@
 #include "viewer.hpp"
 
 Submarine::Submarine() : m_model(objManager::getObj("submarine")), m_viewer(NULL),
-     m_pos(-248.f, 60.f, 0.3f), m_size(2.f, 1.f, 1.5f)
+     m_pos(-148.f, 30.f, 0.3f), m_size(2.f, 1.f, 1.5f)
 {
 }
 

@@ -22,7 +22,6 @@
 #include "TextureManager.hpp"
 #include "globals.hpp"
 
-// TODO Renderable is debug purpose
 class NoiseTerrain : public Renderable {
 
     inline double findnoise2(double x,double y)

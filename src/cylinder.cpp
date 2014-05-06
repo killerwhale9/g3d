@@ -108,7 +108,7 @@ void Cylinder::drawArrays()
 // - single definition of shared data
 // - draw face by face, using face indices
 
-// TODO on calcule une seule fois pas +a chaque draw
+// TODO on devrais calcule une seule fois pas +a chaque draw
 void Cylinder::drawElements()
 {
     GLfloat vertices[nb_face*3*2];//top bot top bot ...
