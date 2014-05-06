@@ -158,13 +158,13 @@ void Torse::draw(int pass)
     glRotatef(m_angTorse.z, 0, 0, 1);
 
     // Torse
-    glColor3f(0,0,1);
+    glColor3f(152/255.0f,87/255.0f,23/255.0f);
     m_figure.draw(pass);
 
     // Bottle
     glPushMatrix();
     glTranslatef(0, -1.3f, 0.1f);
-    glColor3f(1,1,0);
+    glColor3f(237/255.0f,255/255.0f,12/255.0f);
     m_bottle.draw(pass);
     glPopMatrix();
 
@@ -174,7 +174,7 @@ void Torse::draw(int pass)
     glRotatef(m_angHead.x, 1, 0, 0);
     glRotatef(m_angHead.y, 0, 1, 0);
     glRotatef(m_angHead.z, 0, 0, 1);
-    glColor3f(1,1,0);
+    glColor3f(175/255.0f,175/255.0f,175/255.0f);
     glutSolidSphere(m_headRadius, m_precision, m_precision);
     glPopMatrix();
 
@@ -184,14 +184,16 @@ void Torse::draw(int pass)
     glRotatef(m_angURArm.x, 1, 0, 0);
     glRotatef(m_angURArm.y, 0, 1, 0);
     glRotatef(m_angURArm.z, 0, 0, 1);
-    glColor3f(0,0,1);
+    //glColor3f(0,0,1);
+    glColor3f(237/255.0f,255/255.0f,12/255.0f);
     m_rUArm.draw(pass);
 
     glTranslatef(m_rUArm.getLength(), 0, 0);
     glRotatef(m_angLRArm.x, 1, 0, 0);
     glRotatef(m_angLRArm.y, 0, 1, 0);
     glRotatef(m_angLRArm.z, 0, 0, 1);
-    glColor3f(1,0,0);
+    //glColor3f(1,0,0);
+    glColor3f(175/255.0f,175/255.0f,175/255.0f);
     m_rLArm.draw(pass);
 
     glPopMatrix();
@@ -202,14 +204,16 @@ void Torse::draw(int pass)
     glRotatef(m_angULArm.x, 1, 0, 0);
     glRotatef(m_angULArm.y, 0, 1, 0);
     glRotatef(m_angULArm.z, 0, 0, 1);
-    glColor3f(0,0,1);
+    //glColor3f(0,0,1);
+    glColor3f(237/255.0f,255/255.0f,12/255.0f);
     m_lUArm.draw(pass);
 
     glTranslatef(m_lUArm.getLength(), 0, 0);
     glRotatef(m_angLLArm.x, 1, 0, 0);
     glRotatef(m_angLLArm.y, 0, 1, 0);
     glRotatef(m_angLLArm.z, 0, 0, 1);
-    glColor3f(1,0,0);
+    //glColor3f(1,0,0);
+    glColor3f(175/255.0f,175/255.0f,175/255.0f);
     m_lLArm.draw(pass);
 
     //Weapon
@@ -241,14 +245,16 @@ void Torse::draw(int pass)
     glRotatef(m_angURLeg.x, 1, 0, 0);
     glRotatef(m_angURLeg.y, 0, 1, 0);
     glRotatef(m_angURLeg.z, 0, 0, 1);
-    glColor3f(0,0,1);
+    //glColor3f(0,0,1);
+    glColor3f(118/255.0f,32/255.0f,1/255.0f);
     m_rULeg.draw(pass);
 
     glTranslatef(0.0, 0.0, -m_rULeg.getLength());
     glRotatef(m_angLRLeg.x, 1, 0, 0);
     glRotatef(m_angLRLeg.y, 0, 1, 0);
     glRotatef(m_angLRLeg.z, 0, 0, 1);
-    glColor3f(1,0,0);
+    //glColor3f(1,0,0);
+    glColor3f(175/255.0f,175/255.0f,175/255.0f);
     m_rLLeg.draw(pass);
 
     glPopMatrix();
@@ -259,14 +265,16 @@ void Torse::draw(int pass)
     glRotatef(m_angULLeg.x, 1, 0, 0);
     glRotatef(m_angULLeg.y, 0, 1, 0);
     glRotatef(m_angULLeg.z, 0, 0, 1);
-    glColor3f(0,0,1);
+    //glColor3f(0,0,1);
+    glColor3f(118/255.0f,32/255.0f,1/255.0f);
     m_lULeg.draw(pass);
 
     glTranslatef(0, 0, -m_lULeg.getLength());
     glRotatef(m_angLLLeg.x, 1, 0, 0);
     glRotatef(m_angLLLeg.y, 0, 1, 0);
     glRotatef(m_angLLLeg.z, 0, 0, 1);
-    glColor3f(1,0,0);
+    //glColor3f(1,0,0);
+    glColor3f(175/255.0f,175/255.0f,175/255.0f);
     m_lLLeg.draw(pass);
 
     glPopMatrix();
