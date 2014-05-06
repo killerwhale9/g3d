@@ -145,7 +145,7 @@ void Viewer::init()
     guy = new Torse();
     addRenderable(guy);
     flock = new Flock(env, "fish");
-    //addRenderable(flock);
+    addRenderable(flock);
 
     //Useless XXX
     //for (int32_t y = -TERRAIN_HEIGHT/2; y < TERRAIN_HEIGHT/2; ++y) {
@@ -219,7 +219,6 @@ void Viewer::init()
 void Viewer::loadTextures()
 {
     TextureManager::loadTexture("gfx/sand1.jpg", "sand1");
-    TextureManager::loadTexture("gfx/coral.png", "coral");
     TextureManager::loadTexture("gfx/corail1.jpg", "corail1");
     TextureManager::loadTexture("gfx/weed.png", "weed");
 
@@ -230,14 +229,6 @@ void Viewer::loadTextures()
         key<<"caust"<<i;
         file<<"gfx/caustics/caust"<<i<<".jpg";
         causticsTex[i] = TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
-    }
-
-    for (uint32_t i = 1; i <= 15; ++i) {
-        file.str("");
-        key.str("");
-        key<<"fish"<<i;
-        file<<"gfx/fishes/TropicalFish"<<(i<10?"0":"")<<i<<".jpg";
-        //TextureManager::loadTextureMipmaps(file.str().c_str(), key.str());
     }
 
     //Skybox
@@ -255,11 +246,6 @@ void Viewer::loadTextures()
     objManager::loadObj("models/rpg.obj", "gfx/rpg.jpg", "rpg");
     objManager::loadObj("models/missile.obj", "gfx/missile.jpg", "missile");
     objManager::loadObj("models/treasure_chest.obj", "gfx/treasure_chest.jpg", "chest");
-    objManager::loadObj("models/stone1.obj", "gfx/stones/stone1.jpg", "stone1");
-    objManager::loadObj("models/stone2.obj", "gfx/stones/stone2.jpg", "stone2");
-    objManager::loadObj("models/stone3.obj", "gfx/stones/stone3.jpg", "stone3");
-    objManager::loadObj("models/stone4.obj", "gfx/stones/stone4.jpg", "stone4");
-    objManager::loadObj("models/stone5.obj", "gfx/stones/stone5.jpg", "stone5");
     objManager::loadObj("models/shark.obj", "gfx/shark.jpg", "shark");
     objManager::loadObj("models/shark_eyes.obj", "gfx/shark_eyes.jpg", "shark_eyes");
     objManager::loadObj("models/shark_teeth.obj", "gfx/shark_teeth.jpg", "shark_teeth");
@@ -302,7 +288,6 @@ void Viewer::draw()
     for(it = renderableList.begin(); it != renderableList.end(); ++it) {
         (*it)->draw(PASS_NORMAL);
     }
-    flock->draw(PASS_NORMAL); // XXX no caustics here
 
     if (useCaustics) {
         // === SECOND PASS CAUSTICS :3 ===
