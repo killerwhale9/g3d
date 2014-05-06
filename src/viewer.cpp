@@ -86,10 +86,11 @@ void Viewer::init()
     // Création de la caméra et animation
     CameraAnimation &cam = *(new CameraAnimation(30*100, *camera(), useCustomCamera));
 
-    cam.addFrame(0, glm::vec3(-10, -BEG_DIST+10, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST, COMMON_HEIGHT), true);
-    cam.addFrame(30, glm::vec3(0, -BEG_DIST+10+30*SWIM_SPD, COMMON_HEIGHT+10), glm::vec3(0, -BEG_DIST+SWIM_SPD*30, COMMON_HEIGHT), true);
-    cam.addFrame(60, glm::vec3(10, -BEG_DIST+10+60*SWIM_SPD, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+60*SWIM_SPD, COMMON_HEIGHT), true);
-    cam.addFrame(80, glm::vec3(0, 0, 50), glm::vec3(0, 0, 0), false);
+    cam.addFrame(0, glm::vec3(-20, -BEG_DIST+10, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST, COMMON_HEIGHT), true);
+    cam.addFrame(30, glm::vec3(0, -BEG_DIST+20+30*SWIM_SPD, COMMON_HEIGHT+10), glm::vec3(0, -BEG_DIST+SWIM_SPD*30, COMMON_HEIGHT), true);
+    cam.addFrame(60, glm::vec3(20, -BEG_DIST+10+60*SWIM_SPD, COMMON_HEIGHT), glm::vec3(0, -BEG_DIST+60*SWIM_SPD, COMMON_HEIGHT), true);
+    cam.addFrame(62, glm::vec3(0, 0, 50), glm::vec3(0, 0, 0), false);
+    cam.addFrame(120, glm::vec3(0, fps*4*vitesseLenteRequin + fps*1*vitesseRapideRequin + distanceFaceAFace, 50), glm::vec3(0, -BEG_DIST+120*SWIM_SPD+20, COMMON_HEIGHT+20), false);
     cam.interpolate();
 
     addRenderable(&cam);
