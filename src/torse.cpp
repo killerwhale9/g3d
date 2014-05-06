@@ -220,7 +220,7 @@ void Torse::draw(int pass)
     glPushMatrix();
     glTranslatef(m_lUArm.getLength(), 0, 0);
     glRotatef(90, 1, 0, 0);
-    glRotatef(-47, 0, 1, 0);
+    glRotatef(-53, 0, 1, 0);
     glRotatef(-90, 0, 0, 1);
     glScalef(3.0f, 3.0f, 3.0f);
     if (m_viewRpg == 1){
