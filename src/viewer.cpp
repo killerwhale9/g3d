@@ -133,20 +133,13 @@ void Viewer::init()
                     noise->getZ(coralOffsetX, coralOffsetY)));
 
     }
-    for (i=0; i < 10; i++) {
-        coralOffsetX = (glm::simplex(glm::vec3(coralOffsetX*3, coralOffsetY+7.0 ,1.0))+5)*10;
-        coralOffsetY = (glm::simplex(glm::vec3(coralOffsetX, coralOffsetY*10 ,1.0))+1)*10;
-        addRenderable(new Coral(Coral::defaultDepth, coralOffsetX, coralOffsetY,
-                    Coral::randomBetween(Coral::minMult,Coral::maxMult),
-                    noise->getZ(coralOffsetX, coralOffsetY)));
-    }
 
     //addRenderable(new objReader("models/cat.obj", "gfx/cat.png"));
     //addRenderable(new objReader("models/rpg.obj", "gfx/rpg.jpg"));
     //addRenderable(new objReader("models/missile.obj", "gfx/missile.jpg"));
     //addRenderable(new objReader("models/portalbutton.obj", "gfx/button.jpg"));
     //addRenderable(new objReader("models/TropicalFish01.obj", "gfx/fishes/TropicalFish01.jpg"));
-    addRenderable(new Chest());
+    //addRenderable(new Chest());
     addRenderable(new Submarine());
     addRenderable(new Shark());
     guy = new Torse();
