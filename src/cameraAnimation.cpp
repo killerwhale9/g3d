@@ -4,6 +4,7 @@ void CameraAnimation::animate() {
     if (*m_active && m_ind < m_frames.size()) {
         if (m_frames[m_ind]) {
             m_cam->setPosition(qglviewer::Vec(m_frames[m_ind]->pos));
+            m_cam->setUpVector(qglviewer::Vec(0, 0, 1));
             m_cam->lookAt(qglviewer::Vec(m_frames[m_ind]->look));
         }
         m_ind++;

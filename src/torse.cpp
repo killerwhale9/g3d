@@ -30,11 +30,12 @@ Torse::Torse() :
     m_frame(0),
     m_bubbles(0),
     m_viewer(NULL),
-    m_animSwim(new Animation(fps)),
-    m_animGetUp(new Animation(fps)),
-    m_animSwimTrans(new Animation(fps)),
-    m_animAim(new Animation(fps)),
+    m_animSwim(new Animation(30)),
+    m_animGetUp(new Animation(30)),
+    m_animSwimTrans(new Animation(30)),
+    m_animAim(new Animation(30)),
     m_animRecoil(new Animation(10)),
+    m_animHeadUp(new Animation(30)),
     m_currentAnim(NULL),
     m_pos(0, -BEG_DIST, COMMON_HEIGHT),
     m_viewRpg(0),
@@ -120,6 +121,11 @@ Torse::Torse() :
     m_animRecoil->addFrameFromCurrent(0);
     m_animRecoil->addFrame(9, e_legUL, glm::vec3(75, 35, 0));
     m_animRecoil->addFrame(9, e_legUR, glm::vec3(75, -35, 0));
+
+    // ANimation pour lever la tête face au requin
+    // Animation pour le recul apres le coup de feu
+    m_animHeadUp->addFrameFromCurrent(0);
+    m_animHeadUp->addFrame(29, e_head, glm::vec3(35, 0, 0));
 
     setAnimation(m_animSwim);
     animate();// otherwise it all angs are at 0
@@ -318,7 +324,8 @@ void Torse::animate()
         m_pos.y += SWIM_SPD;
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
     } else if (m_timer < fps*10 && m_timer > fps*9) {
-        //if (m_currentAnim != m_) TODO animation lève tête
+        if (m_currentAnim != m_animHeadUp)
+            setAnimation(m_animHeadUp);
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
     } else if (m_timer > 20*fps && m_timer < 21*fps) {
         if (m_currentAnim != m_animGetUp)
@@ -330,7 +337,11 @@ void Torse::animate()
             setAnimation(m_animAim);
     } else if (m_timer > 24*fps) {
         m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
-        m_pos.y += SWIM_SPD;
+        if (m_currentAnim == m_animAim) {
+            m_pos.y -= 0.3;
+        } else {
+            m_pos.y += SWIM_SPD;
+        }
         if (m_frame == 0) {
             if (m_currentAnim == m_animAim) {
                 setAnimation(m_animRecoil);
