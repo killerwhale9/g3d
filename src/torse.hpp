@@ -40,6 +40,7 @@ class Torse : public Renderable
               m_width, // size of the memebers eg: radius as they're cylinders
               m_headRadius;
         int m_precision; // number of faces
+        uint32_t m_timer;
 
 DynamicSystem m_syst;
 

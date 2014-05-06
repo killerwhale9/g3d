@@ -9,12 +9,14 @@ using namespace std;
 #include <stdlib.h>
 #include "glm/gtx/rotate_vector.hpp"
 #include "objManager.hpp"
+#include "const.hpp"
 
 Torse::Torse() :
     m_length(4.f),
     m_width(2.f),
     m_headRadius(1.2f),
     m_precision(16),
+    m_timer(0),
     m_figure(m_length, m_width, m_precision),
     m_bottle(3.f, 1.f, m_precision),
     m_lUArm(m_precision),
@@ -28,13 +30,13 @@ Torse::Torse() :
     m_frame(0),
     m_bubbles(0),
     m_viewer(NULL),
-    m_animSwim(new Animation(30)),
-    m_animGetUp(new Animation(20)),
-    m_animSwimTrans(new Animation(20)),
-    m_animAim(new Animation(20)),
+    m_animSwim(new Animation(fps)),
+    m_animGetUp(new Animation(fps)),
+    m_animSwimTrans(new Animation(fps)),
+    m_animAim(new Animation(fps)),
     m_animRecoil(new Animation(10)),
     m_currentAnim(NULL),
-    m_pos(0, -30, 25),
+    m_pos(0, -BEG_DIST, 25),
     m_viewRpg(0),
     m_viewMissile(0),
     m_posMissile(0),
@@ -77,16 +79,16 @@ Torse::Torse() :
 
     // animation pour se redresser
     m_animGetUp->addFrameFromCurrent(0);
-    m_animGetUp->addFrame(19, e_torse, glm::vec3(-5, 0, 0));
-    m_animGetUp->addFrame(19, e_head, glm::vec3(20, 0, 0));
-    m_animGetUp->addFrame(19, e_armUL, glm::vec3(0, -75, 180));
-    m_animGetUp->addFrame(19, e_armLL, glm::vec3());
-    m_animGetUp->addFrame(19, e_armUR, glm::vec3(0, 75, 10));
-    m_animGetUp->addFrame(19, e_armLR, glm::vec3());
-    m_animGetUp->addFrame(19, e_legUL, glm::vec3(0, 15, 0));
-    m_animGetUp->addFrame(19, e_legLL, glm::vec3());
-    m_animGetUp->addFrame(19, e_legUR, glm::vec3(0, -15, 0));
-    m_animGetUp->addFrame(19, e_legLR, glm::vec3());
+    m_animGetUp->addFrame(29, e_torse, glm::vec3(-5, 0, 0));
+    m_animGetUp->addFrame(29, e_head, glm::vec3(20, 0, 0));
+    m_animGetUp->addFrame(29, e_armUL, glm::vec3(0, -75, 180));
+    m_animGetUp->addFrame(29, e_armLL, glm::vec3());
+    m_animGetUp->addFrame(29, e_armUR, glm::vec3(0, 75, 10));
+    m_animGetUp->addFrame(29, e_armLR, glm::vec3());
+    m_animGetUp->addFrame(29, e_legUL, glm::vec3(0, 15, 0));
+    m_animGetUp->addFrame(29, e_legLL, glm::vec3());
+    m_animGetUp->addFrame(29, e_legUR, glm::vec3(0, -15, 0));
+    m_animGetUp->addFrame(29, e_legLR, glm::vec3());
 
     // Animation pour se remettre à nager
     m_animSwimTrans->addFrameFromCurrent(0);
@@ -127,6 +129,7 @@ void Torse::setAnimation(Animation* a)
 {
     m_currentAnim = a;
     a->generateInterpolation(*this);
+    m_frame = 0;
 }
 
 void Torse::draw(int pass)
@@ -304,7 +307,37 @@ const glm::vec3& Torse::getCurrentRotation(frame_type t)
 void Torse::animate()
 {
     m_currentAnim->update(*this, m_frame);
-    m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
+    if (m_timer < fps*4) {
+        m_pos.y += SWIM_SPD;
+        m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
+    } else if (m_timer > fps*7 && m_timer < fps*8) {
+        m_pos.y += SWIM_SPD;
+        m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
+    } else if (m_timer < fps*9 && m_timer > fps*8) {
+        //if (m_currentAnim != m_) TODO animation lève tête
+        m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
+    } else if (m_timer > 16*fps && m_timer < 17*fps) {
+        if (m_currentAnim != m_animGetUp)
+            setAnimation(m_animGetUp);
+        m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
+    } else if (m_timer < 18*fps && m_timer > 17*fps) {
+        m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
+        if (m_currentAnim != m_animAim)
+            setAnimation(m_animAim);
+    } else if (m_timer > 18*fps) {
+        m_frame = m_frame == m_currentAnim->getSize()-1?0: m_frame+1;
+        if (m_frame == 0) {
+            if (m_currentAnim == m_animAim) {
+                setAnimation(m_animRecoil);
+            } else if (m_currentAnim == m_animRecoil) {
+                setAnimation(m_animSwimTrans);
+            } else if (m_currentAnim == m_animSwimTrans) {
+                setAnimation(m_animSwim);
+            }
+        }
+    }
+
+    m_timer++;
     if (m_frame == 13 && m_currentAnim == m_animAim) {
         m_viewMissile = 1;
         m_viewRpg = 1;
@@ -315,24 +348,21 @@ void Torse::animate()
     if (m_currentAnim == m_animSwimTrans) {
         m_viewMissile = 0;
     }
-    if (m_frame == 0){
-        // XXX TESTING
-        if(m_currentAnim == m_animSwim)
-            setAnimation(m_animGetUp);
-        else if (m_currentAnim == m_animGetUp)
-            setAnimation(m_animAim);
-        else if (m_currentAnim == m_animAim)
-            setAnimation(m_animRecoil);
-        else if (m_currentAnim == m_animRecoil)
-            setAnimation(m_animSwimTrans);
-        else if (m_currentAnim == m_animSwimTrans)
-            setAnimation(m_animSwim);
-    }
+    //if (m_frame == 0){
+        //// XXX TESTING
+        //if(m_currentAnim == m_animSwim)
+            //setAnimation(m_animGetUp);
+        //else if (m_currentAnim == m_animGetUp)
+            //setAnimation(m_animAim);
+        //else if (m_currentAnim == m_animAim) {
+            //setAnimation(m_animRecoil);
+        //}
+        //else if (m_currentAnim == m_animRecoil)
+            //setAnimation(m_animSwimTrans);
+        //else if (m_currentAnim == m_animSwimTrans)
+            //setAnimation(m_animSwim);
+    //}
 
-    if (m_currentAnim == m_animSwim)
-        m_pos.y += 0.3f;
-    else if (m_currentAnim == m_animRecoil)
-        m_pos.y -= 0.3f;
 
     m_bubbles++;
     if (m_bubbles >= 20*2) {

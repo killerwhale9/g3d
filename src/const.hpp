@@ -10,4 +10,7 @@
 #define distanceFaceAFace 3.0f
 #define distanceReculeRequin 10.0f
 
+#define BEG_DIST 250.f
+#define SWIM_SPD 0.3f
+
 #endif

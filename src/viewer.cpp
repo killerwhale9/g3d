@@ -22,6 +22,8 @@
 #include "dynamicSystem.hpp"
 #include "cameraAnimation.hpp"
 #include "coral.hpp"
+#include "globals.hpp"
+#include "const.hpp"
 #include <sstream>
 #include <ctime>
 
