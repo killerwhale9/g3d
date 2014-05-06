@@ -8,7 +8,7 @@ Shark::Shark() :
     m_eyes(objManager::getObj("shark_eyes")),
     m_viewer(NULL),
     m_timer(0),
-    m_pos(0, fps*4*vitesseLenteRequin + fps*1*vitesseRapideRequin + distanceFaceAFace, altitudeAction),
+    m_pos(0, BEG_SHARK, COMMON_HEIGHT),
     m_rot(0)
 {}
 
@@ -52,7 +52,7 @@ void Shark::animate()
     }
     if (m_timer > fps*19.3 && m_timer < fps*19.6) {
         //Le requin s'enfonce
-        m_pos.z -= (altitudeAction-profondeurRequin)/(fps*.3);
+        m_pos.z -= (COMMON_HEIGHT-profondeurRequin)/(fps*.3);
     }
     m_timer++;
 }

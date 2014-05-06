@@ -263,8 +263,6 @@ void Torse::draw(int pass)
     glPopMatrix();
 
     glPopMatrix();
-    m_tube.setBeginingPosition(Vec(getHeadPos()));
-    m_tube.setEndPosition(Vec(getHeadPos()));
     m_tube.draw(pass);
 }
 
@@ -382,7 +380,12 @@ void Torse::animate()
                         m_pos.z + pos.z + (random()%10)*0.1f));
     }
     m_tube.setBeginingPosition(Vec(getHeadPos()));
-    m_tube.setEndPosition(Vec(getHeadPos())+Vec(20.0, 0.0, 0.0));
+    glm::vec3 pos(0.f, 0, m_length-1.3);
+    pos = glm::rotateX(pos, m_angTorse.x);
+    pos = glm::rotateY(pos, m_angTorse.y);
+    pos = glm::rotateZ(pos, m_angTorse.z);
+    pos += m_pos;
+    m_tube.setEndPosition(Vec(pos));
     m_tube.setEndParticlePosition(Vec(getHeadPos()));
     m_tube.animate();
 }
