@@ -153,15 +153,17 @@ void DynamicSystem::draw(int pass)
 	glColor3f(1,0,0);
 	vector<Particle *>::iterator itP;
 	for (itP = particles.begin(); itP != particles.end(); ++itP) {
-		(*itP)->draw(pass);
+        if(itP+1 != particles.end())
+    		(*itP)->draw(pass);
 	}
 
 	// Springs
 	glColor3f(1.0, 0.28, 0.0);
 	glLineWidth(5.0);
 	vector<Spring *>::iterator itS;
+    int nb = 0;
 	for (itS = springs.begin(); itS != springs.end(); ++itS) {
-		(*itS)->draw(pass);
+    	(*itS)->draw(pass);
 	}
 	glLineWidth(1.0);
 }
