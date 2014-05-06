@@ -353,6 +353,7 @@ void Torse::animate()
     }
     m_tube.setBeginingPosition(Vec(getHeadPos()));
     m_tube.setEndPosition(Vec(getHeadPos()));
+    m_tube.setEndParticlePosition(Vec(getHeadPos()));
     m_tube.animate();
 }
 
