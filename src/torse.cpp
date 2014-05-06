@@ -382,7 +382,7 @@ void Torse::animate()
                         m_pos.z + pos.z + (random()%10)*0.1f));
     }
     m_tube.setBeginingPosition(Vec(getHeadPos()));
-    m_tube.setEndPosition(Vec(getHeadPos()));
+    m_tube.setEndPosition(Vec(getHeadPos())+Vec(20.0, 0.0, 0.0));
     m_tube.setEndParticlePosition(Vec(getHeadPos()));
     m_tube.animate();
 }
